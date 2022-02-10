@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 2.6.0
+ * @version 3.1.2
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 3.1.2
 	 * @since   2.2.9
 	 */
 	function get_settings() {
@@ -58,6 +58,17 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_wpo_wcpdf',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Position', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wpo_wcpdf_position',
+				'default'  => 'wpo_wcpdf_after_item_meta',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'wpo_wcpdf_before_item_meta' => __( 'Before item meta', 'ean-for-woocommerce' ),
+					'wpo_wcpdf_after_item_meta'  => __( 'After item meta', 'ean-for-woocommerce' ),
+				),
 			),
 			array(
 				'title'    => __( 'Dokan', 'ean-for-woocommerce' ),

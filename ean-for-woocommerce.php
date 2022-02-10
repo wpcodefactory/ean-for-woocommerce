@@ -8,7 +8,7 @@ Author: Algoritmika Ltd
 Author URI: https://algoritmika.com
 Text Domain: ean-for-woocommerce
 Domain Path: /langs
-WC tested up to: 6.1
+WC tested up to: 6.2
 */
 
 defined( 'ABSPATH' ) || exit;

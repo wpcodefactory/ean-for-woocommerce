@@ -70,10 +70,20 @@ Additionally you can **print** multiple EANs and barcodes to **PDF** file.
 2. Activate the plugin through the "Plugins" menu in WordPress.
 3. Start by visiting plugin settings at "WooCommerce > Settings > EAN".
 
+== Screenshots ==
+
+1. EAN for WooCommerce - Backend - Simple product
+2. EAN for WooCommerce - Backend - Variable product
+3. EAN for WooCommerce - Frontend - Variable product
+4. EAN for WooCommerce - Admin settings
+5. EAN for WooCommerce - Tools
+
 == Changelog ==
 
-= 3.1.2 - 07/02/2022 =
-* Dev - Compatibility - Dokan - EAN field added to variations.
+= 3.1.2 - 10/02/2022 =
+* Dev - Compatibility - Dokan - EAN field added to variations. Includes barcodes.
+* Dev - Compatibility - WooCommerce PDF Invoices & Packing Slips - "Position" option added (defaults to "After item meta"). Includes barcodes.
+* WC tested up to: 6.2.
 
 = 3.1.1 - 04/02/2022 =
 * Dev - Print - Template - `%product_price_regular%`, `%product_price_sale%`, `%product_price_regular_raw%`, `%product_price_sale_raw%` placeholders added.

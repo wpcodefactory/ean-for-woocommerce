@@ -47,7 +47,7 @@ class Alg_WC_EAN_Compatibility {
 		}
 		// "WooCommerce PDF Invoices & Packing Slips" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_wpo_wcpdf', 'no' ) ) {
-			add_action( 'wpo_wcpdf_after_item_meta', array( $this, 'add_to_wpo_wcpdf_ean' ), 10, 3 );
+			add_action( get_option( 'alg_wc_ean_wpo_wcpdf_position', 'wpo_wcpdf_after_item_meta' ), array( $this, 'add_to_wpo_wcpdf_ean' ), 10, 3 );
 		}
 		// "WooCommerce Google Product Feed"
 		add_filter( 'woocommerce_gpf_custom_field_list', array( $this, 'add_to_woocommerce_gpf_custom_field_list' ), PHP_INT_MAX );
@@ -89,7 +89,6 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 2.6.0
 	 * @since   2.6.0
 	 *
-	 * @todo    [next] (feature) customizable position, e.g. `wpo_wcpdf_before_item_meta`?
 	 * @todo    [next] (feature) customizable template?
 	 * @todo    [next] (dev) check if valid?
 	 */
@@ -203,7 +202,6 @@ class Alg_WC_EAN_Compatibility {
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/tmpl-add-product-popup.php#L148
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/new-product-single.php#L338
 	 *
-	 * @todo    [next] (dev) variable products?
 	 * @todo    [next] (feature) optional EAN validation
 	 */
 	function dokan_add_ean_field( $post = false, $post_id = false ) {
