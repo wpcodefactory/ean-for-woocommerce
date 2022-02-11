@@ -1,9 +1,9 @@
 === EAN for WooCommerce ===
-Contributors: algoritmika, anbinder
+Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, barcode, gtin, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -81,9 +81,9 @@ Additionally you can **print** multiple EANs and barcodes to **PDF** file.
 == Changelog ==
 
 = 3.1.2 - 11/02/2022 =
-* Dev - Compatibility - Dokan - EAN field added to variations. Includes barcodes.
+* Dev - Compatibility - Dokan - Field added to variations. Includes barcodes.
 * Dev - Compatibility - WooCommerce PDF Invoices & Packing Slips - "Position" option added (defaults to "After item meta"). Includes barcodes.
-* Dev - Add deploy script.
+* Dev - Deploy script added.
 * WC tested up to: 6.2.
 
 = 3.1.1 - 04/02/2022 =
