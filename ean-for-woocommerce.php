@@ -29,7 +29,7 @@ if ( 'ean-for-woocommerce.php' === basename( __FILE__ ) ) {
 	}
 }
 
-defined( 'ALG_WC_EAN_VERSION' ) || define ( 'ALG_WC_EAN_VERSION', '3.1.2-dev-20220207-1436' );
+defined( 'ALG_WC_EAN_VERSION' ) || define ( 'ALG_WC_EAN_VERSION', '3.1.2-dev-20220211-1046' );
 
 defined( 'ALG_WC_EAN_FILE' ) || define ( 'ALG_WC_EAN_FILE', __FILE__ );
 
