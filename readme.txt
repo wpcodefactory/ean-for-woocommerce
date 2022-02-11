@@ -80,7 +80,7 @@ Additionally you can **print** multiple EANs and barcodes to **PDF** file.
 
 == Changelog ==
 
-= 3.1.2 - 10/02/2022 =
+= 3.1.2 - 11/02/2022 =
 * Dev - Compatibility - Dokan - EAN field added to variations. Includes barcodes.
 * Dev - Compatibility - WooCommerce PDF Invoices & Packing Slips - "Position" option added (defaults to "After item meta"). Includes barcodes.
 * WC tested up to: 6.2.

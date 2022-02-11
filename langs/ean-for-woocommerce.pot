@@ -124,15 +124,15 @@ msgstr ""
 msgid "Go Pro"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-display-barcodes.php:105
-#: includes/pro/class-alg-wc-ean-display-barcodes.php:121
-#: includes/pro/class-alg-wc-ean-display-barcodes.php:160
+#: includes/pro/class-alg-wc-ean-display-barcodes.php:120
+#: includes/pro/class-alg-wc-ean-display-barcodes.php:136
+#: includes/pro/class-alg-wc-ean-display-barcodes.php:175
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:79
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:207
 msgid "Barcode"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-display-barcodes.php:160
+#: includes/pro/class-alg-wc-ean-display-barcodes.php:175
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:79
 msgid "2D barcode"
 msgstr ""
