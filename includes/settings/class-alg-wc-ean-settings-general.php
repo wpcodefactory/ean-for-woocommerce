@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 3.1.0
+ * @version 3.2.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,13 +29,14 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
 	 *
-	 * @todo    [now] [!] (desc) add subsections, e.g. "General", "Display", etc.?
-	 * @todo    [now] [!] (desc) "REST API" as a separate section?
+	 * @todo    [now] [!] (desc) `alg_wc_ean_order_items_meta_rest`: "... tried order item meta, then uses product as a fallback..."
+	 * @todo    [now] [!] (desc) add subsections, e.g. "General", "Display", etc., or "Products", "Orders", etc.?
+	 * @todo    [now] [!] (desc) "REST API" as a separate *section*?
 	 * @todo    [next] [!] (desc) remove "This will" everywhere
 	 * @todo    [next] (dev) `alg_wc_ean_wcfm_hints`: better default value?
 	 * @todo    [next] (dev) `alg_wc_ean_order_items_meta_admin`: default to `yes` || merge with `alg_wc_ean_order_items_meta`
@@ -161,14 +162,6 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'checkboxgroup' => 'end',
 			),
 			array(
-				'title'    => __( 'REST API', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Add EAN to each product object in REST API responses.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_product_rest',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
 				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'Add EAN to new order items meta.', 'ean-for-woocommerce' ),
@@ -181,14 +174,6 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'desc'     => __( 'Admin order', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'Add EAN to new order items meta for orders created by admin.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_order_items_meta_admin',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-				'checkboxgroup' => '',
-			),
-			array(
-				'desc'     => __( 'REST API', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Add EAN to each order object in REST API responses.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_order_items_meta_rest',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 				'checkboxgroup' => 'end',
@@ -330,6 +315,31 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_ean_plugin_options',
+			),
+			array(
+				'title'    => __( 'REST API', 'ean-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_ean_rest_api_options',
+			),
+			array(
+				'title'    => __( 'Products', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Add EAN to each product object in REST API responses.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_product_rest',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Add EAN to each order object in REST API responses.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_order_items_meta_rest',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_ean_rest_api_options',
 			),
 			array(
 				'title'    => __( 'Notes', 'ean-for-woocommerce' ),

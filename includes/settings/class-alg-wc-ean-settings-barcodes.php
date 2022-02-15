@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes Section Settings
  *
- * @version 3.1.2
+ * @version 3.2.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -31,7 +31,7 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.1.2
+	 * @version 3.2.0
 	 * @since   2.0.0
 	 *
 	 * @todo    [next] (desc) Enable section: better desc
@@ -84,6 +84,21 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 					sprintf( __( 'You should use %s shortcode here.', 'ean-for-woocommerce' ), '<code>[alg_wc_ean_barcode' . $this->dim_suffix . ']</code>' ),
 				'id'       => "alg_wc_ean_backend_column_barcode_template{$this->dim_suffix}",
 				'default'  => '[alg_wc_ean_barcode' . $this->dim_suffix . ' content="ean" w="' . ( '1d' === $this->dim ? 1  : 1 ) . '" h="' . ( '1d' === $this->dim ? 15 : 1 ) . '" children="yes"]',
+				'type'     => 'textarea',
+				'css'      => 'width:100%;',
+			),
+			array(
+				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Show barcode image on admin order edit page.', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_order_barcode{$this->dim_suffix}",
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_order_template_barcode{$this->dim_suffix}",
+				'default'  => "<p>[alg_wc_ean_barcode{$this->dim_suffix}]</p>",
 				'type'     => 'textarea',
 				'css'      => 'width:100%;',
 			),
@@ -155,6 +170,39 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 			array(
 				'type'     => 'sectionend',
 				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_options",
+			),
+			array(
+				'title'    => __( 'REST API', 'ean-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_rest_api_options",
+			),
+			array(
+				'title'    => __( 'Products', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Add barcode (base64) to each product object in REST API responses.', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_rest_api_product_barcode{$this->dim_suffix}",
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Add barcode (base64) to each order object in REST API responses.', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_rest_api_order_barcode{$this->dim_suffix}",
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Template', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Used for both "Products" and "Orders" REST API responses.', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_rest_api_product_template_barcode{$this->dim_suffix}",
+				'default'  => '[alg_wc_ean_barcode' . $this->dim_suffix . '_base64 before="data:image/png;base64,"]',
+				'type'     => 'textarea',
+				'css'      => 'width:100%;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_rest_api_options",
 			),
 			array(
 				'title'    => __( 'Plugin Compatibility Options', 'ean-for-woocommerce' ),

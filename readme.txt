@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, barcode, gtin, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.1.2
+Stable tag: 3.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -52,7 +52,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 
 ### &#127942; Premium Version ###
 
-With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) you can generate and display **barcode image** for your product EAN (frontend, backend and/or order items table, including emails).
+With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) you can generate and display **barcode image** for your product EAN (frontend, backend, order items table (including emails), REST API, etc.).
 
 Barcodes can be **one-dimensional** (1D barcodes) or **two-dimensional** (2D barcodes, QR codes).
 
@@ -79,6 +79,14 @@ Additionally you can **print** multiple EANs and barcodes to **PDF** file.
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.2.0 - 15/02/2022 =
+* Dev - Orders - REST API - Now using current product EAN as a fallback (i.e. if there is no EAN in order item meta).
+* Dev - Barcodes - "Orders" options added ("Show barcode image on admin order edit page").
+* Dev - Barcodes - "REST API" (product and order) options added.
+* Dev - Barcodes - `[alg_wc_ean_barcode_base64]` and `[alg_wc_ean_barcode_2d_base64]` shortcodes added.
+* Dev - Admin settings rearranged: "REST API" subsections added.
+* Dev - Code refactoring.
 
 = 3.1.2 - 11/02/2022 =
 * Dev - Compatibility - Dokan - Field added to variations. Includes barcodes.
