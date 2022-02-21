@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.0.0
+ * @version 3.3.0
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -72,7 +72,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.0.0
+	 * @version 3.3.0
 	 * @since   2.2.5
 	 *
 	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
@@ -145,6 +145,14 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'default'  => '',
 				'type'     => 'number',
 				'custom_attributes' => array( 'min' => 0, 'max' => 999 ),
+			),
+			array(
+				'desc'     => __( 'County prefix length', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'For EAN-8 type only. County prefix length for other types will always be 3.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_generate[prefix_length]',
+				'default'  => 3,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 2, 'max' => 3 ),
 			),
 			array(
 				'desc'     => __( 'Seed prefix', 'ean-for-woocommerce' ) . ' (' . __( 'optional', 'ean-for-woocommerce' ) . ')',

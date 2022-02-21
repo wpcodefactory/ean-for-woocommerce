@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Class
  *
- * @version 3.1.0
+ * @version 3.3.0
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -277,7 +277,13 @@ class Alg_WC_EAN_Tools {
 	 */
 	function get_products( $action = false ) {
 		// Query args
-		$args = array( 'limit' => -1, 'return' => 'ids', 'orderby' => 'ID', 'order' => 'ASC', 'type' => array_merge( array_keys( wc_get_product_types() ), array( 'variation' ) ) );
+		$args = array(
+			'limit'   => -1,
+			'return'  => 'ids',
+			'orderby' => 'ID',
+			'order'   => 'ASC',
+			'type'    => array_merge( array_keys( wc_get_product_types() ), array( 'variation' ) ),
+		);
 		// Product options
 		$product_options = false;
 		switch ( $action ) {
@@ -521,26 +527,38 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * get_generate_data.
 	 *
-	 * @version 2.7.0
+	 * @version 3.3.0
 	 * @since   2.2.8
 	 *
+	 * @todo    [now] [!!!] (dev) `ISBN13`, `JAN`
+	 * @todo    [now] [!!!] (fix) `UPCA`: 1+5+5+1 (https://www.cognex.com/resources/symbologies/1-d-linear-barcodes/upc-a-barcodes)
 	 * @todo    [now] [!] (dev) move to a separate class/file, e.g. `class-alg-wc-ean-generator.php`?
 	 */
 	function get_generate_data() {
 		$res = array();
-		$data = array_replace( array( 'type' => 'EAN13', 'prefix' => 200, 'prefix_to' => '', 'seed_prefix' => '' ), get_option( 'alg_wc_ean_tool_product_generate', array() ) );
+		$default_data = array(
+			'type'          => 'EAN13',
+			'prefix'        => 200,
+			'prefix_to'     => '',
+			'prefix_length' => 3,
+			'seed_prefix'   => '',
+		);
+		$data = array_replace( $default_data, get_option( 'alg_wc_ean_tool_product_generate', array() ) );
 		// Seed length
 		switch ( $data['type'] ) {
 			case 'EAN8':
 				$length = 8;
+				$res['prefix_length'] = $data['prefix_length'];
 				break;
 			case 'UPCA':
 				$length = 12;
+				$res['prefix_length'] = 3;
 				break;
 			default: // 'EAN13'
 				$length = 13;
+				$res['prefix_length'] = 3;
 		}
-		$res['seed_length'] = ( $length - 3 - 1 );
+		$res['seed_length'] = ( $length - $res['prefix_length'] - 1 );
 		// Seed prefix
 		$seed_prefix         = ( strlen( $data['seed_prefix'] ) > $res['seed_length'] ? substr( $data['seed_prefix'], 0, $res['seed_length'] ) : $data['seed_prefix'] );
 		$res['seed_length'] -= strlen( $seed_prefix );
@@ -555,7 +573,7 @@ class Alg_WC_EAN_Tools {
 				'from' => ( $data['prefix_to'] > $data['prefix'] ? $data['prefix'] : $data['prefix_to'] ),
 				'to'   => ( $data['prefix_to'] > $data['prefix'] ? $data['prefix_to'] : $data['prefix'] ),
 			) :
-			str_pad( $data['prefix'], 3, '0', STR_PAD_LEFT )
+			str_pad( substr( $data['prefix'], 0, $res['prefix_length'] ), $res['prefix_length'], '0', STR_PAD_LEFT )
 		);
 		return $res;
 	}
@@ -563,14 +581,17 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * generate_ean.
 	 *
-	 * @version 2.7.0
+	 * @version 3.3.0
 	 * @since   2.2.8
 	 *
 	 * @todo    [next] (feature) customizable seed (i.e. not product ID), e.g. random?; etc.
 	 */
 	function generate_ean( $product_id, $data ) {
-		$ean = ( $data['is_rand_prefix'] ? str_pad( rand( $data['prefix']['from'], $data['prefix']['to'] ), 3, '0', STR_PAD_LEFT ) : $data['prefix'] ) .
-			$data['seed_prefix'] . str_pad( substr( $product_id, 0, $data['seed_length'] ), $data['seed_length'], '0', STR_PAD_LEFT );
+		$prefix = ( $data['is_rand_prefix'] ?
+			str_pad( substr( rand( $data['prefix']['from'], $data['prefix']['to'] ), 0, $data['prefix_length'] ), $data['prefix_length'], '0', STR_PAD_LEFT ) :
+			$data['prefix']
+		);
+		$ean = $prefix . $data['seed_prefix'] . str_pad( substr( $product_id, 0, $data['seed_length'] ), $data['seed_length'], '0', STR_PAD_LEFT );
 		return $ean . $this->get_checksum( $ean );
 	}
 

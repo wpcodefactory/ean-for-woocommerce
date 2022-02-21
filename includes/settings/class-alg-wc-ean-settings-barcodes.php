@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes Section Settings
  *
- * @version 3.2.0
+ * @version 3.3.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -31,9 +31,10 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.2.0
+	 * @version 3.3.0
 	 * @since   2.0.0
 	 *
+	 * @todo    [now] [!!!] (desc) 1D barcode type: Automatic
 	 * @todo    [next] (desc) Enable section: better desc
 	 * @todo    [maybe] (desc) `alg_wc_ean_order_items_table_barcode`: "... *may* not work..."?
 	 * @todo    [maybe] (dev) `alg_wc_ean_backend_column_barcode_data[]`?
@@ -272,27 +273,30 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'title',
 				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_advanced_options",
 			),
-		) );
-		if ( '2d' === $this->dim ) {
-			$settings = array_merge( $settings, array(
-				array(
-					'title'    => __( 'Barcode type', 'ean-for-woocommerce' ),
-					'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_barcode_type",
-					'default'  => 'QRCODE,L',
-					'type'     => 'select',
-					'class'    => 'chosen_select',
-					'options'  => array(
+			array(
+				'title'    => __( 'Barcode type', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_barcode_type",
+				'default'  => ( '2d' === $this->dim ? 'QRCODE,L' : 'AUTO' ),
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => ( '2d' === $this->dim ?
+					array(
 						'QRCODE,L'   => __( 'QR code: Low error correction', 'ean-for-woocommerce' ),
 						'QRCODE,M'   => __( 'QR code: Medium error correction', 'ean-for-woocommerce' ),
 						'QRCODE,Q'   => __( 'QR code: Better error correction', 'ean-for-woocommerce' ),
 						'QRCODE,H'   => __( 'QR code: Best error correction', 'ean-for-woocommerce' ),
 						'DATAMATRIX' => __( 'Datamatrix (ISO/IEC 16022)', 'ean-for-woocommerce' ),
 						'PDF417'     => __( 'PDF417 (ISO/IEC 15438:2006)', 'ean-for-woocommerce' ),
-					),
+					) :
+					array(
+						'AUTO'       => __( 'Automatic', 'ean-for-woocommerce' ),
+						'EAN8'       => 'EAN-8',
+						'UPCA'       => 'UPC-A',
+						'EAN13'      => 'EAN-13',
+						'C128'       => 'CODE 128',
+					)
 				),
-			) );
-		}
-		$settings = array_merge( $settings, array(
+			),
 			array(
 				'title'    => __( 'Suppress errors', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ) . ' (' . __( 'recommended', 'ean-for-woocommerce' ) . ')',

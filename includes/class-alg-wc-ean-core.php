@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 2.8.0
+ * @version 3.3.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -54,8 +54,10 @@ class Alg_WC_EAN_Core {
 	/**
 	 * get_type_by_ean_length.
 	 *
-	 * @version 1.5.0
+	 * @version 3.3.0
 	 * @since   1.5.0
+	 *
+	 * @todo    [now] (dev) rename function?
 	 */
 	function get_type_by_ean_length( $ean ) {
 		$length = strlen( $ean );
@@ -65,7 +67,7 @@ class Alg_WC_EAN_Core {
 			case 12:
 				return 'UPCA';
 			case 13:
-				return 'EAN13';
+				return ( $this->is_ean_isbn( $ean ) ? 'ISBN13' : ( $this->is_ean_jan( $ean ) ? 'JAN' : 'EAN13' ) );
 			default:
 				return false;
 		}
@@ -74,10 +76,10 @@ class Alg_WC_EAN_Core {
 	/**
 	 * get_ean_type_length.
 	 *
-	 * @version 1.4.0
+	 * @version 3.3.0
 	 * @since   1.4.0
 	 *
-	 * @todo    [next] now used only: `EAN8`, `UPCA` (and `EAN13`)
+	 * @todo    [next] now used only: `EAN8`, `UPCA`, `EAN13`, `ISBN13`, `JAN`
 	 */
 	function get_ean_type_length( $type ) {
 		switch ( $type ) {
@@ -89,6 +91,8 @@ class Alg_WC_EAN_Core {
 				return 12;
 			case 'GTIN13':
 			case 'EAN13':
+			case 'ISBN13':
+			case 'JAN':
 				return 13;
 			case 'GTIN14':
 			case 'EAN14':
@@ -101,26 +105,47 @@ class Alg_WC_EAN_Core {
 	}
 
 	/**
+	 * is_ean_isbn.
+	 *
+	 * @version 3.3.0
+	 * @since   3.3.0
+	 */
+	function is_ean_isbn( $value ) {
+		return in_array( substr( $value, 0, 3 ), array( '978', '979' ) );
+	}
+
+	/**
+	 * is_ean_jan.
+	 *
+	 * @version 3.3.0
+	 * @since   3.3.0
+	 */
+	function is_ean_jan( $value ) {
+		return in_array( substr( $value, 0, 2 ), array( '45', '49' ) );
+	}
+
+	/**
 	 * is_valid_ean.
 	 *
-	 * @version 2.4.0
+	 * @version 3.3.0
 	 * @since   1.0.1
 	 *
 	 * @see     https://stackoverflow.com/questions/19890144/generate-valid-ean13-in-php
 	 * @see     https://stackoverflow.com/questions/29076255/how-do-i-validate-a-barcode-number-using-php
 	 * @see     http://www.gs1.org/how-calculate-check-digit-manually
 	 *
-	 * @todo    [next] add more formats/standards: see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
-	 * @todo    [next] `ean-13`: remove?
-	 * @todo    [maybe] `ean-13`: `while ( strlen( $ean ) < 13 ) { $ean = '0' . $ean; }`
+	 * @todo    [now] [!] (feature) add more formats/standards, e.g. ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
 	 */
-	function is_valid_ean( $ean, $product_id = false ) {
-		$type = $this->get_type( $ean, false, $product_id );
+	function is_valid_ean( $value, $product_id = false ) {
+		$type = $this->get_type( $value, false, $product_id );
 		switch ( $type ) {
-			case 'EAN8':  // e.g.: 96385074
-			case 'UPCA':  // e.g.: 042100005264
+			case 'EAN8':   // e.g.: 96385074
+			case 'UPCA':   // e.g.: 042100005264
+			case 'EAN13':  // e.g.: 5901234123457
+			case 'ISBN13':
+			case 'JAN':
 			case 'AUTO':
-				$ean = ( string ) $ean;
+				$ean = ( string ) $value;
 				// We accept only digits
 				if ( ! preg_match( "/^[0-9]+$/", $ean ) ) {
 					$result = false;
@@ -150,26 +175,23 @@ class Alg_WC_EAN_Core {
 				$sum            = $sum_even + $sum_odd;
 				$sum_rounded_up = ceil( $sum / 10 ) * 10;
 				$result         = ( $check == ( $sum_rounded_up - $sum ) );
-				break;
-			case 'EAN13': // e.g.: 5901234123457
-				if ( 13 != strlen( $ean ) ) {
-					$result = false;
-					break;
+				// Extra prefix check (ISBN13, JAN)
+				if ( $result ) {
+					if ( 'ISBN13' === $type ) {
+						if ( ! $this->is_ean_isbn( $value ) ) {
+							$result = false;
+						}
+					} elseif ( 'JAN' === $type ) {
+						if ( ! $this->is_ean_jan( $value ) ) {
+							$result = false;
+						}
+					}
 				}
-				$ean = preg_split( "//", $ean, -1, PREG_SPLIT_NO_EMPTY );
-				$a = $b = 0;
-				for ( $i = 0; $i < 6; $i++ ) {
-					$a += ( int ) array_shift( $ean );
-					$b += ( int ) array_shift( $ean );
-				}
-				$total    = ( $a * 1 ) + ( $b * 3 );
-				$next_ten = ceil( $total / 10 ) * 10;
-				$result   = ( $next_ten - $total == array_shift( $ean ) );
 				break;
 			default:
-				$result = ( 0 != strlen( $ean ) );
+				$result = ( 0 != strlen( $value ) );
 		}
-		return apply_filters( 'alg_wc_ean_is_valid', $result, $ean, $type );
+		return apply_filters( 'alg_wc_ean_is_valid', $result, $value, $type );
 	}
 
 	/**

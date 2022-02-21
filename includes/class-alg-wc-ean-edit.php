@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 2.4.0
+ * @version 3.3.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -95,7 +95,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * get_ean_input_pattern.
 	 *
-	 * @version 2.4.0
+	 * @version 3.3.0
 	 * @since   1.0.1
 	 *
 	 * @todo    [next] `AUTO`: better maxlength (13); add minlength (8)
@@ -108,6 +108,8 @@ class Alg_WC_EAN_Edit {
 			case 'EAN8':
 			case 'UPCA':
 			case 'EAN13':
+			case 'ISBN13':
+			case 'JAN':
 			case 'AUTO':
 				$result = array_merge( $atts, array( 'pattern' => '[0-9]+', 'maxlength' => ( 'AUTO' === $type ? 13 : alg_wc_ean()->core->get_ean_type_length( $type ) ) ) );
 				break;

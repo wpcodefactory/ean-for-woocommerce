@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 3.2.0
+ * @version 3.3.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -27,13 +27,72 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	}
 
 	/**
+	 * get_types_desc.
+	 *
+	 * @version 3.3.0
+	 * @since   3.3.0
+	 *
+	 * @see     https://en.wikipedia.org/wiki/Global_Trade_Item_Number
+	 * @see     https://en.wikipedia.org/wiki/EAN-8
+	 * @see     https://en.wikipedia.org/wiki/Universal_Product_Code
+	 * @see     https://en.wikipedia.org/wiki/International_Article_Number
+	 * @see     https://en.wikipedia.org/wiki/International_Standard_Book_Number
+	 * @see     https://en.wikipedia.org/wiki/International_Article_Number#jan
+	 */
+	function get_types_desc() {
+		$types = array(
+			'EAN-8'    => array(
+				'desc'   => __( 'Less commonly used EAN standard. An EAN-8 number includes a 2- or 3-digit GS1 prefix, 5- or 4-digit item reference element (depending on the length of the GS1 prefix), and a checksum digit.', 'ean-for-woocommerce' ),
+				'length' => 8,
+			),
+			'UPC-A'    => array(
+				'desc'   => __( 'The UPC-A barcode is the most common type in the United States. UPC (technically refers to UPC-A) consists of 12 digits. It begins with a single digit number system character, which designates how the code should be classified: as a regular product, a weighted item, pharmaceuticals, coupons, etc. After that is a five digit manufacturer\'s number, followed by a five digit product number, and finally a checksum digit.', 'ean-for-woocommerce' ),
+				'length' => 12,
+			),
+			'EAN-13'   => array(
+				'desc'   => __( 'This is the most commonly used EAN standard. An EAN-13 number includes a 3-digit GS1 prefix, 9-digit manufacturer and product code, and a checksum digit.', 'ean-for-woocommerce' ),
+				'length' => 13,
+			),
+			'ISBN-13'  => array(
+				'desc'   => __( 'The International Standard Book Number (ISBN) is a numeric commercial book identifier. It\'s a subset of EAN-13 - with <code>978</code> or <code>979</code> prefix.', 'ean-for-woocommerce' ),
+				'length' => 13,
+			),
+			'JAN'      => array(
+				'desc'   => __( 'Japanese Article Number (JAN) is a subset of EAN-13 - with <code>45</code> or <code>49</code> prefix.', 'ean-for-woocommerce' ),
+				'length' => 13,
+			),
+			__( 'Custom', 'ean-for-woocommerce' ) => array(
+				'desc'   => __( 'Custom can represent all 128 ASCII code characters (numbers, upper case/lower case letters, symbols and control codes).', 'ean-for-woocommerce' ),
+				'length' => __( 'Any', 'ean-for-woocommerce' ),
+			),
+		);
+		$result  = '';
+		$result .= '<table class="widefat striped">' .
+			'<tr>' .
+				'<td><strong>' . __( 'Type', 'ean-for-woocommerce' ) . '</td>' .
+				'<td><strong>' . __( 'Length', 'ean-for-woocommerce' ) . '</td>' .
+				'<td><strong>' . __( 'Description', 'ean-for-woocommerce' ) . '</td>' .
+			'</tr>';
+		foreach ( $types as $title => $data ) {
+			$result .= '<tr>' .
+				"<td><strong>{$title}</strong></td>" .
+				"<td><code>{$data['length']}</code></td>" .
+				"<td>{$data['desc']}</td>" .
+			'</tr>';
+		}
+		$result .= '</table>';
+		return '<details style="cursor:pointer;"><summary>' . __( 'Type details', 'ean-for-woocommerce' ) . '</summary>' . $result . '</details>';
+	}
+
+	/**
 	 * get_settings.
 	 *
-	 * @version 3.2.0
+	 * @version 3.3.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
 	 *
+	 * @todo    [now] [!!!] (dev) `alg_wc_ean_type`: rename `C128` to `CUSTOM`
 	 * @todo    [now] [!] (desc) `alg_wc_ean_order_items_meta_rest`: "... tried order item meta, then uses product as a fallback..."
 	 * @todo    [now] [!] (desc) add subsections, e.g. "General", "Display", etc., or "Products", "Orders", etc.?
 	 * @todo    [now] [!] (desc) "REST API" as a separate *section*?
@@ -82,6 +141,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Type', 'ean-for-woocommerce' ),
+				'desc'     => $this->get_types_desc(),
 				'desc_tip' => sprintf( __( 'The "Type" will be used for: %s', 'ean-for-woocommerce' ),
 						'<br><br>' . implode( ',<br><br>', array(
 							__( 'EAN validation (on the admin product edit pages, and in the admin products column)', 'ean-for-woocommerce' ),
@@ -95,11 +155,13 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'select',
 				'class'    => 'chosen_select',
 				'options'  => array(
-					'AUTO'  => __( 'Automatic', 'ean-for-woocommerce' ) . ' (' . implode( ', ', array( 'EAN-13', 'UPC-A', 'EAN-8' ) ) . ')',
-					'EAN8'  => 'EAN-8',
-					'UPCA'  => 'UPC-A',
-					'EAN13' => 'EAN-13',
-					'C128'  => 'CODE 128',
+					'AUTO'   => __( 'Automatic', 'ean-for-woocommerce' ) . ' (' . implode( ', ', array( 'EAN-13', 'UPC-A', 'EAN-8', 'ISBN-13', 'JAN' ) ) . ')',
+					'EAN8'   => 'EAN-8',
+					'UPCA'   => 'UPC-A',
+					'EAN13'  => 'EAN-13',
+					'ISBN13' => 'ISBN-13',
+					'JAN'    => 'JAN',
+					'C128'   => __( 'Custom', 'ean-for-woocommerce' ), // mislabeled, should be `CUSTOM`
 				),
 			),
 			array(

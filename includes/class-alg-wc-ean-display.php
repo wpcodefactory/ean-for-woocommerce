@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 3.1.0
+ * @version 3.3.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -238,7 +238,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_to_product_structured_data.
 	 *
-	 * @version 2.4.0
+	 * @version 3.3.0
 	 * @since   1.0.0
 	 *
 	 * @see     http://schema.org/Product
@@ -258,6 +258,8 @@ class Alg_WC_EAN_Display {
 					$key = 'gtin12';
 					break;
 				case 'EAN13':
+				case 'ISBN13':
+				case 'JAN':
 					$key = 'gtin13';
 					break;
 				default: // e.g. `AUTO`, `C128`

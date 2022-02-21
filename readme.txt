@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, barcode, gtin, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.2.0
+Stable tag: 3.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,7 +13,7 @@ Manage product EAN in WooCommerce. Beautifully.
 
 **EAN for WooCommerce** plugin lets you manage product EAN in WooCommerce.
 
-Currently supported standards: EAN-13, UPC-A, EAN-8, CODE 128.
+Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, Custom.
 
 ### &#9989; Main Features ###
 
@@ -79,6 +79,15 @@ Additionally you can **print** multiple EANs and barcodes to **PDF** file.
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.3.0 - 21/02/2022 =
+* Dev - General - Type - "ISBN-13" type added.
+* Dev - General - Type - "JAN" type added.
+* Dev - General - Type - "Custom" type added; "CODE 128" type removed.
+* Dev - General - Type - "Type details" description added.
+* Dev - Tools - Product Tools - Generate - "County prefix length" option added (for EAN-8 type only).
+* Dev - 1D Barcodes - Advanced Options - "Barcode type" option added (defaults to `Automatic`).
+* Dev - Code refactoring.
 
 = 3.2.0 - 15/02/2022 =
 * Dev - Orders - REST API - Now using current product EAN as a fallback (i.e. if there is no EAN in order item meta).
