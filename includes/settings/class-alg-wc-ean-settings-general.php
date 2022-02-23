@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 3.3.0
+ * @version 3.4.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_types_desc.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.0
 	 * @since   3.3.0
 	 *
 	 * @see     https://en.wikipedia.org/wiki/Global_Trade_Item_Number
@@ -75,7 +75,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			'</tr>';
 		foreach ( $types as $title => $data ) {
 			$result .= '<tr>' .
-				"<td><strong>{$title}</strong></td>" .
+				"<td><pre><strong>{$title}</strong></pre></td>" .
 				"<td><code>{$data['length']}</code></td>" .
 				"<td>{$data['desc']}</td>" .
 			'</tr>';
@@ -87,7 +87,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -329,6 +329,23 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'desc_tip' => __( 'This will add EAN to the product structured data, e.g. for Google Search Console.', 'ean-for-woocommerce' ),
 				'default'  => 'yes',
 				'type'     => 'checkbox',
+				'checkboxgroup' => 'start',
+			),
+			array(
+				'desc'     => __( 'Automatic key', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'If enabled, will use the key based on EAN type, i.e. %s for EAN-8, %s for UPC-A, %s for EAN-13, ISBN-13 and JAN, and %s for all other types.', 'ean-for-woocommerce' ),
+					'<code>gtin8</code>', '<code>gtin12</code>', '<code>gtin13</code>', '<code>gtin</code>' ),
+				'id'       => 'alg_wc_ean_frontend_product_structured_data_key_auto',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'end',
+			),
+			array(
+				'desc'     => __( 'Custom key', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Ignored, unless the "Automatic key" option above is disabled.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_frontend_product_structured_data_key',
+				'default'  => 'gtin',
+				'type'     => 'text',
 			),
 			array(
 				'title'    => __( 'Order items table', 'ean-for-woocommerce' ),

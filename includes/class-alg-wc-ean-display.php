@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 3.3.0
+ * @version 3.4.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -238,32 +238,35 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_to_product_structured_data.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.0
 	 * @since   1.0.0
 	 *
 	 * @see     http://schema.org/Product
 	 *
-	 * @todo    [next] custom key?
 	 * @todo    [next] maybe always use `gtin` (... all-numeric string of either 8, 12, 13 or 14 digits...)
 	 * @todo    [next] `default` (`C128`): maybe no markup then?
 	 */
 	function add_ean_to_product_structured_data( $markup, $product ) {
 		if ( '' !== ( $value = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {
-			$type = alg_wc_ean()->core->get_type( $value, false, $product->get_id() );
-			switch ( $type ) {
-				case 'EAN8':
-					$key = 'gtin8';
-					break;
-				case 'UPCA':
-					$key = 'gtin12';
-					break;
-				case 'EAN13':
-				case 'ISBN13':
-				case 'JAN':
-					$key = 'gtin13';
-					break;
-				default: // e.g. `AUTO`, `C128`
-					$key = apply_filters( 'alg_wc_ean_product_structured_data_markup_key', 'gtin', $type );
+			if ( 'yes' === get_option( 'alg_wc_ean_frontend_product_structured_data_key_auto', 'yes' ) ) {
+				$type = alg_wc_ean()->core->get_type( $value, false, $product->get_id() );
+				switch ( $type ) {
+					case 'EAN8':
+						$key = 'gtin8';
+						break;
+					case 'UPCA':
+						$key = 'gtin12';
+						break;
+					case 'EAN13':
+					case 'ISBN13':
+					case 'JAN':
+						$key = 'gtin13';
+						break;
+					default: // e.g. `AUTO`, `C128`
+						$key = apply_filters( 'alg_wc_ean_product_structured_data_markup_key', 'gtin', $type );
+				}
+			} else {
+				$key = get_option( 'alg_wc_ean_frontend_product_structured_data_key', 'gtin' );
 			}
 			$markup[ $key ] = $value;
 		}

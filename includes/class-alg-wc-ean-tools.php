@@ -530,7 +530,7 @@ class Alg_WC_EAN_Tools {
 	 * @version 3.3.0
 	 * @since   2.2.8
 	 *
-	 * @todo    [now] [!!!] (dev) `ISBN13`, `JAN`
+	 * @todo    [now] [!] (dev) `ISBN13`, `JAN`
 	 * @todo    [now] [!!!] (fix) `UPCA`: 1+5+5+1 (https://www.cognex.com/resources/symbologies/1-d-linear-barcodes/upc-a-barcodes)
 	 * @todo    [now] [!] (dev) move to a separate class/file, e.g. `class-alg-wc-ean-generator.php`?
 	 */

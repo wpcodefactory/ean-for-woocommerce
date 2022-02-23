@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, barcode, gtin, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.3.0
+Stable tag: 3.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -30,7 +30,7 @@ Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, Custom.
 * Output EAN with a **shortcode**.
 * And more...
 
-### &#9965; Tools ###
+### &#129520; Tools ###
 
 Plugin has tools that will help you generate, copy, assign and delete EANs in bulk, automatically or periodically.
 
@@ -52,13 +52,13 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 
 ### &#127942; Premium Version ###
 
-With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) you can generate and display **barcode image** for your product EAN (frontend, backend, order items table (including emails), REST API, etc.).
+With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) you can:
 
-Barcodes can be **one-dimensional** (1D barcodes) or **two-dimensional** (2D barcodes, QR codes).
+* Generate and display **barcode image** for your product EAN (frontend, backend, order items table (including emails), REST API, etc.).
+* Barcodes can be **one-dimensional** (1D barcodes) or **two-dimensional** (2D barcodes, QR codes).
+* Additionally you can **print** multiple EANs and barcodes to **PDF** file.
 
-Additionally you can **print** multiple EANs and barcodes to **PDF** file.
-
-= Feedback =
+### &#128472; Feedback ###
 
 * We are open to your suggestions and feedback.
 * Thank you for using or trying out one of our plugins!
@@ -79,6 +79,16 @@ Additionally you can **print** multiple EANs and barcodes to **PDF** file.
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.4.0 - 23/02/2022 =
+* Dev - General - Product structured data - "Automatic key" options added.
+* Dev - General - Type - Type details - Admin settings restyled.
+* Dev - Tools - Product Tools - Generate - Type - Admin settings description added.
+* Dev - Barcodes - Shortcodes - Optional `ean` attribute added.
+* Dev - Barcodes - Shortcodes - Shortcodes are always available now (even if the corresponding barcodes section is disabled), e.g. for the "Print" section.
+* Dev - Print - Developers - `alg_wc_ean_print_render_meta_box_shop_order_force_refunded` filter added.
+* Dev - Print - Developers - `alg_wc_ean_print_barcode_shop_order_refunded_item_qty` filter added.
+* Dev - Code refactoring.
 
 = 3.3.0 - 21/02/2022 =
 * Dev - General - Type - "ISBN-13" type added.
