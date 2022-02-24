@@ -2,13 +2,13 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 3.3.0
+ * @version 3.5.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EAN_Core' ) ) :
 
@@ -17,9 +17,10 @@ class Alg_WC_EAN_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.5.0
 	 * @since   1.0.0
 	 *
+	 * @todo    [now] [!] (dev) wpml-config.xml?
 	 * @todo    [now] [!] (dev) `alg_wc_ean_meta_key`: search for `alg_ean`
 	 * @todo    [next] (dev) WPML/Polylang (use default language product ID)
 	 * @todo    [later] (dev) check for duplicated EAN
@@ -34,6 +35,7 @@ class Alg_WC_EAN_Core {
 			$this->orders        = require_once( 'class-alg-wc-ean-orders.php' );
 			$this->tools         = require_once( 'class-alg-wc-ean-tools.php' );
 			$this->compatibility = require_once( 'class-alg-wc-ean-compatibility.php' );
+			$this->shortcodes    = require_once( 'class-alg-wc-ean-shortcodes.php' );
 		}
 		// Core loaded
 		do_action( 'alg_wc_ean_core_loaded', $this );

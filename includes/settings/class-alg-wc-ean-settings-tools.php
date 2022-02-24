@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.4.0
+ * @version 3.5.0
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -72,7 +72,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.0
 	 * @since   2.2.5
 	 *
 	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
@@ -117,8 +117,8 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			array(
 				'desc'     => __( 'Type', 'ean-for-woocommerce' ),
 				'desc_tip' =>
-					__( 'To generate ISBN-13, set this option to "EAN-13", and then set the "Country prefix" option to 978 or 979.', 'ean-for-woocommerce' ) . '<br><br>' .
-					__( 'To generate JAN, set this option to "EAN-13", and then set the "Country prefix" option to a number in the 450-459 range or in the 490-499 range.', 'ean-for-woocommerce' ),
+					'* ' . __( 'To generate ISBN-13, set this option to "EAN-13", and then set the "Country prefix" option to 978 or 979.', 'ean-for-woocommerce' ) . '<br><br>' .
+					'* ' . __( 'To generate JAN, set this option to "EAN-13", and then set the "Country prefix" option to a number in the 450-459 range or in the 490-499 range.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_generate[type]',
 				'default'  => 'EAN13',
 				'type'     => 'select',

@@ -49,8 +49,6 @@ class Alg_WC_EAN_Display {
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_product_structured_data', 'yes' ) ) {
 				add_filter( 'woocommerce_structured_data_product', array( $this, 'add_ean_to_product_structured_data' ), 10, 2 );
 			}
-			// Shortcodes
-			add_shortcode( 'alg_wc_ean', array( $this, 'ean_shortcode' ) );
 		}
 		// Backend
 		if ( is_admin() ) {
@@ -215,27 +213,6 @@ class Alg_WC_EAN_Display {
 	}
 
 	/**
-	 * ean_shortcode.
-	 *
-	 * @version 2.1.0
-	 * @since   1.5.1
-	 *
-	 * @todo    [maybe] check if valid?
-	 * @todo    [maybe] `on_empty`?
-	 * @todo    [next] [!] (dev) variable: implode variations' EANs?
-	 */
-	function ean_shortcode( $atts, $content = '' ) {
-		$default_atts = array(
-			'product_id' => false,
-			'before'     => '',
-			'after'      => '',
-		);
-		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean' );
-		$result = alg_wc_ean()->core->get_ean( $atts['product_id'] );
-		return ( '' === $result ? '' : ( $atts['before'] . $result . $atts['after'] ) );
-	}
-
-	/**
 	 * add_ean_to_product_structured_data.
 	 *
 	 * @version 3.4.0
@@ -338,7 +315,7 @@ class Alg_WC_EAN_Display {
 	 * @version 2.1.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [next] [!] (dev) template: shortcode vs placeholder?
+	 * @todo    [now] (dev) template: shortcode vs placeholder?
 	 * @todo    [maybe] customizable wrapping HTML (same for all frontend/backend options)
 	 * @todo    [maybe] `esc_html__( 'N/A', 'ean-for-woocommerce' )`
 	 */

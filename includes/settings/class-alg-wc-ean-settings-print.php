@@ -2,13 +2,13 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 3.1.1
+ * @version 3.5.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EAN_Settings_Print' ) ) :
 
@@ -27,14 +27,153 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	}
 
 	/**
+	 * maybe_add_deprecated_settings.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 */
+	function maybe_add_deprecated_settings( $settings, $options ) {
+
+		// Barcode Options
+		if ( ! empty( $options['template'] ) && false !== strpos( $options['template'], '%barcode%' ) ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( 'Barcode Options', 'ean-for-woocommerce' ),
+					'desc'     => sprintf( __( 'For the %s placeholder.', 'ean-for-woocommerce' ), '<code>' . '%barcode%' . '</code>' ),
+					'type'     => 'title',
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_options',
+				),
+				array(
+					'title'    => __( 'Barcode width', 'ean-for-woocommerce' ),
+					'desc_tip' => __( 'Width of a single bar element in pixels.', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_width_px]',
+					'default'  => 2,
+					'type'     => 'number',
+					'custom_attributes' => array( 'min' => 1 ),
+				),
+				array(
+					'title'    => __( 'Barcode height', 'ean-for-woocommerce' ),
+					'desc_tip' => __( 'Height of a single bar element in pixels.', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_height_px]',
+					'default'  => 30,
+					'type'     => 'number',
+					'custom_attributes' => array( 'min' => 1 ),
+				),
+				array(
+					'title'    => __( 'Barcode color', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_color]',
+					'default'  => '#000000',
+					'type'     => 'color',
+				),
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_options',
+				),
+			) );
+		}
+
+		// 2D Barcode Options
+		if ( ! empty( $options['template'] ) && false !== strpos( $options['template'], '%barcode_2d%' ) ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( '2D Barcode Options', 'ean-for-woocommerce' ),
+					'desc'     => sprintf( __( 'For the %s placeholder.', 'ean-for-woocommerce' ), '<code>' . '%barcode_2d%' . '</code>' ),
+					'type'     => 'title',
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_2d_options',
+				),
+				array(
+					'title'    => __( '2D barcode width', 'ean-for-woocommerce' ),
+					'desc_tip' => __( 'Width of a single rectangle element in pixels.', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_width_px]',
+					'default'  => 3,
+					'type'     => 'number',
+					'custom_attributes' => array( 'min' => 1 ),
+				),
+				array(
+					'title'    => __( '2D barcode height', 'ean-for-woocommerce' ),
+					'desc_tip' => __( 'Height of a single rectangle element in pixels.', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_height_px]',
+					'default'  => 3,
+					'type'     => 'number',
+					'custom_attributes' => array( 'min' => 1 ),
+				),
+				array(
+					'title'    => __( '2D barcode color', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_color]',
+					'default'  => '#000000',
+					'type'     => 'color',
+				),
+				array(
+					'title'    => __( '2D barcode content', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_content]',
+					'default'  => 'ean',
+					'type'     => 'select',
+					'class'    => 'chosen_select',
+					'options'  => array(
+						'ean' => __( 'Product EAN', 'ean-for-woocommerce' ),
+						'url' => __( 'Product URL', 'ean-for-woocommerce' ),
+					),
+				),
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_2d_options',
+				),
+			) );
+		}
+
+		// Product Image Options
+		if ( ! empty( $options['template'] ) && false !== strpos( $options['template'], '%product_image%' ) ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( 'Product Image Options', 'ean-for-woocommerce' ),
+					'desc'     => sprintf( __( 'For the %s placeholder.', 'ean-for-woocommerce' ), '<code>' . '%product_image%' . '</code>' ),
+					'type'     => 'title',
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_product_image_options',
+				),
+				array(
+					'title'    => __( 'Product image width', 'ean-for-woocommerce' ),
+					'desc_tip' => __( 'In pixels.', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[product_image_width_px]',
+					'default'  => 30,
+					'type'     => 'number',
+					'custom_attributes' => array( 'min' => 1 ),
+				),
+				array(
+					'title'    => __( 'Product image height', 'ean-for-woocommerce' ),
+					'desc_tip' => __( 'In pixels.', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[product_image_height_px]',
+					'default'  => 30,
+					'type'     => 'number',
+					'custom_attributes' => array( 'min' => 1 ),
+				),
+				array(
+					'title'    => __( 'Product image size', 'ean-for-woocommerce' ),
+					'desc_tip' => __( 'Accepts any registered image size name.', 'ean-for-woocommerce' ),
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[product_image_size]',
+					'default'  => 'woocommerce_thumbnail',
+					'type'     => 'text',
+				),
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'alg_wc_ean_print_barcodes_to_pdf_product_image_options',
+				),
+			) );
+		}
+
+		return $settings;
+	}
+
+	/**
 	 * get_settings.
 	 *
-	 * @version 3.1.1
+	 * @version 3.5.0
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
 	 *
-	 * @todo    [next] (dev) mark placeholder sections as "deprecated" (at least "2D barcode content"); update "Template" default value?
+	 * @todo    [next] (feature) Cell border: add customization options
+	 * @todo    [now] [!] (desc) "Deprecated placeholders" desc tip: remove?
+	 * @todo    [now] [!!] (feature) `wpautop()`?
 	 * @todo    [next] (desc) `children`: better desc?
 	 * @todo    [next] (desc) better section desc?
 	 * @todo    [maybe] (desc) Page format: better desc?
@@ -73,7 +212,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			$pdf_page_formats[ $format_id ] = "{$format_id} ({$format_dim_w} x {$format_dim_h} {$unit_title})";
 		}
 
-		return array(
+		$settings = array(
 			array(
 				'title'    => __( 'Print Barcodes (PDF)', 'ean-for-woocommerce' ),
 				'type'     => 'title',
@@ -188,6 +327,17 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 0.000001, 'step' => 0.000001 ),
 			),
 			array(
+				'title'    => __( 'Cell border', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_border]',
+				'default'  => 0,
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					0 => __( 'No', 'ean-for-woocommerce' ),
+					1 => __( 'Yes', 'ean-for-woocommerce' ),
+				),
+			),
+			array(
 				'title'    => __( 'Top margin', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[margin_top]',
@@ -244,7 +394,19 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Template', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'Available placeholders: %s.', 'ean-for-woocommerce' ), '<code>' . implode( '</code>, <code>', array(
+				'desc'     => sprintf( __( 'You should use shortcodes here: %s.', 'ean-for-woocommerce' ),
+					'<code>' . implode( '</code>, <code>', array(
+						'[alg_wc_ean]',
+						'[alg_wc_ean_barcode]',
+						'[alg_wc_ean_barcode_2d]',
+						'[alg_wc_ean_product_image]',
+						'[alg_wc_ean_product_name]',
+						'[alg_wc_ean_product_price]',
+						'[alg_wc_ean_product_sku]',
+						'[alg_wc_ean_product_attr]',
+						'[alg_wc_ean_product_id]',
+					) ) . '</code>' ),
+				'desc_tip' => sprintf( __( 'Deprecated placeholders: %s.', 'ean-for-woocommerce' ), '<strong>' . implode( '</strong>, <strong>', array(
 						'%barcode%',
 						'%barcode_2d%',
 						'%ean%',
@@ -261,9 +423,9 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 						'%product_id%',
 						'%product_parent_title%',
 						'%product_parent_sku%',
-					) ) . '</code>' ),
+					) ) . '</strong>' ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[template]',
-				'default'  => '%barcode%<br>%ean%',
+				'default'  => '[alg_wc_ean_barcode]<br>[alg_wc_ean]',
 				'type'     => 'textarea',
 				'css'      => 'width:100%;height:150px;',
 			),
@@ -291,114 +453,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_general_options',
 			),
-			array(
-				'title'    => __( 'Barcode Options', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'For the %s placeholder.', 'ean-for-woocommerce' ), '<code>' . '%barcode%' . '</code>' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_options',
-			),
-			array(
-				'title'    => __( 'Barcode width', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Width of a single bar element in pixels.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_width_px]',
-				'default'  => 2,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 1 ),
-			),
-			array(
-				'title'    => __( 'Barcode height', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Height of a single bar element in pixels.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_height_px]',
-				'default'  => 30,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 1 ),
-			),
-			array(
-				'title'    => __( 'Barcode color', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_color]',
-				'default'  => '#000000',
-				'type'     => 'color',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_options',
-			),
-			array(
-				'title'    => __( '2D Barcode Options', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'For the %s placeholder.', 'ean-for-woocommerce' ), '<code>' . '%barcode_2d%' . '</code>' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_2d_options',
-			),
-			array(
-				'title'    => __( '2D barcode width', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Width of a single rectangle element in pixels.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_width_px]',
-				'default'  => 3,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 1 ),
-			),
-			array(
-				'title'    => __( '2D barcode height', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Height of a single rectangle element in pixels.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_height_px]',
-				'default'  => 3,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 1 ),
-			),
-			array(
-				'title'    => __( '2D barcode color', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_color]',
-				'default'  => '#000000',
-				'type'     => 'color',
-			),
-			array(
-				'title'    => __( '2D barcode content', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[barcode_2d_content]',
-				'default'  => 'ean',
-				'type'     => 'select',
-				'class'    => 'chosen_select',
-				'options'  => array(
-					'ean' => __( 'Product EAN', 'ean-for-woocommerce' ),
-					'url' => __( 'Product URL', 'ean-for-woocommerce' ),
-				),
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_barcode_2d_options',
-			),
-			array(
-				'title'    => __( 'Product Image Options', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'For the %s placeholder.', 'ean-for-woocommerce' ), '<code>' . '%product_image%' . '</code>' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_product_image_options',
-			),
-			array(
-				'title'    => __( 'Product image width', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'In pixels.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[product_image_width_px]',
-				'default'  => 30,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 1 ),
-			),
-			array(
-				'title'    => __( 'Product image height', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'In pixels.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[product_image_height_px]',
-				'default'  => 30,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 1 ),
-			),
-			array(
-				'title'    => __( 'Product image size', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Accepts any registered image size name.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[product_image_size]',
-				'default'  => 'woocommerce_thumbnail',
-				'type'     => 'text',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_product_image_options',
-			),
+		);
+
+		$settings = $this->maybe_add_deprecated_settings( $settings, $options );
+
+		$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Admin Options', 'ean-for-woocommerce' ),
 				'type'     => 'title',
@@ -475,8 +534,9 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_advanced_options',
 			),
-		);
+		) );
 
+		return $settings;
 	}
 
 }

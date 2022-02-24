@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 3.4.0
+ * @version 3.5.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,16 +87,18 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
 	 *
-	 * @todo    [now] [!!!] (dev) `alg_wc_ean_type`: rename `C128` to `CUSTOM`
+	 * @todo    [now] [!!] (dev) `alg_wc_ean_order_items_table_templates`: translate?
+	 * @todo    [now] [!!] (dev) deprecate placeholders
+	 * @todo    [now] [!] (dev) `alg_wc_ean_type`: rename `C128` to `CUSTOM`
 	 * @todo    [now] [!] (desc) `alg_wc_ean_order_items_meta_rest`: "... tried order item meta, then uses product as a fallback..."
 	 * @todo    [now] [!] (desc) add subsections, e.g. "General", "Display", etc., or "Products", "Orders", etc.?
 	 * @todo    [now] [!] (desc) "REST API" as a separate *section*?
-	 * @todo    [next] [!] (desc) remove "This will" everywhere
+	 * @todo    [now] (desc) remove "This will" everywhere
 	 * @todo    [next] (dev) `alg_wc_ean_wcfm_hints`: better default value?
 	 * @todo    [next] (dev) `alg_wc_ean_order_items_meta_admin`: default to `yes` || merge with `alg_wc_ean_order_items_meta`
 	 * @todo    [next] (dev) `alg_wc_ean_order_items_meta`: default to `yes`
@@ -144,10 +146,10 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'desc'     => $this->get_types_desc(),
 				'desc_tip' => sprintf( __( 'The "Type" will be used for: %s', 'ean-for-woocommerce' ),
 						'<br><br>' . implode( ',<br><br>', array(
-							__( 'EAN validation (on the admin product edit pages, and in the admin products column)', 'ean-for-woocommerce' ),
-							__( 'EAN input pattern (on the admin product edit pages)', 'ean-for-woocommerce' ),
-							__( 'product structured data (e.g. for Google Search Console)', 'ean-for-woocommerce' ),
-							__( 'outputting 1D barcodes', 'ean-for-woocommerce' ),
+							'* ' . __( 'EAN validation (on the admin product edit pages, and in the admin products column)', 'ean-for-woocommerce' ),
+							'* ' . __( 'EAN input pattern (on the admin product edit pages)', 'ean-for-woocommerce' ),
+							'* ' . __( 'product structured data (e.g. for Google Search Console)', 'ean-for-woocommerce' ),
+							'* ' . __( 'outputting 1D barcodes', 'ean-for-woocommerce' ),
 						) ) . '.'
 					),
 				'id'       => 'alg_wc_ean_type',

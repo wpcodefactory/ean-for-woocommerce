@@ -2,13 +2,13 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 3.1.2
+ * @version 3.5.0
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_WC_EAN_Settings_Compatibility' ) ) :
 
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.1.2
+	 * @version 3.5.0
 	 * @since   2.2.9
 	 */
 	function get_settings() {
@@ -69,6 +69,22 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 					'wpo_wcpdf_before_item_meta' => __( 'Before item meta', 'ean-for-woocommerce' ),
 					'wpo_wcpdf_after_item_meta'  => __( 'After item meta', 'ean-for-woocommerce' ),
 				),
+			),
+			array(
+				'title'    => __( 'WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'This will show EAN in PDF documents of the %s plugin.', 'ean-for-woocommerce' ),
+					'<a target="_blank" href="' . 'https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/' . '">' .
+						__( 'WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels', 'ean-for-woocommerce' ) . '</a>' ),
+				'id'       => 'alg_wc_ean_wt_pklist',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wt_pklist_template',
+				'default'  => '<p>EAN: [alg_wc_ean]</p>',
+				'type'     => 'textarea',
 			),
 			array(
 				'title'    => __( 'Dokan', 'ean-for-woocommerce' ),

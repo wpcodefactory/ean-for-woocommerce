@@ -82,7 +82,7 @@ class Alg_WC_EAN_Tools {
 	 *
 	 * @todo    [now] [!] (dev) remove `length`?
 	 * @todo    [now] [!] (dev) recheck headers?
-	 * @todo    [next] [!] (dev) redirect page?
+	 * @todo    [now] (dev) redirect page?
 	 */
 	function export_settings() {
 		if ( 'yes' === get_option( 'alg_wc_ean_export_settings', 'no' ) ) {
@@ -156,7 +156,7 @@ class Alg_WC_EAN_Tools {
 	 * @version 2.7.0
 	 * @since   2.7.0
 	 *
-	 * @todo    [now] [!] (feature) all other actions, e.g. "Copy EAN from SKU", etc.
+	 * @todo    [now] [!!] (feature) all other actions, e.g. "Copy EAN from SKU", etc.
 	 * @todo    [now] (dev) notices
 	 * @todo    [now] [!] (dev) merge with `products_create()`?
 	 */
@@ -531,7 +531,7 @@ class Alg_WC_EAN_Tools {
 	 * @since   2.2.8
 	 *
 	 * @todo    [now] [!] (dev) `ISBN13`, `JAN`
-	 * @todo    [now] [!!!] (fix) `UPCA`: 1+5+5+1 (https://www.cognex.com/resources/symbologies/1-d-linear-barcodes/upc-a-barcodes)
+	 * @todo    [now] [!!] (fix) `UPCA`: 1+5+5+1 (https://www.cognex.com/resources/symbologies/1-d-linear-barcodes/upc-a-barcodes)
 	 * @todo    [now] [!] (dev) move to a separate class/file, e.g. `class-alg-wc-ean-generator.php`?
 	 */
 	function get_generate_data() {

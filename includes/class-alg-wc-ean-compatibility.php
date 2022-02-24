@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 3.1.2
+ * @version 3.5.0
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -17,10 +17,10 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.2
+	 * @version 3.5.0
 	 * @since   2.2.0
 	 *
-	 * @todo    [next] [!] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
+	 * @todo    [now] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
 	 * @todo    [next] (feature) WCFM: customizable position, i.e. instead of right below the "SKU" field in "Inventory" tab
 	 * @todo    [next] (feature) Dokan: customizable position, i.e. instead of `dokan_new_product_after_product_tags` and `dokan_product_edit_after_product_tags`
 	 * @todo    [maybe] (feature) https://wordpress.org/plugins/woocommerce-xml-csv-product-import/ (WooCommerce add-on for "WP All Import")
@@ -49,8 +49,27 @@ class Alg_WC_EAN_Compatibility {
 		if ( 'yes' === get_option( 'alg_wc_ean_wpo_wcpdf', 'no' ) ) {
 			add_action( get_option( 'alg_wc_ean_wpo_wcpdf_position', 'wpo_wcpdf_after_item_meta' ), array( $this, 'add_to_wpo_wcpdf_ean' ), 10, 3 );
 		}
+		// "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" plugin
+		if ( 'yes' === get_option( 'alg_wc_ean_wt_pklist', 'no' ) ) {
+			add_filter( 'wf_pklist_alter_product_name', array( $this, 'add_to_wt_pklist_ean' ), 10, 5 );
+		}
 		// "WooCommerce Google Product Feed"
 		add_filter( 'woocommerce_gpf_custom_field_list', array( $this, 'add_to_woocommerce_gpf_custom_field_list' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * add_to_wt_pklist_ean.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 *
+	 * @see     https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/
+	 *
+	 * @todo    [now] (feature) more positions, e.g. as a separate column
+	 */
+	function add_to_wt_pklist_ean( $order_item_name, $template_type, $product, $order_item, $order ) {
+		$template = get_option( 'alg_wc_ean_wt_pklist_template', '<p>EAN: [alg_wc_ean]</p>' );
+		return $order_item_name . alg_wc_ean()->core->shortcodes->do_shortcode( $template, array( 'product_id' => $product->get_id() ) );
 	}
 
 	/**
@@ -124,7 +143,7 @@ class Alg_WC_EAN_Compatibility {
 	 *
 	 * @see     https://plugins.svn.wordpress.org/wc-frontend-manager/tags/6.5.10/views/products-manager/wcfm-view-products-manage-tabs.php
 	 *
-	 * @todo    [next] [!] (dev) do we need `esc_html` everywhere, e.g. in `hints`? (same for `dokan_add_ean_field()`)
+	 * @todo    [now] (dev) do we need `esc_html` everywhere, e.g. in `hints`? (same for `dokan_add_ean_field()`)
 	 * @todo    [next] (dev) variable products?
 	 * @todo    [next] (feature) optional EAN validation
 	 */

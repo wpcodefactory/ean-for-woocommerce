@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes Section Settings
  *
- * @version 3.3.0
+ * @version 3.5.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -31,10 +31,9 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.3.0
+	 * @version 3.5.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [now] [!!!] (desc) 1D barcode type: Automatic
 	 * @todo    [next] (desc) Enable section: better desc
 	 * @todo    [maybe] (desc) `alg_wc_ean_order_items_table_barcode`: "... *may* not work..."?
 	 * @todo    [maybe] (dev) `alg_wc_ean_backend_column_barcode_data[]`?
@@ -242,6 +241,22 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 				),
 			),
 			array(
+				'title'    => __( 'WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'Show barcode image in PDF documents of the %s plugin.', 'ean-for-woocommerce' ),
+					'<a target="_blank" href="' . 'https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/' . '">' .
+						__( 'WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels', 'ean-for-woocommerce' ) . '</a>' ),
+				'id'       => "alg_wc_ean_wt_pklist_barcode{$this->dim_suffix}",
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_wt_pklist_barcode_template{$this->dim_suffix}",
+				'default'  => "<p>[alg_wc_ean_barcode{$this->dim_suffix}]</p>",
+				'type'     => 'textarea',
+			),
+			array(
 				'title'    => __( 'Dokan', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'This will show barcode in vendor product form of the %s plugin.', 'ean-for-woocommerce' ),
@@ -275,6 +290,8 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Barcode type', 'ean-for-woocommerce' ),
+				'desc'     => ( '2d' === $this->dim ? '' : sprintf( __( 'If set to "Automatic", will use the barcode type based on EAN type, i.e. %s for EAN-8, %s for UPC-A, %s for EAN-13, ISBN-13 and JAN, and %s for all other types.', 'ean-for-woocommerce' ),
+					'<code>EAN-8</code>', '<code>UPC-A</code>', '<code>EAN-13</code>', '<code>CODE 128</code>' ) ),
 				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_barcode_type",
 				'default'  => ( '2d' === $this->dim ? 'QRCODE,L' : 'AUTO' ),
 				'type'     => 'select',

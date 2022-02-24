@@ -1,9 +1,9 @@
 === EAN for WooCommerce ===
 Contributors: wpcodefactory, algoritmika, anbinder
-Tags: woocommerce, ean, barcode, gtin, woo commerce
+Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.4.0
+Stable tag: 3.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,6 +79,21 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.5.0 - 24/02/2022 =
+* Dev - Compatibility - "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" plugin compatibility added. Includes barcodes.
+* Dev - Shortcodes - `[alg_wc_ean]` - `on_empty` attribute added.
+* Dev - Shortcodes - `[alg_wc_ean_product_attr]` - `product_id`, `before`, `after`, `parent` attributes added. Shortcode moved to the free plugin version.
+* Dev - Shortcodes - `[alg_wc_ean_product_image]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_product_name]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_product_sku]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_product_price]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_product_id]` shortcode added.
+* Dev - Barcodes - Shortcodes - `color` attribute added to `[alg_wc_ean_barcode]`, `[alg_wc_ean_barcode_2d]`, `[alg_wc_ean_barcode_base64]` and `[alg_wc_ean_barcode_2d_base64]` shortcodes (defaults to `#000000`).
+* Dev - Print - "Cell border" option added (defaults to "No").
+* Dev - Print - Placeholders are deprecated now (shortcodes should be used instead). Default value and admin settings description updated for the "Template" option. Now "Barcode Options", "2D Barcode Options" and "Product Image Options" admin settings subsections are visible only if there is corresponding placeholder in the "Template".
+* Dev - Admin settings descriptions updated.
+* Dev - Code refactoring.
 
 = 3.4.0 - 23/02/2022 =
 * Dev - General - Product structured data - "Automatic key" options added.
