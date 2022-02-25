@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 3.5.0
+ * @version 3.5.1
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.1
 	 * @since   2.2.9
 	 */
 	function get_settings() {
@@ -81,10 +81,54 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_wt_pklist_template',
+				'desc'     => __( 'Content', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wt_pklist_options[content]',
 				'default'  => '<p>EAN: [alg_wc_ean]</p>',
 				'type'     => 'textarea',
+			),
+			array(
+				'desc'     => __( 'Position', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wt_pklist_options[position]',
+				'default'  => 'after_product_meta',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'before_product_name' => __( 'Before item name', 'ean-for-woocommerce' ),
+					'after_product_name'  => __( 'After item name', 'ean-for-woocommerce' ),
+					'before_product_meta' => __( 'Before item meta', 'ean-for-woocommerce' ),
+					'after_product_meta'  => __( 'After item meta', 'ean-for-woocommerce' ),
+					'column'              => __( 'As a separate column', 'ean-for-woocommerce' ),
+				),
+			),
+			array(
+				'desc'     => __( 'Documents', 'ean-for-woocommerce' ) . '<br>' .
+					sprintf( __( 'Can be a comma-separated list, e.g.: %s.', 'ean-for-woocommerce' ),
+						'<code>' . implode( ',', array( 'invoice', 'packinglist', 'deliverynote', 'dispatchlabel' ) ) . '</code>' ),
+				'desc_tip' => __( 'Leave empty to include in all documents.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wt_pklist_options[documents]',
+				'default'  => '',
+				'type'     => 'text',
+			),
+			array(
+				'desc'     => __( 'Column title', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Used only if the "Position" option is set to the "As a separate column".', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wt_pklist_options[column_title]',
+				'default'  => __( 'EAN', 'ean-for-woocommerce' ),
+				'type'     => 'text',
+			),
+			array(
+				'desc'     => sprintf( __( 'Column HTML %s', 'ean-for-woocommerce' ), '<code>class</code>' ),
+				'desc_tip' => __( 'Used only if the "Position" option is set to the "As a separate column".', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wt_pklist_options[column_class]',
+				'default'  => 'wfte_product_table_head_ean wfte_text_center',
+				'type'     => 'text',
+			),
+			array(
+				'desc'     => sprintf( __( 'Column HTML %s', 'ean-for-woocommerce' ), '<code>style</code>' ),
+				'desc_tip' => __( 'Used only if the "Position" option is set to the "As a separate column".', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wt_pklist_options[column_style]',
+				'default'  => '',
+				'type'     => 'text',
 			),
 			array(
 				'title'    => __( 'Dokan', 'ean-for-woocommerce' ),

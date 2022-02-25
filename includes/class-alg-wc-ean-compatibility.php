@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 3.5.0
+ * @version 3.5.1
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.1
 	 * @since   2.2.0
 	 *
 	 * @todo    [now] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
@@ -51,25 +51,99 @@ class Alg_WC_EAN_Compatibility {
 		}
 		// "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_wt_pklist', 'no' ) ) {
-			add_filter( 'wf_pklist_alter_product_name', array( $this, 'add_to_wt_pklist_ean' ), 10, 5 );
+			// Options
+			$this->wt_pklist_options = array_replace(
+				array(
+					'content'      => '<p>EAN: [alg_wc_ean]</p>',
+					'position'     => 'after_product_meta',
+					'documents'    => '',
+					'column_title' => __( 'EAN', 'ean-for-woocommerce' ),
+					'column_class' => 'wfte_product_table_head_ean wfte_text_center',
+					'column_style' => '',
+				),
+				get_option( 'alg_wc_ean_wt_pklist_options', array() )
+			);
+			// Hooks
+			switch ( $this->wt_pklist_options['position'] ) {
+				case 'column':
+					add_filter( 'wf_pklist_package_product_table_additional_column_val', array( $this, 'add_to_wt_pklist_column_ean' ), 10, 6 );
+					add_filter( 'wf_pklist_product_table_additional_column_val',         array( $this, 'add_to_wt_pklist_column_ean' ), 10, 6 );
+					add_filter( 'wf_pklist_alter_product_table_head',                    array( $this, 'add_to_wt_pklist_column_head_ean' ), 10, 3 );
+					break;
+				case 'before_product_meta':
+				case 'after_product_meta':
+					add_filter( 'wf_pklist_add_product_meta',                            array( $this, 'add_to_wt_pklist_ean' ), 10, 5 );
+					add_filter( 'wf_pklist_add_package_product_meta',                    array( $this, 'add_to_wt_pklist_ean' ), 10, 5 );
+					break;
+				default: // 'after_product_name', 'before_product_name'
+					add_filter( 'wf_pklist_alter_product_name',                          array( $this, 'add_to_wt_pklist_ean' ), 10, 5 );
+					add_filter( 'wf_pklist_alter_package_product_name',                  array( $this, 'add_to_wt_pklist_ean' ), 10, 5 );
+			}
 		}
 		// "WooCommerce Google Product Feed"
 		add_filter( 'woocommerce_gpf_custom_field_list', array( $this, 'add_to_woocommerce_gpf_custom_field_list' ), PHP_INT_MAX );
 	}
 
 	/**
+	 * wt_pklist_check_template_type.
+	 *
+	 * @version 3.5.1
+	 * @since   3.5.1
+	 */
+	function wt_pklist_check_template_type( $template_type ) {
+		if ( ! empty( $this->wt_pklist_options['documents'] ) ) {
+			if ( ! is_array( $this->wt_pklist_options['documents'] ) ) {
+				$this->wt_pklist_options['documents'] = array_map( 'trim', explode( ',', $this->wt_pklist_options['documents'] ) );
+			}
+			return ( in_array( $template_type, $this->wt_pklist_options['documents'] ) );
+		}
+		return true;
+	}
+
+	/**
+	 * add_to_wt_pklist_column_head_ean.
+	 *
+	 * @version 3.5.1
+	 * @since   3.5.1
+	 */
+	function add_to_wt_pklist_column_head_ean( $columns, $template_type, $order ) {
+		if ( $this->wt_pklist_check_template_type( $template_type ) ) {
+			$columns['ean'] = '<th' .
+					' class="' . $this->wt_pklist_options['column_class'] . '"' .
+					' style="' . $this->wt_pklist_options['column_style'] . '"' .
+					' col-type="' . sanitize_key( $this->wt_pklist_options['column_title'] ) . '"' .
+				'>' . $this->wt_pklist_options['column_title'] . '</th>';
+		}
+		return $columns;
+	}
+
+	/**
+	 * add_to_wt_pklist_column_ean.
+	 *
+	 * @version 3.5.1
+	 * @since   3.5.1
+	 */
+	function add_to_wt_pklist_column_ean( $value, $template_type, $column_key, $product, $order_item, $order ) {
+		if ( 'ean' === $column_key ) {
+			$value = $this->add_to_wt_pklist_ean( $value, $template_type, $product, $order_item, $order );
+		}
+		return $value;
+	}
+
+	/**
 	 * add_to_wt_pklist_ean.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.1
 	 * @since   3.5.0
 	 *
 	 * @see     https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/
-	 *
-	 * @todo    [now] (feature) more positions, e.g. as a separate column
 	 */
-	function add_to_wt_pklist_ean( $order_item_name, $template_type, $product, $order_item, $order ) {
-		$template = get_option( 'alg_wc_ean_wt_pklist_template', '<p>EAN: [alg_wc_ean]</p>' );
-		return $order_item_name . alg_wc_ean()->core->shortcodes->do_shortcode( $template, array( 'product_id' => $product->get_id() ) );
+	function add_to_wt_pklist_ean( $value, $template_type, $product, $order_item, $order ) {
+		if ( $this->wt_pklist_check_template_type( $template_type ) ) {
+			$result = alg_wc_ean()->core->shortcodes->do_shortcode( $this->wt_pklist_options['content'], array( 'product_id' => $product->get_id() ) );
+			$value  = ( in_array( $this->wt_pklist_options['position'], array( 'after_product_meta', 'after_product_name' ) ) ? $value . $result : $result . $value );
+		}
+		return $value;
 	}
 
 	/**

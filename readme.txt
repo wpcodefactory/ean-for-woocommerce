@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,6 +79,9 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.5.1 - 24/02/2022 =
+* Dev - Compatibility - "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" - "Position" option added (defaults to "After item meta" (was "After item name")). Available positions: "Before item name", "After item name", "After item meta", "Before item meta" and "As a separate column". "Documents" option added (defaults to all documents (was "Invoice" and "Dispatch label" only)). "Column title", "Column HTML class" and "Column HTML style" options added. Includes barcodes.
 
 = 3.5.0 - 24/02/2022 =
 * Dev - Compatibility - "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" plugin compatibility added. Includes barcodes.
