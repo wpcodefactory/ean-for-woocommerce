@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes Section Settings
  *
- * @version 3.5.1
+ * @version 3.6.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,21 +17,21 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.1.0
+	 * @version 3.6.0
 	 * @since   2.0.0
 	 */
-	function __construct( $dim, $id, $desc ) {
+	function __construct( $dim ) {
 		$this->dim        = $dim;
-		$this->dim_suffix = ( '1d' === $this->dim ? '' : '_2d' );
-		$this->id         = $id;
-		$this->desc       = $desc;
+		$this->dim_suffix = ( '1d' === $this->dim ? ''                                      : '_2d' );
+		$this->id         = ( '1d' === $this->dim ? 'barcodes'                              : 'barcodes_2d' );
+		$this->desc       = ( '1d' === $this->dim ? __( 'Barcodes', 'ean-for-woocommerce' ) : __( '2D Barcodes', 'ean-for-woocommerce' ) );
 		parent::__construct();
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.5.1
+	 * @version 3.6.0
 	 * @since   2.0.0
 	 *
 	 * @todo    [next] (desc) Enable section: better desc
@@ -88,21 +88,6 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 				'css'      => 'width:100%;',
 			),
 			array(
-				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Show barcode image on admin order edit page.', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_order_barcode{$this->dim_suffix}",
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_order_template_barcode{$this->dim_suffix}",
-				'default'  => "<p>[alg_wc_ean_barcode{$this->dim_suffix}]</p>",
-				'type'     => 'textarea',
-				'css'      => 'width:100%;',
-			),
-			array(
 				'title'    => __( 'Single product page', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'Show barcode image on single product page on frontend.', 'ean-for-woocommerce' ),
@@ -138,6 +123,30 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
+				'type'     => 'sectionend',
+				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_options",
+			),
+			array(
+				'title'    => __( 'Orders & Emails', 'ean-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_orders_options",
+			),
+			array(
+				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Show barcode image on admin order edit page.', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_order_barcode{$this->dim_suffix}",
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_order_template_barcode{$this->dim_suffix}",
+				'default'  => "<p>[alg_wc_ean_barcode{$this->dim_suffix}]</p>",
+				'type'     => 'textarea',
+				'css'      => 'width:100%;',
+			),
+			array(
 				'title'    => __( 'Order items table', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Pages', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'Show barcode image in order items table on <strong>pages</strong>.', 'ean-for-woocommerce' ) . ' ' .
@@ -169,7 +178,7 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'type'     => 'sectionend',
-				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_options",
+				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_orders_options",
 			),
 			array(
 				'title'    => __( 'REST API', 'ean-for-woocommerce' ),

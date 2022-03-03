@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 3.5.0
+ * @version 3.6.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,18 +17,18 @@ class Alg_WC_EAN_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 3.6.0
 	 * @since   1.0.0
 	 *
 	 * @todo    [now] [!] (dev) wpml-config.xml?
 	 * @todo    [now] [!] (dev) `alg_wc_ean_meta_key`: search for `alg_ean`
 	 * @todo    [next] (dev) WPML/Polylang (use default language product ID)
-	 * @todo    [later] (dev) check for duplicated EAN
 	 */
 	function __construct() {
 		$this->ean_key = get_option( 'alg_wc_ean_meta_key', '_alg_ean' );
 		if ( 'yes' === get_option( 'alg_wc_ean_plugin_enabled', 'yes' ) ) {
 			$this->edit          = require_once( 'class-alg-wc-ean-edit.php' );
+			$this->admin         = require_once( 'class-alg-wc-ean-admin.php' );
 			$this->search        = require_once( 'class-alg-wc-ean-search.php' );
 			$this->display       = require_once( 'class-alg-wc-ean-display.php' );
 			$this->import_export = require_once( 'class-alg-wc-ean-export-import.php' );
@@ -194,6 +194,24 @@ class Alg_WC_EAN_Core {
 				$result = ( 0 != strlen( $value ) );
 		}
 		return apply_filters( 'alg_wc_ean_is_valid', $result, $value, $type );
+	}
+
+	/**
+	 * do_ean_exist.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function do_ean_exist( $ean, $not_product_id = false ) {
+		$args = array(
+			'meta_key'     => $this->ean_key,
+			'meta_value'   => $ean,
+			'post_type'    => array( 'product', 'product_variation' ),
+			'post__not_in' => ( $not_product_id ? array( $not_product_id ) : array() ),
+			'fields'       => 'ids',
+		);
+		$query = new WP_Query( $args );
+		return $query->have_posts();
 	}
 
 	/**

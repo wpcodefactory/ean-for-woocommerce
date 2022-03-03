@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.5.1
+Stable tag: 3.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -47,6 +47,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 * [WCFM](https://wordpress.org/plugins/wc-frontend-manager/) and [WCFM Marketplace](https://wordpress.org/plugins/wc-multivendor-marketplace/) plugins.
 * [Print Invoice & Delivery Notes for WooCommerce](https://wordpress.org/plugins/woocommerce-delivery-notes/) plugin.
 * [WooCommerce PDF Invoices & Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/) plugin.
+* [WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels](https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/) plugin.
 * [WooCommerce Google Product Feed](https://woocommerce.com/products/google-product-feed/) plugin.
 * And more...
 
@@ -80,8 +81,24 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 
 == Changelog ==
 
-= 3.5.1 - 24/02/2022 =
-* Dev - Compatibility - "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" - "Position" option added (defaults to "After item meta" (was "After item name")). Available positions: "Before item name", "After item name", "After item meta", "Before item meta" and "As a separate column". "Documents" option added (defaults to all documents (was "Invoice" and "Dispatch label" only)). "Column title", "Column HTML class" and "Column HTML style" options added. Includes barcodes.
+= 3.6.0 - 03/03/2022 =
+* Dev - General - Admin product edit page - "Check if valid" option added (defaults to `yes`).
+* Dev - General - Admin product edit page - "Check if unique" option added (defaults to `no`).
+* Dev - General - "Admin product duplicate" option added (defaults to `yes`).
+* Dev - Shortcodes - `[alg_wc_ean_product_meta]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_product_function]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean]` - `children` attribute (defaults to `no`) and `glue` attribute (defaults to `, `) added.
+* Dev - Developers - `alg_wc_ean_edit` filter added.
+* Dev - Print - "Style" option added.
+* Dev - Barcodes - Shortcodes - `on_empty` attribute added to `[alg_wc_ean_barcode]`, `[alg_wc_ean_barcode_2d]`, `[alg_wc_ean_barcode_base64]` and `[alg_wc_ean_barcode_2d_base64]` shortcodes.
+* Dev - Admin settings rearranged ("Orders & Emails" subsections added (includes barcodes)).
+* Dev - Code refactoring.
+
+= 3.5.1 - 25/02/2022 =
+* Dev - Compatibility - "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" (includes barcodes):
+    * "Position" option added (defaults to "After item meta" (was "After item name")). Available positions: "Before item name", "After item name", "After item meta", "Before item meta" and "As a separate column".
+    * "Documents" option added (defaults to all documents (was "Invoice" and "Dispatch label" only)).
+    * "Column title", "Column HTML class" and "Column HTML style" options added.
 
 = 3.5.0 - 24/02/2022 =
 * Dev - Compatibility - "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" plugin compatibility added. Includes barcodes.

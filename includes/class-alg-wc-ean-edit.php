@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 3.3.0
+ * @version 3.6.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,11 +17,11 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.0.0
+	 * @version 3.6.0
 	 * @since   2.0.0
 	 */
 	function __construct() {
-		if ( is_admin() ) {
+		if ( is_admin() && apply_filters( 'alg_wc_ean_edit', true ) ) {
 			// Admin product edit page
 			add_action( get_option( 'alg_wc_ean_backend_position', 'woocommerce_product_options_sku' ), array( $this, 'add_ean_input' ) );
 			add_action( 'save_post_product',                                                            array( $this, 'save_ean_input' ), 10, 2 );
@@ -83,13 +83,22 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * get_ean_input_desc.
 	 *
-	 * @version 2.4.0
+	 * @version 3.6.0
 	 * @since   1.0.1
 	 */
 	function get_ean_input_desc( $ean, $product_id = false ) {
-		return ( alg_wc_ean()->core->is_valid_ean( $ean, $product_id ) ?
-			'<span style="color:green;">' . esc_html__( 'Valid EAN', 'ean-for-woocommerce' )   . '</span>' :
-			'<span style="color:red;">'   . esc_html__( 'Invalid EAN', 'ean-for-woocommerce' ) . '</span>' );
+		$desc = array();
+		if ( 'yes' === get_option( 'alg_wc_ean_backend_is_valid', 'yes' ) ) {
+			$desc[] = ( alg_wc_ean()->core->is_valid_ean( $ean, $product_id ) ?
+				'<span style="color:green;">' . esc_html__( 'Valid EAN', 'ean-for-woocommerce' )   . '</span>' :
+				'<span style="color:red;">'   . esc_html__( 'Invalid EAN', 'ean-for-woocommerce' ) . '</span>' );
+		}
+		if ( 'yes' === get_option( 'alg_wc_ean_backend_is_unique', 'no' ) ) {
+			$desc[] = ( ! alg_wc_ean()->core->do_ean_exist( $ean, $product_id ) ?
+				'<span style="color:green;">' . esc_html__( 'Unique EAN', 'ean-for-woocommerce' )     . '</span>' :
+				'<span style="color:red;">'   . esc_html__( 'Duplicated EAN', 'ean-for-woocommerce' ) . '</span>' );
+		}
+		return implode( ' | ', $desc );
 	}
 
 	/**

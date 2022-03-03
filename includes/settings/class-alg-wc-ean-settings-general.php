@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 3.5.0
+ * @version 3.6.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,7 +87,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.5.0
+	 * @version 3.6.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -189,6 +189,22 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				),
 			),
 			array(
+				'desc'     => __( 'Check if valid', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This will check if product EAN is valid.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_backend_is_valid',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'start',
+			),
+			array(
+				'desc'     => __( 'Check if unique', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This will check if product EAN is unique in your shop.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_backend_is_unique',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'end',
+			),
+			array(
 				'title'    => __( 'Admin search', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'This will enable searching by EAN in admin area.', 'ean-for-woocommerce' ),
@@ -226,21 +242,12 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'checkboxgroup' => 'end',
 			),
 			array(
-				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
+				'title'    => __( 'Admin product duplicate', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Add EAN to new order items meta.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_order_items_meta',
-				'default'  => 'no',
+				'desc_tip' => __( 'This will copy EAN on admin "Duplicate" product action.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_duplicate_product',
+				'default'  => 'yes',
 				'type'     => 'checkbox',
-				'checkboxgroup' => 'start',
-			),
-			array(
-				'desc'     => __( 'Admin order', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Add EAN to new order items meta for orders created by admin.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_order_items_meta_admin',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-				'checkboxgroup' => 'end',
 			),
 			array(
 				'title'    => __( 'Single product page', 'ean-for-woocommerce' ),
@@ -350,6 +357,32 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'text',
 			),
 			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_ean_plugin_options',
+			),
+			array(
+				'title'    => __( 'Orders & Emails', 'ean-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_ean_orders_options',
+			),
+			array(
+				'title'    => __( 'Orders', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Add EAN to new order items meta.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_order_items_meta',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'start',
+			),
+			array(
+				'desc'     => __( 'Admin order', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Add EAN to new order items meta for orders created by admin.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_order_items_meta_admin',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'end',
+			),
+			array(
 				'title'    => __( 'Order items table', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Pages', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'This will show EAN in order items table on <strong>pages</strong>.', 'ean-for-woocommerce' ) . ' ' .
@@ -395,7 +428,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'alg_wc_ean_plugin_options',
+				'id'       => 'alg_wc_ean_orders_options',
 			),
 			array(
 				'title'    => __( 'REST API', 'ean-for-woocommerce' ),

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 3.5.0
+ * @version 3.6.0
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 3.6.0
 	 * @since   3.5.0
 	 *
 	 * @todo    [maybe] (feature) add `[alg_wc_ean_type]` shortcode?
@@ -25,13 +25,15 @@ class Alg_WC_EAN_Shortcodes {
 	function __construct() {
 		$this->data = array();
 		// Shortcodes
-		add_shortcode( 'alg_wc_ean',               array( $this, 'ean_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_attr',  array( $this, 'product_attr_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_image', array( $this, 'product_image_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_name',  array( $this, 'product_name_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_sku',   array( $this, 'product_sku_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_price', array( $this, 'product_price_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_id',    array( $this, 'product_id_shortcode' ) );
+		add_shortcode( 'alg_wc_ean',                  array( $this, 'ean_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_attr',     array( $this, 'product_attr_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_image',    array( $this, 'product_image_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_name',     array( $this, 'product_name_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_sku',      array( $this, 'product_sku_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_price',    array( $this, 'product_price_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_id',       array( $this, 'product_id_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_meta',     array( $this, 'product_meta_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_function', array( $this, 'product_function_shortcode' ) );
 	}
 
 	/**
@@ -71,6 +73,96 @@ class Alg_WC_EAN_Shortcodes {
 	 */
 	function get_shortcode_att( $att, $atts, $default = '' ) {
 		return ( ! empty( $atts[ $att ] ) ? $atts[ $att ] : ( ! empty( $this->data[ $att ] ) ? $this->data[ $att ] : $default ) );
+	}
+
+	/**
+	 * get_products.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function get_products( $atts, $default = false ) {
+		$product_id  = $this->get_shortcode_att( 'product_id', $atts, $default );
+		$product_ids = array( $product_id );
+		if ( filter_var( $atts['children'], FILTER_VALIDATE_BOOLEAN ) && ( $product = wc_get_product( $product_id ) ) ) {
+			$product_ids = array_merge( $product_ids, $product->get_children() );
+		}
+		return $product_ids;
+	}
+
+	/**
+	 * product_function_shortcode.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function product_function_shortcode( $atts, $content = '' ) {
+
+		// Atts
+		$default_atts = array(
+			'product_id' => false,
+			'before'     => '',
+			'after'      => '',
+			'on_empty'   => '',
+			'parent'     => 'no',
+			'name'       => '',
+		);
+		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean_product_function' );
+
+		// Check the required atts
+		if ( '' === $atts['name'] || ! ( $product_id = $this->get_shortcode_att( 'product_id', $atts, get_the_ID() ) ) ) {
+			return '';
+		}
+
+		// Product ID
+		if ( 'yes' === $atts['parent'] && 0 != ( $product_parent_id = wp_get_post_parent_id ( $product_id ) ) ) {
+			$product_id = $product_parent_id;
+		}
+
+		// Check if function exists
+		if ( ! ( $product = wc_get_product( $product_id ) ) || ! is_callable( array( $product, $atts['name'] ) ) ) {
+			return '';
+		}
+
+		// Result
+		$result = $product->{$atts['name']}();
+
+		return $this->output( $result, $atts );
+	}
+
+	/**
+	 * product_meta_shortcode.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function product_meta_shortcode( $atts, $content = '' ) {
+
+		// Atts
+		$default_atts = array(
+			'product_id' => false,
+			'before'     => '',
+			'after'      => '',
+			'on_empty'   => '',
+			'parent'     => 'no',
+			'key'        => '',
+		);
+		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean_product_meta' );
+
+		// Check the required atts
+		if ( '' === $atts['key'] || ! ( $product_id = $this->get_shortcode_att( 'product_id', $atts, get_the_ID() ) ) ) {
+			return '';
+		}
+
+		// Product ID
+		if ( 'yes' === $atts['parent'] && 0 != ( $product_parent_id = wp_get_post_parent_id ( $product_id ) ) ) {
+			$product_id = $product_parent_id;
+		}
+
+		// Result
+		$result = get_post_meta( $product_id, $atts['key'], true );
+
+		return $this->output( $result, $atts );
 	}
 
 	/**
@@ -302,12 +394,12 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * ean_shortcode.
 	 *
-	 * @version 3.5.0
+	 * @version 3.6.0
 	 * @since   1.5.1
 	 *
 	 * @todo    [now] [!!] (feature) `parent`? (same for barcodes)
-	 * @todo    [now] [!!] (dev) variable: implode variations' EANs?
 	 * @todo    [maybe] (dev) check if valid?
+	 * @todo    [maybe] (feature) add `children` attribute to all shortcodes, e.g. `product_attr_shortcode()`
 	 */
 	function ean_shortcode( $atts, $content = '' ) {
 
@@ -317,11 +409,20 @@ class Alg_WC_EAN_Shortcodes {
 			'before'     => '',
 			'after'      => '',
 			'on_empty'   => '',
+			'children'   => 'no',
+			'glue'       => ', ', // for `children = yes`
 		);
 		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean' );
 
+		// Products
+		$product_ids = $this->get_products( $atts );
+
 		// Result
-		$result = alg_wc_ean()->core->get_ean( $this->get_shortcode_att( 'product_id', $atts, false ) );
+		$result = array();
+		foreach ( $product_ids as $product_id ) {
+			$result[] = alg_wc_ean()->core->get_ean( $product_id );
+		}
+		$result = implode( $atts['glue'], $result );
 
 		return $this->output( $result, $atts );
 	}
