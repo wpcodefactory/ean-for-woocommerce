@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Class
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -20,6 +20,8 @@ class Alg_WC_EAN_Tools {
 	 * @version 3.7.0
 	 * @since   2.1.0
 	 *
+	 * @todo    [now] [!!!] (feature) copy from attribute
+	 * @todo    [now] [!!!] (feature) copy to attribute
 	 * @todo    [now] [!] (dev) Export/Import Settings: move to a separate class/file?
 	 * @todo    [maybe] (feature) Automatic actions: `updated_postmeta`?
 	 * @todo    [maybe] (dev) Automatic actions: `woocommerce_after_product_object_save`?
@@ -389,7 +391,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 3.0.0
+	 * @version 3.7.1
 	 * @since   2.2.8
 	 *
 	 * @todo    [now] [!] (dev) merge with `products_create()`?
@@ -416,9 +418,12 @@ class Alg_WC_EAN_Tools {
 					$ean = $post_id;
 					break;
 				case 'copy_meta':
-					$data = array_replace( array( 'key' => '' ), get_option( 'alg_wc_ean_tool_product_copy_meta', array() ) );
+					$data = array_replace( array( 'key' => '', 'sub_key' => '' ), get_option( 'alg_wc_ean_tool_product_copy_meta', array() ) );
 					if ( '' !== $data['key'] ) {
 						$ean = get_post_meta( $post_id, $data['key'], true );
+						if ( '' !== $data['sub_key'] ) {
+							$ean = ( isset( $ean[ $data['sub_key'] ] ) ? $ean[ $data['sub_key'] ] : '' );
+						}
 					}
 					break;
 				case 'assign_list':
@@ -443,7 +448,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 3.7.0
+	 * @version 3.7.1
 	 * @since   2.9.0
 	 *
 	 * @todo    [now] (dev) `array_shift()` vs `array_reverse()` + `array_pop()`?
@@ -455,7 +460,7 @@ class Alg_WC_EAN_Tools {
 				$data = $this->get_generate_data();
 				break;
 			case 'copy_meta':
-				$data = array_replace( array( 'key' => '' ), get_option( 'alg_wc_ean_tool_product_copy_meta', array() ) );
+				$data = array_replace( array( 'key' => '', 'sub_key' => '' ), get_option( 'alg_wc_ean_tool_product_copy_meta', array() ) );
 				if ( '' === $data['key'] ) {
 					return array( 'result' => false, 'message' => __( 'Please set the "Meta key" option.', 'ean-for-woocommerce' ) );
 				}
@@ -497,6 +502,9 @@ class Alg_WC_EAN_Tools {
 					break;
 				case 'copy_meta':
 					$ean = get_post_meta( $product_id, $data['key'], true );
+					if ( '' !== $data['sub_key'] ) {
+						$ean = ( isset( $ean[ $data['sub_key'] ] ) ? $ean[ $data['sub_key'] ] : '' );
+					}
 					break;
 				case 'assign_list':
 					$ean = array_shift( $data );

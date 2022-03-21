@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -72,7 +72,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.7.0
+	 * @version 3.7.1
 	 * @since   2.2.5
 	 *
 	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
@@ -189,6 +189,13 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'desc'     => sprintf( __( 'Meta key, e.g. %s', 'ean-for-woocommerce' ), '<code>_gtin</code>' ),
 				'desc_tip' => __( 'Product meta key to copy from.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_copy_meta[key]',
+				'default'  => '',
+				'type'     => 'text',
+			),
+			array(
+				'desc'     => __( 'Meta sub key', 'ean-for-woocommerce' ) . ' (' . __( 'optional', 'ean-for-woocommerce' ) . ')',
+				'desc_tip' => __( 'Optional sub key. This is used when meta was saved in an array.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_copy_meta[sub_key]',
 				'default'  => '',
 				'type'     => 'text',
 			),

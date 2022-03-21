@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.7.0
+Stable tag: 3.7.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -81,6 +81,9 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.7.1 - 21/03/2022 =
+* Dev - Tools - Product Tools - Copy product meta - "Meta sub key (optional)" option added.
 
 = 3.7.0 - 21/03/2022 =
 * Dev - Single product page - Positions - "Product additional information tab" position added.
