@@ -34,6 +34,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
 	 *
+	 * @todo    [now] [!!] (feature) predefined templates, e.g. with `<table>`
 	 * @todo    [next] (feature) Cell border: add customization options
 	 * @todo    [now] [!] (desc) "Deprecated placeholders" desc tip: remove?
 	 * @todo    [now] [!!] (feature) `wpautop()`?

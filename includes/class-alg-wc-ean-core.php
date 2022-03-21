@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 3.6.0
+ * @version 3.7.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.7.0
 	 * @since   1.0.0
 	 *
 	 * @todo    [now] [!] (dev) wpml-config.xml?
@@ -27,15 +27,17 @@ class Alg_WC_EAN_Core {
 	function __construct() {
 		$this->ean_key = get_option( 'alg_wc_ean_meta_key', '_alg_ean' );
 		if ( 'yes' === get_option( 'alg_wc_ean_plugin_enabled', 'yes' ) ) {
-			$this->edit          = require_once( 'class-alg-wc-ean-edit.php' );
-			$this->admin         = require_once( 'class-alg-wc-ean-admin.php' );
-			$this->search        = require_once( 'class-alg-wc-ean-search.php' );
-			$this->display       = require_once( 'class-alg-wc-ean-display.php' );
-			$this->import_export = require_once( 'class-alg-wc-ean-export-import.php' );
-			$this->orders        = require_once( 'class-alg-wc-ean-orders.php' );
-			$this->tools         = require_once( 'class-alg-wc-ean-tools.php' );
-			$this->compatibility = require_once( 'class-alg-wc-ean-compatibility.php' );
-			$this->shortcodes    = require_once( 'class-alg-wc-ean-shortcodes.php' );
+			$this->edit              = require_once( 'class-alg-wc-ean-edit.php' );
+			$this->admin             = require_once( 'class-alg-wc-ean-admin.php' );
+			$this->search            = require_once( 'class-alg-wc-ean-search.php' );
+			$this->display           = require_once( 'class-alg-wc-ean-display.php' );
+			$this->order_items_table = require_once( 'class-alg-wc-ean-order-items-table.php' );
+			$this->import_export     = require_once( 'class-alg-wc-ean-export-import.php' );
+			$this->orders            = require_once( 'class-alg-wc-ean-orders.php' );
+			$this->rest_api          = require_once( 'class-alg-wc-ean-rest-api.php' );
+			$this->tools             = require_once( 'class-alg-wc-ean-tools.php' );
+			$this->compatibility     = require_once( 'class-alg-wc-ean-compatibility.php' );
+			$this->shortcodes        = require_once( 'class-alg-wc-ean-shortcodes.php' );
 		}
 		// Core loaded
 		do_action( 'alg_wc_ean_core_loaded', $this );

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Orders Class
  *
- * @version 3.2.0
+ * @version 3.7.0
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -17,13 +17,13 @@ class Alg_WC_EAN_Orders {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.7.0
 	 * @since   2.1.0
 	 *
 	 * @todo    [next] (feature) option to add it to `woocommerce_hidden_order_itemmeta`
 	 */
 	function __construct() {
-		// Orders
+		// Orders items meta
 		if ( 'yes' === get_option( 'alg_wc_ean_order_items_meta', 'no' ) ) {
 			add_action( 'woocommerce_checkout_order_processed', array( $this, 'add_ean_to_order_items_meta' ), PHP_INT_MAX, 1 );
 		}
@@ -31,38 +31,6 @@ class Alg_WC_EAN_Orders {
 		if ( 'yes' === get_option( 'alg_wc_ean_order_items_meta_admin', 'no' ) ) {
 			add_action( 'woocommerce_new_order_item', array( $this, 'new_order_item_ajax' ), PHP_INT_MAX, 2 );
 		}
-		// REST API
-		if ( 'yes' === get_option( 'alg_wc_ean_order_items_meta_rest', 'no' ) ) {
-			add_filter( 'woocommerce_rest_prepare_shop_order_object', array( $this, 'rest_order_add_ean' ), PHP_INT_MAX, 3 );
-		}
-	}
-
-	/**
-	 * rest_order_add_ean.
-	 *
-	 * @version 3.2.0
-	 * @since   2.8.0
-	 */
-	function rest_order_add_ean( $response, $order, $request ) {
-		foreach ( $response->data['line_items'] as $item_key => &$item ) {
-			$is_in_meta = false;
-			if ( ! empty( $item['meta_data'] ) ) {
-				foreach ( $item['meta_data'] as $meta_data ) {
-					if ( isset( $meta_data['key'], $meta_data['value'] ) && alg_wc_ean()->core->ean_key === $meta_data['key'] ) {
-						$item['ean'] = $meta_data['value'];
-						$is_in_meta = true;
-						break;
-					}
-				}
-			}
-			if ( ! $is_in_meta && isset( $item['product_id'] ) ) {
-				$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
-				if ( '' !== ( $ean = alg_wc_ean()->core->get_ean( $product_id ) ) ) {
-					$item['ean'] = $ean;
-				}
-			}
-		}
-		return $response;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.5.0
+ * @version 3.7.0
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -72,7 +72,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.5.0
+	 * @version 3.7.0
 	 * @since   2.2.5
 	 *
 	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
@@ -210,6 +210,13 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'options'  => $this->get_terms( 'product_cat', 'alg_wc_ean_tool_product_assign_list_settings' ),
 			),
 			array(
+				'desc'     => __( 'Reuse deleted', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Will add EANs from the deleted products to the "List" option.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_assign_list_settings[reuse_deleted]',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
 				'desc'     => __( 'List', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'EAN list to assign from.', 'ean-for-woocommerce' ) . ' ' .
 					__( 'One EAN per line.', 'ean-for-woocommerce' ) . ' ' .
@@ -223,6 +230,14 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'title'    => __( 'Delete', 'ean-for-woocommerce' ),
 				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Delete all EANs for all products', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_delete_product_meta',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Get stats', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This tool will not assign/delete any EANs, instead it will count how many products in your shop do not have EAN.', 'ean-for-woocommerce' ),
+				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Get stats', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product[get_stats]',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

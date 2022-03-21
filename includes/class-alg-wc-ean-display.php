@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 3.4.0
+ * @version 3.7.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,9 +17,10 @@ class Alg_WC_EAN_Display {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.7.0
 	 * @since   2.0.0
 	 *
+	 * @todo    [now] [!!] (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php`?
 	 * @todo    [next] (dev) remove `! is_admin()` and `is_admin()`?
 	 * @todo    [next] (feature) frontend: customizable position and template for loop, cart, etc. (now implemented for "single product page" only)
 	 * @todo    [later] frontend: order?
@@ -48,6 +49,10 @@ class Alg_WC_EAN_Display {
 			// Product structured data
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_product_structured_data', 'yes' ) ) {
 				add_filter( 'woocommerce_structured_data_product', array( $this, 'add_ean_to_product_structured_data' ), 10, 2 );
+				// "Rank Math SEO" plugin
+				if ( 'yes' === get_option( 'alg_wc_ean_frontend_product_structured_data_rank_math_seo', 'no' ) ) {
+					add_filter( 'rank_math/json_ld', array( $this, 'add_ean_to_product_structured_data_rank_math_seo' ), PHP_INT_MAX, 2 );
+				}
 			}
 		}
 		// Backend
@@ -61,19 +66,34 @@ class Alg_WC_EAN_Display {
 				add_action( 'admin_head',                           array( $this, 'product_columns_style' ) );
 			}
 		}
-		// Order Items Table
+	}
+
+	/**
+	 * add_ean_to_product_structured_data_rank_math_seo.
+	 *
+	 * @version 3.7.0
+	 * @since   3.7.0
+	 *
+	 * @see     https://wordpress.org/plugins/seo-by-rank-math/
+	 *
+	 * @todo    [now] (dev) simplify?
+	 * @todo    [now] (dev) move to the "Compatibility" class (and settings section)?
+	 */
+	function add_ean_to_product_structured_data_rank_math_seo( $data, $json_ld = false ) {
 		if (
-			'yes' === get_option( 'alg_wc_ean_order_items_table', 'no' ) ||
-			'yes' === get_option( 'alg_wc_ean_order_items_table_emails', get_option( 'alg_wc_ean_order_items_table', 'no' ) )
+			! empty( $data['richSnippet']['@type'] ) && 'Product' === $data['richSnippet']['@type'] &&
+			( ! empty( $json_ld->post_id ) || ! empty( $json_ld->post->ID ) )
 		) {
-			add_action( 'woocommerce_order_item_meta_end',      array( $this, 'add_to_order_item_meta_ean' ), 10, 4 );
-			add_action( 'woocommerce_email_before_order_table', array( $this, 'save_email_data' ), 10, 4 );
-			add_action( 'woocommerce_email_after_order_table',  array( $this, 'reset_email_data' ), 10, 0 );
+			$product_id = ( ! empty( $json_ld->post_id ) ? $json_ld->post_id : $json_ld->post->ID );
+			$product    = wc_get_product( $product_id );
+			if ( $product ) {
+				$_data = $this->add_ean_to_product_structured_data( array(), $product );
+				if ( ! empty( $_data ) ) {
+					$data['richSnippet'] = array_merge( $data['richSnippet'], $_data );
+				}
+			}
 		}
-		// REST API
-		if ( 'yes' === get_option( 'alg_wc_ean_product_rest', 'no' ) ) {
-			add_filter( 'woocommerce_rest_prepare_product_object', array( $this, 'rest_product_add_ean' ), PHP_INT_MAX, 3 );
-		}
+		return $data;
 	}
 
 	/**
@@ -91,17 +111,6 @@ class Alg_WC_EAN_Display {
 			width: 10%;
 		}
 		</style><?php
-	}
-
-	/**
-	 * rest_product_add_ean.
-	 *
-	 * @version 2.9.0
-	 * @since   2.9.0
-	 */
-	function rest_product_add_ean( $response, $product, $request ) {
-		$response->data['ean'] = alg_wc_ean()->core->get_ean( $product->get_id() );
-		return $response;
 	}
 
 	/**
@@ -218,10 +227,12 @@ class Alg_WC_EAN_Display {
 	 * @version 3.4.0
 	 * @since   1.0.0
 	 *
-	 * @see     http://schema.org/Product
+	 * @see     https://schema.org/Product
+	 * @see     https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L328
 	 *
-	 * @todo    [next] maybe always use `gtin` (... all-numeric string of either 8, 12, 13 or 14 digits...)
-	 * @todo    [next] `default` (`C128`): maybe no markup then?
+	 * @todo    [now] (dev) what to do if there is no markup data? see: https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L324
+	 * @todo    [next] (dev) maybe always use `gtin` (... all-numeric string of either 8, 12, 13 or 14 digits...)
+	 * @todo    [next] (dev) `default` (`C128`): maybe no markup then?
 	 */
 	function add_ean_to_product_structured_data( $markup, $product ) {
 		if ( '' !== ( $value = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {
@@ -364,68 +375,6 @@ class Alg_WC_EAN_Display {
 			echo '<div><span class="sku_wrapper ean_wrapper">' . esc_html__( 'EAN:', 'ean-for-woocommerce' ) . ' ' .
 				'<span class="ean">' . $ean . '</span>' .
 			'</span></div>';
-		}
-	}
-
-	/**
-	 * save_email_data.
-	 *
-	 * @version 3.1.0
-	 * @since   3.1.0
-	 */
-	function save_email_data( $order, $sent_to_admin, $plain_text, $email ) {
-		$this->order_table_email = $email;
-	}
-
-	/**
-	 * reset_email_data.
-	 *
-	 * @version 3.1.0
-	 * @since   3.1.0
-	 */
-	function reset_email_data() {
-		$this->order_table_email = false;
-	}
-
-	/**
-	 * add_to_order_item_meta_ean.
-	 *
-	 * @version 3.1.0
-	 * @since   1.2.0
-	 */
-	function add_to_order_item_meta_ean( $item_id, $item, $order, $plain_text ) {
-		if ( false !== ( $ean = alg_wc_ean()->core->get_ean_from_order_item( $item ) ) ) {
-			// Do we need to display?
-			$do_display_in_emails = ( 'yes' === get_option( 'alg_wc_ean_order_items_table_emails', get_option( 'alg_wc_ean_order_items_table', 'no' ) ) );
-			$emails               = get_option( 'alg_wc_ean_order_items_table_emails_list', array() );
-			$do_display_on_pages  = ( 'yes' === get_option( 'alg_wc_ean_order_items_table', 'no' ) );
-			if ( $do_display_in_emails && empty( $emails ) && $do_display_on_pages ) {
-				// Display everywhere, no need to check further...
-				$do_display = true;
-			} else {
-				if ( empty( $this->order_table_email ) ) {
-					// "WooCommerce Email Customizer with Drag and Drop Email Builder" plugin by "Flycart Technologies LLP"
-					global $woo_email_arguments;
-					if ( ! empty( $woo_email_arguments['email'] ) ) {
-						$this->order_table_email = $woo_email_arguments['email'];
-					}
-				}
-				if ( ! empty( $this->order_table_email ) ) {
-					// It's an email...
-					$do_display = ( $do_display_in_emails ? ( empty( $emails ) || in_array( $this->order_table_email->id, $emails ) ) : false );
-				} else {
-					// It's a page, e.g. "Thank you"
-					$do_display = $do_display_on_pages;
-				}
-			}
-			// Display
-			if ( $do_display ) {
-				$templates = array_replace( array(
-						'html'       => '<ul class="wc-item-meta"><li><span class="sku_wrapper ean_wrapper">EAN: <span class="ean">%ean%</span></span></li></ul>',
-						'plain_text' => '%new_line%- EAN: %ean%',
-					), get_option( 'alg_wc_ean_order_items_table_templates', array() ) );
-				echo str_replace( array( '%new_line%', '%ean%' ), array( "\n", $ean ), $templates[ ( ! $plain_text ? 'html' : 'plain_text' ) ] );
-			}
 		}
 	}
 

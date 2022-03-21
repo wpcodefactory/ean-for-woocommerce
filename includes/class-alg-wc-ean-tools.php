@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Class
  *
- * @version 3.3.0
+ * @version 3.7.0
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.7.0
 	 * @since   2.1.0
 	 *
 	 * @todo    [now] [!] (dev) Export/Import Settings: move to a separate class/file?
@@ -46,6 +46,28 @@ class Alg_WC_EAN_Tools {
 		// Orders Tools
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'orders_add' ) );
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'orders_delete' ) );
+		// Assign from the list: Reuse deleted
+		add_action( 'before_delete_post', array( $this, 'reuse_deleted' ), 10, 2 );
+	}
+
+	/**
+	 * reuse_deleted.
+	 *
+	 * @version 3.7.0
+	 * @since   3.7.0
+	 *
+	 * @todo    [maybe] (feature) add option to add to the end of the list (i.e. not to the beginning of the list, as it is now)
+	 */
+	function reuse_deleted( $postid, $post ) {
+		$assign_list_settings = get_option( 'alg_wc_ean_tool_product_assign_list_settings', array() );
+		if (
+			! empty( $assign_list_settings['reuse_deleted'] ) && 'yes' === $assign_list_settings['reuse_deleted'] &&
+			in_array( $post->post_type, array( 'product', 'product_variation' ) ) &&
+			'' !== ( $ean = get_post_meta( $postid, alg_wc_ean()->core->ean_key, true ) )
+		) {
+			$data = ( '' !== ( $data = get_option( 'alg_wc_ean_tool_product_assign_list', '' ) ) ? array_map( 'trim', explode( PHP_EOL, $data ) ) : array() );
+			update_option( 'alg_wc_ean_tool_product_assign_list', implode( PHP_EOL, array_merge( array( $ean ), $data ) ) );
+		}
 	}
 
 	/**
@@ -421,7 +443,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 2.9.0
+	 * @version 3.7.0
 	 * @since   2.9.0
 	 *
 	 * @todo    [now] (dev) `array_shift()` vs `array_reverse()` + `array_pop()`?
@@ -448,9 +470,18 @@ class Alg_WC_EAN_Tools {
 				break;
 		}
 		// Product loop
-		$count = 0;
-		foreach ( $this->get_products( $action ) as $product_id ) {
-			if ( '' !== get_post_meta( $product_id, alg_wc_ean()->core->ean_key, true ) ) {
+		$products = $this->get_products( $action );
+		$total    = count( $products );
+		$count    = 0;
+		foreach ( $products as $product_id ) {
+			$current_ean = get_post_meta( $product_id, alg_wc_ean()->core->ean_key, true );
+			if ( 'get_stats' === $action ) {
+				if ( '' === $current_ean ) {
+					$count++;
+				}
+				continue;
+			}
+			if ( '' !== $current_ean ) {
 				continue;
 			}
 			$ean = '';
@@ -483,21 +514,24 @@ class Alg_WC_EAN_Tools {
 		}
 		switch ( $action ) {
 			case 'generate':
-				$message = __( 'EAN generated for %s products.', 'ean-for-woocommerce' );
+				$message = __( 'EAN generated for %s products (%s total products).', 'ean-for-woocommerce' );
 				break;
 			case 'assign_list':
-				$message = __( 'EAN assigned for %s products.', 'ean-for-woocommerce' );
+				$message = __( 'EAN assigned for %s products (%s total products).', 'ean-for-woocommerce' );
+				break;
+			case 'get_stats':
+				$message = __( '%s products without EAN (%s total products).', 'ean-for-woocommerce' );
 				break;
 			default:
-				$message = __( 'EAN copied for %s products.', 'ean-for-woocommerce' );
+				$message = __( 'EAN copied for %s products (%s total products).', 'ean-for-woocommerce' );
 		}
-		return array( 'result' => true, 'message' => sprintf( $message, $count ) );
+		return array( 'result' => true, 'message' => sprintf( $message, $count, $total ) );
 	}
 
 	/**
 	 * products_create.
 	 *
-	 * @version 2.9.0
+	 * @version 3.7.0
 	 * @since   2.1.0
 	 *
 	 * @todo    [now] (dev) message: "success/error" (i.e. check `$response['result']`)
@@ -505,7 +539,7 @@ class Alg_WC_EAN_Tools {
 	 * @todo    [maybe] (dev) better notice(s)?
 	 */
 	function products_create() {
-		$tools = array_replace( array( 'generate' => 'no', 'copy_sku' => 'no', 'copy_id' => 'no', 'copy_meta' => 'no', 'assign_list' => 'no' ),
+		$tools = array_replace( array( 'generate' => 'no', 'copy_sku' => 'no', 'copy_id' => 'no', 'copy_meta' => 'no', 'assign_list' => 'no', 'get_stats' => 'no'  ),
 			get_option( 'alg_wc_ean_tool_product', array() ) );
 		if ( in_array( 'yes', $tools ) ) {
 			delete_option( 'alg_wc_ean_tool_product' );

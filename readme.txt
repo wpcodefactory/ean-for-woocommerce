@@ -3,11 +3,11 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.6.0
+Stable tag: 3.7.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Manage product EAN in WooCommerce. Beautifully.
+Manage product GTIN (EAN, UPC, ISBN, etc.) in WooCommerce. Beautifully.
 
 == Description ==
 
@@ -23,7 +23,7 @@ Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, Custom.
 * Add sortable EAN column to **admin products list**.
 * Optionally **show EAN** on **single product page**, **shop pages** and/or in **cart** on frontend.
 * Add EAN to **product structured data**, e.g. for Google Search Console.
-* Add EAN to **WooCommerce REST API** order and product responses.
+* Add EAN to **WooCommerce REST API** order and product responses; search orders and products by EAN.
 * Show EAN in **order items table**, including emails, "thank you" page, etc.
 * **Export** and **import** EAN.
 * Use product **quick** and **bulk edit** to manage EAN.
@@ -49,6 +49,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 * [WooCommerce PDF Invoices & Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/) plugin.
 * [WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels](https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/) plugin.
 * [WooCommerce Google Product Feed](https://woocommerce.com/products/google-product-feed/) plugin.
+* [Rank Math SEO](https://wordpress.org/plugins/seo-by-rank-math/) plugin.
 * And more...
 
 ### &#127942; Premium Version ###
@@ -80,6 +81,29 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.7.0 - 21/03/2022 =
+* Dev - Single product page - Positions - "Product additional information tab" position added.
+* Dev - Product structured data - "Rank Math SEO" option added (defaults to `no`).
+* Dev - Barcodes - Cart:
+    * Using shortcodes now.
+    * "Cart template" option added.
+* Dev - REST API:
+    * Products - "Search by EAN" option added.
+    * Orders - "Search by EAN" option added.
+    * Admin settings descriptions updated.
+* Dev - Tools:
+    * Product Tools - "Get stats" tool added.
+    * Product Tools - "... total products" message added.
+    * Product Tools - Assign from the list - "Reuse deleted" option added (defaults to `no`).
+* Dev - Shortcodes - Barcodes - `[alg_wc_ean_barcode_2d_base64]` - Default `w` and `h` are set to `2` now (was `3`).
+* Dev - "TCPDF" library updated to v6.4.4.
+* Dev - Code refactoring:
+    * `Alg_WC_EAN_REST_API` class added.
+    * `Alg_WC_EAN_Order_Items_Table` class added.
+    * `Alg_WC_EAN_Order_Items_Table_Barcodes` class added.
+    * `Alg_WC_EAN_Barcodes` class added.
+* WC tested up to: 6.3.
 
 = 3.6.0 - 03/03/2022 =
 * Dev - General - Admin product edit page - "Check if valid" option added (defaults to `yes`).
