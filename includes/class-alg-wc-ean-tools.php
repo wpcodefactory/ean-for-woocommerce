@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Class
  *
- * @version 3.7.1
+ * @version 3.7.2
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -20,8 +20,8 @@ class Alg_WC_EAN_Tools {
 	 * @version 3.7.0
 	 * @since   2.1.0
 	 *
-	 * @todo    [now] [!!!] (feature) copy from attribute
-	 * @todo    [now] [!!!] (feature) copy to attribute
+	 * @todo    [now] [!!] (feature) copy from attribute
+	 * @todo    [now] [!!] (feature) copy to attribute (as a separate tool; not as "Generate" option)?
 	 * @todo    [now] [!] (dev) Export/Import Settings: move to a separate class/file?
 	 * @todo    [maybe] (feature) Automatic actions: `updated_postmeta`?
 	 * @todo    [maybe] (dev) Automatic actions: `woocommerce_after_product_object_save`?
@@ -177,7 +177,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * handle_product_bulk_actions.
 	 *
-	 * @version 2.7.0
+	 * @version 3.7.2
 	 * @since   2.7.0
 	 *
 	 * @todo    [now] [!!] (feature) all other actions, e.g. "Copy EAN from SKU", etc.
@@ -199,6 +199,9 @@ class Alg_WC_EAN_Tools {
 									'' !== ( $ean = $this->generate_ean( $product_id, $data ) ) &&
 									update_post_meta( $product_id, alg_wc_ean()->core->ean_key, $ean )
 								);
+							if ( $result && '' !== $data['product_attribute'] ) {
+								$this->add_product_attribute( $product_id, $ean, $data['product_attribute'] );
+							}
 							break;
 						case 'alg_wc_ean_delete':
 							$result = delete_post_meta( $product_id, alg_wc_ean()->core->ean_key );
@@ -344,6 +347,7 @@ class Alg_WC_EAN_Tools {
 	 * @version 2.1.0
 	 * @since   2.1.0
 	 *
+	 * @todo    [now] [!!] (dev) delete `product_attribute` as well
 	 * @todo    [next] (dev) delete directly with SQL from the `meta` table
 	 * @todo    [maybe] (dev) better notice(s)?
 	 */
@@ -391,7 +395,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 3.7.1
+	 * @version 3.7.2
 	 * @since   2.2.8
 	 *
 	 * @todo    [now] [!] (dev) merge with `products_create()`?
@@ -409,7 +413,8 @@ class Alg_WC_EAN_Tools {
 			$ean = '';
 			switch ( $action ) {
 				case 'generate':
-					$ean = $this->generate_ean( $post_id, $this->get_generate_data() );
+					$data = $this->get_generate_data();
+					$ean  = $this->generate_ean( $post_id, $data );
 					break;
 				case 'copy_sku':
 					$ean = ( ( $product = wc_get_product( $post_id ) ) ? $product->get_sku() : get_post_meta( $post_id, '_sku', true ) );
@@ -437,8 +442,11 @@ class Alg_WC_EAN_Tools {
 			}
 			if ( '' !== $ean ) {
 				update_post_meta( $post_id, alg_wc_ean()->core->ean_key, $ean );
+				if ( 'generate' === $action && '' !== $data['product_attribute'] ) {
+					$this->add_product_attribute( $post_id, $ean, $data['product_attribute'] );
+				}
+				// Prevent the new EAN from being overwritten by the variation's `input` field on the product edit page
 				if ( 'product_variation' === $post->post_type && isset( alg_wc_ean()->core->edit ) ) {
-					// Prevents the new EAN from being overwritten by the variation's `input` field on the product edit page
 					remove_action( 'woocommerce_save_product_variation', array( alg_wc_ean()->core->edit, 'save_ean_input_variation' ), 10 );
 				}
 			}
@@ -448,7 +456,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 3.7.1
+	 * @version 3.7.2
 	 * @since   2.9.0
 	 *
 	 * @todo    [now] (dev) `array_shift()` vs `array_reverse()` + `array_pop()`?
@@ -511,6 +519,9 @@ class Alg_WC_EAN_Tools {
 					break;
 			}
 			if ( '' !== $ean && update_post_meta( $product_id, alg_wc_ean()->core->ean_key, $ean ) ) {
+				if ( 'generate' === $action && '' !== $data['product_attribute'] ) {
+					$this->add_product_attribute( $product_id, $ean, $data['product_attribute'] );
+				}
 				$count++;
 			}
 			if ( 'assign_list' === $action && empty( $data ) ) {
@@ -567,9 +578,34 @@ class Alg_WC_EAN_Tools {
 	}
 
 	/**
+	 * add_product_attribute.
+	 *
+	 * @version 3.7.2
+	 * @since   3.7.2
+	 *
+	 * @todo    [next] (feature) local (i.e. per product; non-taxonomy) product attribute
+	 * @todo    [next] (dev) use `$product->set_attributes()` instead of `update_post_meta( $product_id, '_product_attributes', $product_attributes )`
+	 */
+	function add_product_attribute( $product_id, $ean, $taxonomy ) {
+		wp_set_object_terms( $product_id, $ean, $taxonomy );
+		$product_attributes = get_post_meta( $product_id, '_product_attributes', true );
+		if ( empty( $product_attributes ) ) {
+			$product_attributes = array();
+		}
+		$product_attributes[ $taxonomy ] = array(
+			'name'         => $taxonomy,
+			'value'        => $ean,
+			'is_visible'   => 1,
+			'is_variation' => 0,
+			'is_taxonomy'  => 1,
+		);
+		update_post_meta( $product_id, '_product_attributes', $product_attributes );
+	}
+
+	/**
 	 * get_generate_data.
 	 *
-	 * @version 3.3.0
+	 * @version 3.7.2
 	 * @since   2.2.8
 	 *
 	 * @todo    [now] [!] (dev) `ISBN13`, `JAN`
@@ -579,13 +615,15 @@ class Alg_WC_EAN_Tools {
 	function get_generate_data() {
 		$res = array();
 		$default_data = array(
-			'type'          => 'EAN13',
-			'prefix'        => 200,
-			'prefix_to'     => '',
-			'prefix_length' => 3,
-			'seed_prefix'   => '',
+			'type'              => 'EAN13',
+			'prefix'            => 200,
+			'prefix_to'         => '',
+			'prefix_length'     => 3,
+			'seed_prefix'       => '',
+			'product_attribute' => '',
 		);
 		$data = array_replace( $default_data, get_option( 'alg_wc_ean_tool_product_generate', array() ) );
+
 		// Seed length
 		switch ( $data['type'] ) {
 			case 'EAN8':
@@ -601,10 +639,12 @@ class Alg_WC_EAN_Tools {
 				$res['prefix_length'] = 3;
 		}
 		$res['seed_length'] = ( $length - $res['prefix_length'] - 1 );
+
 		// Seed prefix
 		$seed_prefix         = ( strlen( $data['seed_prefix'] ) > $res['seed_length'] ? substr( $data['seed_prefix'], 0, $res['seed_length'] ) : $data['seed_prefix'] );
 		$res['seed_length'] -= strlen( $seed_prefix );
 		$res['seed_prefix']  = $seed_prefix;
+
 		// Prefix
 		if ( '' === $data['prefix'] ) {
 			$data['prefix'] = 0;
@@ -617,6 +657,10 @@ class Alg_WC_EAN_Tools {
 			) :
 			str_pad( substr( $data['prefix'], 0, $res['prefix_length'] ), $res['prefix_length'], '0', STR_PAD_LEFT )
 		);
+
+		// Product attribute
+		$res['product_attribute'] = $data['product_attribute'];
+
 		return $res;
 	}
 

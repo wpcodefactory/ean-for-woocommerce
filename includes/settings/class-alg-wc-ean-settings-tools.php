@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.7.1
+ * @version 3.7.2
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -70,9 +70,29 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	}
 
 	/**
+	 * get_product_attributes.
+	 *
+	 * @version 3.7.2
+	 * @since   3.7.2
+	 */
+	function get_product_attributes() {
+		$options     = array();
+		$options[''] = esc_html__( 'Disable', 'ean-for-woocommerce' );
+		$taxonomies  = wc_get_attribute_taxonomies();
+		if ( ! empty( $taxonomies ) ) {
+			foreach ( $taxonomies as $tax ) {
+				$id             = esc_attr( wc_attribute_taxonomy_name( $tax->attribute_name ) );
+				$label          = esc_html( $tax->attribute_label ? $tax->attribute_label : $tax->attribute_name );
+				$options[ $id ] = $label;
+			}
+		}
+		return $options;
+	}
+
+	/**
 	 * get_settings.
 	 *
-	 * @version 3.7.1
+	 * @version 3.7.2
 	 * @since   2.2.5
 	 *
 	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
@@ -163,6 +183,15 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'default'  => '',
 				'type'     => 'text',
 				'custom_attributes' => array( 'pattern' => '[0-9]+' ),
+			),
+			array(
+				'desc'     => __( 'Product attribute', 'ean-for-woocommerce' ) . ' (' . __( 'optional', 'ean-for-woocommerce' ) . ')',
+				'desc_tip' => __( 'If enabled, will copy the generated EAN to the selected product attribute as well.', 'ean-for-woocommerce' ) . ' (' . __( 'optional', 'ean-for-woocommerce' ) . ')',
+				'id'       => 'alg_wc_ean_tool_product_generate[product_attribute]',
+				'default'  => '',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => $this->get_product_attributes(),
 			),
 			array(
 				'title'    => __( 'Copy product SKU', 'ean-for-woocommerce' ),
