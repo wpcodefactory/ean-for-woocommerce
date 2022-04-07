@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 3.6.0
+ * @version 3.8.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.0
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
@@ -358,7 +358,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_admin_options',
 			),
 			array(
-				'title'    => __( 'Advanced Options', 'ean-for-woocommerce' ),
+				'title'    => __( 'Advanced Print Options', 'ean-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_advanced_options',
 			),

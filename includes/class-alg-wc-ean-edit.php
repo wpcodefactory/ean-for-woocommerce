@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 3.6.0
+ * @version 3.8.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -182,13 +182,13 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * save_ean_input.
 	 *
-	 * @version 1.0.0
+	 * @version 3.8.0
 	 * @since   1.0.0
 	 *
 	 * @todo    [maybe] save `$key . '_is_valid'` (same in `save_ean_input_variation()`)
 	 */
 	function save_ean_input( $post_id, $__post ) {
-		if ( isset( $_POST[ alg_wc_ean()->core->ean_key ] ) && empty( $_REQUEST['woocommerce_quick_edit'] ) ) {
+		if ( isset( $_POST[ alg_wc_ean()->core->ean_key ] ) && empty( $_REQUEST['woocommerce_quick_edit'] ) && empty( $_REQUEST['woocommerce_bulk_edit'] ) ) {
 			update_post_meta( $post_id, alg_wc_ean()->core->ean_key, wc_clean( $_POST[ alg_wc_ean()->core->ean_key ] ) );
 		}
 	}

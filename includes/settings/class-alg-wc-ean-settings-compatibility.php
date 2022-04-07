@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 3.5.1
+ * @version 3.8.0
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.5.1
+	 * @version 3.8.0
 	 * @since   2.2.9
 	 */
 	function get_settings() {
@@ -38,6 +38,19 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'title'    => __( 'Plugin Compatibility Options', 'ean-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_ean_plugin_compatibility_options',
+			),
+			array(
+				'title'    => __( 'Point of Sale for WooCommerce', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'This will add EAN to the product search of the %s plugin.', 'ean-for-woocommerce' ),
+						'<a target="_blank" href="' . 'https://woocommerce.com/products/point-of-sale-for-woocommerce/' . '">' .
+							__( 'Point of Sale for WooCommerce', 'ean-for-woocommerce' ) . '</a>' ) . '<br>' .
+					__( '<strong>Please note</strong> that "WooCommerce > Settings > EAN > General > Search" option must be enabled as well.', 'ean-for-woocommerce' ) . '<br>' .
+					__( '<strong>Alternatively</strong> you can add "EAN" to the "Scanning Fields" and "Product SKU" to the "Search Includes" options in "Point of Sale > Settings > Register".', 'ean-for-woocommerce' ) . '<br>' .
+					'* ' . __( 'To enable searching with a scanner, add "EAN" field to the "Scanning Fields" option in "Point of Sale > Settings > Register".', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_wc_pos_search',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'    => __( 'Print Invoice & Delivery Notes for WooCommerce', 'ean-for-woocommerce' ),
@@ -129,6 +142,15 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_wt_pklist_options[column_style]',
 				'default'  => '',
 				'type'     => 'text',
+			),
+			array(
+				'title'    => __( 'WooCommerce Customer / Order / Coupon Export', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'This will add %s column to the order items export of the %s plugin.', 'ean-for-woocommerce' ),
+					'<code>item_ean</code>', '<a target="_blank" href="https://woocommerce.com/products/ordercustomer-csv-export/">' . __( 'WooCommerce Customer / Order / Coupon Export', 'ean-for-woocommerce' ) . '</a>' ),
+				'id'       => 'alg_wc_ean_wc_customer_order_export',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'    => __( 'Dokan', 'ean-for-woocommerce' ),

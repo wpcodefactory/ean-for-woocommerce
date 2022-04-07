@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 3.5.1
+ * @version 3.8.0
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.1
+	 * @version 3.8.0
 	 * @since   2.2.0
 	 *
 	 * @todo    [now] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
@@ -26,8 +26,13 @@ class Alg_WC_EAN_Compatibility {
 	 * @todo    [maybe] (feature) https://wordpress.org/plugins/woocommerce-xml-csv-product-import/ (WooCommerce add-on for "WP All Import")
 	 */
 	function __construct() {
+
 		// "Point of Sale for WooCommerce" plugin
 		add_filter( 'wc_pos_scanning_fields', array( $this, 'wc_pos_scanning_fields' ), PHP_INT_MAX );
+		if ( 'yes' === get_option( 'alg_wc_ean_wc_pos_search', 'no' ) ) {
+			add_filter( 'woocommerce_rest_prepare_product_object', array( $this, 'wc_pos_add_ean_to_product_name' ), PHP_INT_MAX, 3 );
+		}
+
 		// "Dokan – Best WooCommerce Multivendor Marketplace Solution – Build Your Own Amazon, eBay, Etsy" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_dokan', 'no' ) ) {
 			add_action( 'dokan_new_product_after_product_tags',  array( $this, 'dokan_add_ean_field' ) );
@@ -36,19 +41,23 @@ class Alg_WC_EAN_Compatibility {
 			add_action( 'dokan_product_updated',                 array( $this, 'dokan_save_ean_field' ), 10, 2 );
 			add_action( 'dokan_product_after_variation_pricing', array( $this, 'dokan_add_ean_field_variation' ), 10, 3 );
 		}
+
 		// WCFM
 		if ( 'yes' === get_option( 'alg_wc_ean_wcfm', 'no' ) ) {
 			add_filter( 'wcfm_product_fields_stock',            array( $this, 'wcfm_add_ean_field' ), 10, 3 );
 			add_action( 'after_wcfm_products_manage_meta_save', array( $this, 'wcfm_save_ean_field' ), 10, 2 );
 		}
+
 		// "Print Invoice & Delivery Notes for WooCommerce" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_wcdn', 'no' ) ) {
 			add_action( 'wcdn_order_item_after', array( $this, 'add_to_wcdn_ean' ), 10, 3 );
 		}
+
 		// "WooCommerce PDF Invoices & Packing Slips" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_wpo_wcpdf', 'no' ) ) {
 			add_action( get_option( 'alg_wc_ean_wpo_wcpdf_position', 'wpo_wcpdf_after_item_meta' ), array( $this, 'add_to_wpo_wcpdf_ean' ), 10, 3 );
 		}
+
 		// "WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_wt_pklist', 'no' ) ) {
 			// Options
@@ -80,8 +89,43 @@ class Alg_WC_EAN_Compatibility {
 					add_filter( 'wf_pklist_alter_package_product_name',                  array( $this, 'add_to_wt_pklist_ean' ), 10, 5 );
 			}
 		}
+
 		// "WooCommerce Google Product Feed"
 		add_filter( 'woocommerce_gpf_custom_field_list', array( $this, 'add_to_woocommerce_gpf_custom_field_list' ), PHP_INT_MAX );
+
+		// "WooCommerce Customer / Order / Coupon Export"
+		if ( 'yes' === get_option( 'alg_wc_ean_wc_customer_order_export', 'no' ) ) {
+			add_filter( 'wc_customer_order_export_format_data_sources',            array( $this, 'wc_customer_order_export_add_column' ), 10, 3 );
+			add_filter( 'wc_customer_order_export_csv_order_row_one_row_per_item', array( $this, 'wc_customer_order_export_render_column' ), 10, 4 );
+		}
+
+	}
+
+	/**
+	 * wc_customer_order_export_add_column.
+	 *
+	 * @version 3.8.0
+	 * @since   3.8.0
+	 *
+	 * @todo    [now] [!!] (dev) `item_ean` to `item_alg_wc_ean`?
+	 * @todo    [next] (dev) XML (at least in `OrderLineItems`)?
+	 */
+	function wc_customer_order_export_add_column( $data_sources, $export_type, $output_type ) {
+		if ( 'orders' === $export_type && 'csv' === $output_type ) {
+			$data_sources[] = 'item_ean';
+		}
+		return $data_sources;
+	}
+
+	/**
+	 * wc_customer_order_export_render_column.
+	 *
+	 * @version 3.8.0
+	 * @since   3.8.0
+	 */
+	function wc_customer_order_export_render_column( $data, $item, $order, $generator ) {
+		$data['item_ean'] = ( ! empty( $item['id'] ) && ( $_item = new WC_Order_Item_Product( $item['id'] ) ) ? alg_wc_ean()->core->get_ean_from_order_item( $_item ) : '' );
+		return $data;
 	}
 
 	/**
@@ -311,14 +355,34 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * wc_pos_scanning_fields.
 	 *
+	 * Adds "EAN" field to the "Scanning Fields" option in "Point of Sale > Settings > Register".
+	 *
 	 * @version 2.2.0
 	 * @since   2.2.0
 	 *
-	 * @see     https://www.woocommerce.com/products/woocommerce-point-of-sale/
+	 * @see     https://woocommerce.com/products/point-of-sale-for-woocommerce/
 	 */
 	function wc_pos_scanning_fields( $fields ) {
 		$fields[ alg_wc_ean()->core->ean_key ] = __( 'EAN', 'ean-for-woocommerce' );
 		return $fields;
+	}
+
+	/**
+	 * wc_pos_add_ean_to_product_name.
+	 *
+	 * @version 3.8.0
+	 * @since   3.8.0
+	 *
+	 * @see     https://woocommerce.com/products/point-of-sale-for-woocommerce/
+	 *
+	 * @todo    [now] [!!] (dev) `get_route()`: better solution, e.g. exact match with `/wc-pos/products`?
+	 * @todo    [now] [!!] (dev) find better solution, e.g. add elsewhere, not to the name?
+	 */
+	function wc_pos_add_ean_to_product_name( $response, $product, $request ) {
+		if ( ( false !== strpos( $request->get_route(), '/wc-pos/' ) ) && '' !== ( $ean = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {
+			$response->data['name'] .= ' (' . sprintf( __( 'EAN: %s', 'ean-for-woocommerce' ), $ean ) . ')';
+		}
+		return $response;
 	}
 
 }

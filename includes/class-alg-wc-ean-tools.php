@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Class
  *
- * @version 3.7.2
+ * @version 3.8.0
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -75,25 +75,34 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * import_settings.
 	 *
-	 * @version 3.1.0
+	 * @version 3.8.0
 	 * @since   3.1.0
 	 *
-	 * @todo    [now] [!] (dev) validate data?
+	 * @todo    [now] [!!] (feature) separate "Reset all settings" tool?
+	 * @todo    [maybe] (dev) better data validation?
 	 */
 	function import_settings() {
 		if ( ! empty( $_FILES['alg_wc_ean_import_settings']['tmp_name'] ) ) {
 			$content = file_get_contents( $_FILES['alg_wc_ean_import_settings']['tmp_name'] );
 			$content = json_decode( $content, true );
-			$counter = 0;
-			foreach ( $content as $row ) {
-				if ( 'alg_wc_ean_version' !== $row['option_name'] ) {
-					if ( update_option( $row['option_name'], $row['option_value'] ) ) {
-						$counter++;
+			if ( JSON_ERROR_NONE === json_last_error() ) {
+				// Reset
+				global $wpdb;
+				$deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'alg_wc_ean%'" );
+				// Import
+				$counter = 0;
+				foreach ( $content as $row ) {
+					if ( 'alg_wc_ean_version' !== $row['option_name'] ) {
+						if ( update_option( $row['option_name'], $row['option_value'] ) ) {
+							$counter++;
+						}
 					}
 				}
-			}
-			if ( is_callable( array( 'WC_Admin_Settings', 'add_message' ) ) ) {
-				WC_Admin_Settings::add_message( sprintf( __( 'Settings imported (%d option(s) updated).', 'ean-for-woocommerce' ), $counter ) );
+				if ( is_callable( array( 'WC_Admin_Settings', 'add_message' ) ) ) {
+					WC_Admin_Settings::add_message( sprintf( __( 'Settings imported (%d option(s) deleted, %d option(s) updated).', 'ean-for-woocommerce' ), $deleted, $counter ) );
+				}
+			} elseif ( is_callable( array( 'WC_Admin_Settings', 'add_message' ) ) ) {
+				WC_Admin_Settings::add_message( sprintf( __( 'Import file error: %s', 'ean-for-woocommerce' ), json_last_error_msg() ) );
 			}
 		}
 	}
@@ -101,7 +110,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * export_settings.
 	 *
-	 * @version 3.1.0
+	 * @version 3.8.0
 	 * @since   3.1.0
 	 *
 	 * @todo    [now] [!] (dev) remove `length`?
@@ -112,7 +121,7 @@ class Alg_WC_EAN_Tools {
 		if ( 'yes' === get_option( 'alg_wc_ean_export_settings', 'no' ) ) {
 			update_option( 'alg_wc_ean_export_settings', 'no' );
 			global $wpdb;
-			$content = $wpdb->get_results( "SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE 'alg_wc_ean%'" );
+			$content = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE 'alg_wc_ean%'" );
 			foreach ( $content as &$row ) {
 				$row->option_value = maybe_unserialize( $row->option_value );
 			}
@@ -348,7 +357,7 @@ class Alg_WC_EAN_Tools {
 	 * @since   2.1.0
 	 *
 	 * @todo    [now] [!!] (dev) delete `product_attribute` as well
-	 * @todo    [next] (dev) delete directly with SQL from the `meta` table
+	 * @todo    [now] [!!] (dev) delete directly with SQL from the `meta` table: `$counter = $wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = '" . alg_wc_ean()->core->ean_key . "'" );`
 	 * @todo    [maybe] (dev) better notice(s)?
 	 */
 	function products_delete() {

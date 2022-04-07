@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.7.2
+Stable tag: 3.8.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -11,7 +11,7 @@ Manage product GTIN (EAN, UPC, ISBN, etc.) in WooCommerce. Beautifully.
 
 == Description ==
 
-**EAN for WooCommerce** plugin lets you manage product EAN in WooCommerce.
+**EAN for WooCommerce** plugin lets you manage product GTIN (EAN, UPC, ISBN, etc.) in WooCommerce.
 
 Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, Custom.
 
@@ -50,6 +50,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 * [WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels](https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/) plugin.
 * [WooCommerce Google Product Feed](https://woocommerce.com/products/google-product-feed/) plugin.
 * [Rank Math SEO](https://wordpress.org/plugins/seo-by-rank-math/) plugin.
+* [WooCommerce Customer / Order / Coupon Export](https://woocommerce.com/products/ordercustomer-csv-export/) plugin.
 * And more...
 
 ### &#127942; Premium Version ###
@@ -81,6 +82,32 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.8.0 - 07/04/2022 =
+* Dev - Compatibility:
+    * Point of Sale for WooCommerce - "Add EAN to search" option added.
+    * "WooCommerce Customer / Order / Coupon Export" plugin compatibility added. Includes barcodes.
+* Dev - Barcodes:
+    * "[2D] Barcode (image link)" and "[2D] Barcode (base64)" columns added to "Products > All Products > Export".
+    * Barcode generator - Always checking if EAN is valid for 1D barcodes.
+* Dev - Advanced - Export/Import Plugin Settings - Import:
+    * Validating JSON data now.
+    * Resetting all options before the import now.
+* Dev - Shortcodes - Barcodes - Template:
+    * `%barcode_base64%` placeholder added.
+    * `%barcode_link%` placeholder added.
+* Dev - Developers - Product structured data - `alg_wc_ean_product_structured_data_markup_key`:
+    * `$product` is passed to the filter as well now.
+    * Filter is applied for the "Custom key" option as well now.
+* Dev - Admin settings:
+    * General - "Admin search" renamed to "Admin product search".
+    * Barcodes - "Advanced Options" renamed to "Advanced Barcodes Options".
+    * Barcodes - "Compatibility" moved to separate sections.
+    * Print - "Advanced Options" renamed to "Advanced Print Options".
+* Dev - Code refactoring:
+    * EAN edit.
+    * Export Plugin Settings.
+    * Barcode generator.
 
 = 3.7.2 - 22/03/2022 =
 * Dev - Tools - Product Tools - Generate - "Product attribute (optional)" option added.

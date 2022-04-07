@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes Section Settings
  *
- * @version 3.7.0
+ * @version 3.8.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -31,7 +31,7 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.7.0
+	 * @version 3.8.0
 	 * @since   2.0.0
 	 *
 	 * @todo    [next] (desc) Enable section: better desc
@@ -223,131 +223,10 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'sectionend',
 				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_rest_api_options",
 			),
-			array(
-				'title'    => __( 'Plugin Compatibility Options', 'ean-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_compatibility_options",
-			),
-			array(
-				'title'    => __( 'Print Invoice & Delivery Notes for WooCommerce', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => sprintf( __( 'Show barcode image in PDF documents of the %s plugin.', 'ean-for-woocommerce' ),
-					'<a target="_blank" href="' . 'https://wordpress.org/plugins/woocommerce-delivery-notes/' . '">' .
-						__( 'Print Invoice & Delivery Notes for WooCommerce', 'ean-for-woocommerce' ) . '</a>' ),
-				'id'       => "alg_wc_ean_wcdn_barcode{$this->dim_suffix}",
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'WooCommerce PDF Invoices & Packing Slips', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => sprintf( __( 'Show barcode image in PDF documents of the %s plugin.', 'ean-for-woocommerce' ),
-					'<a target="_blank" href="' . 'https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/' . '">' .
-						__( 'WooCommerce PDF Invoices & Packing Slips', 'ean-for-woocommerce' ) . '</a>' ),
-				'id'       => "alg_wc_ean_wpo_wcpdf_barcode{$this->dim_suffix}",
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'desc'     => __( 'Position', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_wpo_wcpdf_barcode_position{$this->dim_suffix}",
-				'default'  => 'wpo_wcpdf_after_item_meta',
-				'type'     => 'select',
-				'class'    => 'chosen_select',
-				'options'  => array(
-					'wpo_wcpdf_before_item_meta' => __( 'Before item meta', 'ean-for-woocommerce' ),
-					'wpo_wcpdf_after_item_meta'  => __( 'After item meta', 'ean-for-woocommerce' ),
-				),
-			),
-			array(
-				'title'    => __( 'WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => sprintf( __( 'Show barcode image in PDF documents of the %s plugin.', 'ean-for-woocommerce' ),
-					'<a target="_blank" href="' . 'https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/' . '">' .
-						__( 'WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels', 'ean-for-woocommerce' ) . '</a>' ),
-				'id'       => "alg_wc_ean_wt_pklist_barcode{$this->dim_suffix}",
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'desc'     => __( 'Content', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_wt_pklist_barcode_options{$this->dim_suffix}[content]",
-				'default'  => "<p>[alg_wc_ean_barcode{$this->dim_suffix}]</p>",
-				'type'     => 'textarea',
-			),
-			array(
-				'desc'     => __( 'Position', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_wt_pklist_barcode_options{$this->dim_suffix}[position]",
-				'default'  => 'after_product_meta',
-				'type'     => 'select',
-				'class'    => 'chosen_select',
-				'options'  => array(
-					'before_product_name' => __( 'Before item name', 'ean-for-woocommerce' ),
-					'after_product_name'  => __( 'After item name', 'ean-for-woocommerce' ),
-					'before_product_meta' => __( 'Before item meta', 'ean-for-woocommerce' ),
-					'after_product_meta'  => __( 'After item meta', 'ean-for-woocommerce' ),
-					'column'              => __( 'As a separate column', 'ean-for-woocommerce' ),
-				),
-			),
-			array(
-				'desc'     => __( 'Documents', 'ean-for-woocommerce' ) . '<br>' .
-					sprintf( __( 'Can be a comma-separated list, e.g.: %s.', 'ean-for-woocommerce' ),
-						'<code>' . implode( ',', array( 'invoice', 'packinglist', 'deliverynote', 'dispatchlabel' ) ) . '</code>' ),
-				'desc_tip' => __( 'Leave empty to include in all documents.', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_wt_pklist_barcode_options{$this->dim_suffix}[documents]",
-				'default'  => '',
-				'type'     => 'text',
-			),
-			array(
-				'desc'     => __( 'Column title', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Used only if the "Position" option is set to the "As a separate column".', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_wt_pklist_barcode_options{$this->dim_suffix}[column_title]",
-				'default'  => __( 'Barcode', 'ean-for-woocommerce' ),
-				'type'     => 'text',
-			),
-			array(
-				'desc'     => sprintf( __( 'Column HTML %s', 'ean-for-woocommerce' ), '<code>class</code>' ),
-				'desc_tip' => __( 'Used only if the "Position" option is set to the "As a separate column".', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_wt_pklist_barcode_options{$this->dim_suffix}[column_class]",
-				'default'  => 'wfte_product_table_head_ean wfte_text_center',
-				'type'     => 'text',
-			),
-			array(
-				'desc'     => sprintf( __( 'Column HTML %s', 'ean-for-woocommerce' ), '<code>style</code>' ),
-				'desc_tip' => __( 'Used only if the "Position" option is set to the "As a separate column".', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_wt_pklist_barcode_options{$this->dim_suffix}[column_style]",
-				'default'  => '',
-				'type'     => 'text',
-			),
-			array(
-				'title'    => __( 'Dokan', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => sprintf( __( 'This will show barcode in vendor product form of the %s plugin.', 'ean-for-woocommerce' ),
-					'<a target="_blank" href="https://wordpress.org/plugins/dokan-lite/">' . __( 'Dokan', 'ean-for-woocommerce' ) . '</a>' ),
-				'id'       => "alg_wc_ean_dokan_barcode{$this->dim_suffix}",
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'desc'     => __( 'Title', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_dokan_title_barcode{$this->dim_suffix}",
-				'default'  => __( 'Barcode', 'ean-for-woocommerce' ),
-				'type'     => 'text',
-			),
-			array(
-				'desc'     => __( 'Content', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_dokan_content_barcode{$this->dim_suffix}",
-				'default'  => "[alg_wc_ean_barcode{$this->dim_suffix}]",
-				'type'     => 'textarea',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_compatibility_options",
-			),
 		);
 		$settings = array_merge( $settings, array(
 			array(
-				'title'    => __( 'Advanced Options', 'ean-for-woocommerce' ),
+				'title'    => __( 'Advanced Barcodes Options', 'ean-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_advanced_options",
 			),

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 3.7.0
+ * @version 3.8.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,7 +87,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.7.0
+	 * @version 3.8.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -206,7 +206,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'checkboxgroup' => 'end',
 			),
 			array(
-				'title'    => __( 'Admin search', 'ean-for-woocommerce' ),
+				'title'    => __( 'Admin product search', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'This will enable searching by EAN in admin area.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_backend_search',

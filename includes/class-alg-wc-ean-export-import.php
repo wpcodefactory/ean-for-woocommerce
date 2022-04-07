@@ -57,7 +57,7 @@ class Alg_WC_EAN_Export_Import {
 	 * @version 1.5.0
 	 * @since   1.5.0
 	 *
-	 * @todo    [maybe] (dev) use `alg_wc_ean_title` option value instead of 'EAN' (same in `add_import_mapping_option()` and `add_export_column()`)?
+	 * @todo    [now] [!!] (dev) use `alg_wc_ean_title` option value instead of 'EAN' (same in `add_import_mapping_option()` and `add_export_column()`)?
 	 */
 	function set_import_mapping_option_default( $columns ) {
 		$columns['EAN'] = 'alg_ean';

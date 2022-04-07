@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 3.7.0
+ * @version 3.8.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -20,7 +20,7 @@ class Alg_WC_EAN_Display {
 	 * @version 3.7.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [now] [!!] (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php`?
+	 * @todo    [now] [!!] (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php` or `class-alg-wc-ean-admin.php`?
 	 * @todo    [next] (dev) remove `! is_admin()` and `is_admin()`?
 	 * @todo    [next] (feature) frontend: customizable position and template for loop, cart, etc. (now implemented for "single product page" only)
 	 * @todo    [later] frontend: order?
@@ -224,7 +224,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_to_product_structured_data.
 	 *
-	 * @version 3.4.0
+	 * @version 3.8.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://schema.org/Product
@@ -251,10 +251,11 @@ class Alg_WC_EAN_Display {
 						$key = 'gtin13';
 						break;
 					default: // e.g. `AUTO`, `C128`
-						$key = apply_filters( 'alg_wc_ean_product_structured_data_markup_key', 'gtin', $type );
+						$key = apply_filters( 'alg_wc_ean_product_structured_data_markup_key', 'gtin', $type, $product );
 				}
 			} else {
 				$key = get_option( 'alg_wc_ean_frontend_product_structured_data_key', 'gtin' );
+				$key = apply_filters( 'alg_wc_ean_product_structured_data_markup_key', $key, false, $product );
 			}
 			$markup[ $key ] = $value;
 		}
@@ -327,7 +328,7 @@ class Alg_WC_EAN_Display {
 	 * @since   1.0.0
 	 *
 	 * @todo    [now] (dev) template: shortcode vs placeholder?
-	 * @todo    [maybe] customizable wrapping HTML (same for all frontend/backend options)
+	 * @todo    [maybe] customizable wrapping HTML (same for all frontend/backend options) - `ean` class must be present though (for the variations' JS)
 	 * @todo    [maybe] `esc_html__( 'N/A', 'ean-for-woocommerce' )`
 	 */
 	function add_ean( $template ) {
