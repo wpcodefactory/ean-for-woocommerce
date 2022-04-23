@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -324,42 +324,43 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean.
 	 *
-	 * @version 2.1.0
+	 * @version 3.8.1
 	 * @since   1.0.0
 	 *
 	 * @todo    [now] (dev) template: shortcode vs placeholder?
 	 * @todo    [maybe] customizable wrapping HTML (same for all frontend/backend options) - `ean` class must be present though (for the variations' JS)
 	 * @todo    [maybe] `esc_html__( 'N/A', 'ean-for-woocommerce' )`
 	 */
-	function add_ean( $template ) {
+	function add_ean( $template, $single_or_loop ) {
 		$output_data = $this->get_ean_output_data();
 		if ( $output_data['do_output'] ) {
 			$ean_html = '<span class="ean">' . $output_data['value'] . '</span>';
-			echo '<span class="sku_wrapper ean_wrapper"' . $output_data['style'] . '>' . str_replace( '%ean%', $ean_html, $template ) . '</span>';
+			$output   = '<span class="sku_wrapper ean_wrapper"' . $output_data['style'] . '>' . str_replace( '%ean%', $ean_html, $template ) . '</span>';
+			echo apply_filters( 'alg_wc_ean_display', $output, $output_data['value'], $output_data['style'], $template, $single_or_loop );
 		}
 	}
 
 	/**
 	 * add_ean_single.
 	 *
-	 * @version 2.1.0
+	 * @version 3.8.1
 	 * @since   2.1.0
 	 */
 	function add_ean_single() {
-		$this->add_ean( get_option( 'alg_wc_ean_template', __( 'EAN: %ean%', 'ean-for-woocommerce' ) ) );
+		$this->add_ean( get_option( 'alg_wc_ean_template', __( 'EAN: %ean%', 'ean-for-woocommerce' ) ), 'single' );
 	}
 
 	/**
 	 * add_ean_loop.
 	 *
-	 * @version 2.8.0
+	 * @version 3.8.1
 	 * @since   2.0.0
 	 *
 	 * @todo    [maybe] (feature) customizable template; position(s)?
 	 * @todo    [maybe] (dev) variable: implode variations' EANs?
 	 */
 	function add_ean_loop() {
-		$this->add_ean( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) . ': %ean%' );
+		$this->add_ean( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) . ': %ean%', 'loop' );
 	}
 
 	/**

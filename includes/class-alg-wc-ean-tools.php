@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Class
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -27,14 +27,18 @@ class Alg_WC_EAN_Tools {
 	 * @todo    [maybe] (dev) Automatic actions: `woocommerce_after_product_object_save`?
 	 */
 	function __construct() {
+
 		// Export/Import Settings
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'import_settings' ) );
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'export_settings' ) );
+
 		// Products Tools
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'products_delete' ) );
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'products_create' ) );
+
 		// Automatic actions
 		add_action( 'wp_insert_post', array( $this, 'product_on_insert_post' ), PHP_INT_MAX, 3 );
+
 		// Periodic action
 		if ( '' !== get_option( 'alg_wc_ean_products_periodic_action', '' ) ) {
 			add_action( 'init', array( $this, 'schedule_products_periodic_action' ) );
@@ -42,14 +46,18 @@ class Alg_WC_EAN_Tools {
 		} else {
 			add_action( 'init', array( $this, 'unschedule_products_periodic_action' ) );
 		}
+
 		// "Products > Bulk actions"
 		add_filter( 'bulk_actions-edit-product', array( $this, 'add_product_bulk_actions' ) );
 		add_filter( 'handle_bulk_actions-edit-product', array( $this, 'handle_product_bulk_actions' ), 10, 3 );
+
 		// Orders Tools
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'orders_add' ) );
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'orders_delete' ) );
+
 		// Assign from the list: Reuse deleted
 		add_action( 'before_delete_post', array( $this, 'reuse_deleted' ), 10, 2 );
+
 	}
 
 	/**
@@ -614,7 +622,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * get_generate_data.
 	 *
-	 * @version 3.7.2
+	 * @version 3.8.1
 	 * @since   2.2.8
 	 *
 	 * @todo    [now] [!] (dev) `ISBN13`, `JAN`
@@ -629,6 +637,7 @@ class Alg_WC_EAN_Tools {
 			'prefix_to'         => '',
 			'prefix_length'     => 3,
 			'seed_prefix'       => '',
+			'seed_method'       => 'product_id',
 			'product_attribute' => '',
 		);
 		$data = array_replace( $default_data, get_option( 'alg_wc_ean_tool_product_generate', array() ) );
@@ -649,7 +658,7 @@ class Alg_WC_EAN_Tools {
 		}
 		$res['seed_length'] = ( $length - $res['prefix_length'] - 1 );
 
-		// Seed prefix
+		// Seed prefix, i.e. "Manufacturer code"
 		$seed_prefix         = ( strlen( $data['seed_prefix'] ) > $res['seed_length'] ? substr( $data['seed_prefix'], 0, $res['seed_length'] ) : $data['seed_prefix'] );
 		$res['seed_length'] -= strlen( $seed_prefix );
 		$res['seed_prefix']  = $seed_prefix;
@@ -667,6 +676,9 @@ class Alg_WC_EAN_Tools {
 			str_pad( substr( $data['prefix'], 0, $res['prefix_length'] ), $res['prefix_length'], '0', STR_PAD_LEFT )
 		);
 
+		// Seed method, i.e. "Product code"
+		$res['seed_method'] = $data['seed_method'];
+
 		// Product attribute
 		$res['product_attribute'] = $data['product_attribute'];
 
@@ -674,19 +686,52 @@ class Alg_WC_EAN_Tools {
 	}
 
 	/**
+	 * get_rand_prefix.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 */
+	function get_rand_prefix( $from, $to, $length ) {
+		return str_pad( substr( rand( $from, $to ), 0, $length ), $length, '0', STR_PAD_LEFT );
+	}
+
+	/**
+	 * get_seed.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 *
+	 * @todo    [now] [!!] (dev) `counter`: (optional) max value?
+	 */
+	function get_seed( $method, $length, $args ) {
+		switch ( $method ) {
+
+			case 'product_id':
+				$seed = $args['product_id'];
+				break;
+
+			case 'counter':
+				global $wpdb;
+				$wpdb->query( 'START TRANSACTION' );
+				$seed = get_option( 'alg_wc_ean_tool_product_generate_seed_counter', 0 );
+				update_option( 'alg_wc_ean_tool_product_generate_seed_counter', ( $seed + 1 ) );
+				$wpdb->query( 'COMMIT' );
+				break;
+
+		}
+		return str_pad( substr( $seed, 0, $length ), $length, '0', STR_PAD_LEFT );
+	}
+
+	/**
 	 * generate_ean.
 	 *
-	 * @version 3.3.0
+	 * @version 3.8.1
 	 * @since   2.2.8
-	 *
-	 * @todo    [next] (feature) customizable seed (i.e. not product ID), e.g. random?; etc.
 	 */
 	function generate_ean( $product_id, $data ) {
-		$prefix = ( $data['is_rand_prefix'] ?
-			str_pad( substr( rand( $data['prefix']['from'], $data['prefix']['to'] ), 0, $data['prefix_length'] ), $data['prefix_length'], '0', STR_PAD_LEFT ) :
-			$data['prefix']
-		);
-		$ean = $prefix . $data['seed_prefix'] . str_pad( substr( $product_id, 0, $data['seed_length'] ), $data['seed_length'], '0', STR_PAD_LEFT );
+		$prefix = ( $data['is_rand_prefix'] ? $this->get_rand_prefix( $data['prefix']['from'], $data['prefix']['to'], $data['prefix_length'] ) : $data['prefix'] );
+		$seed   = $this->get_seed( $data['seed_method'], $data['seed_length'], array( 'product_id' => $product_id ) );
+		$ean    = $prefix . $data['seed_prefix'] . $seed;
 		return $ean . $this->get_checksum( $ean );
 	}
 

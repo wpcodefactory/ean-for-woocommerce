@@ -8,7 +8,7 @@
 #: includes/class-alg-wc-ean-compatibility.php:366
 #: includes/class-alg-wc-ean-display.php:176
 #: includes/class-alg-wc-ean-display.php:182
-#: includes/class-alg-wc-ean-display.php:362
+#: includes/class-alg-wc-ean-display.php:363
 #: includes/class-alg-wc-ean-edit.php:50
 #: includes/class-alg-wc-ean-edit.php:143
 #: includes/class-alg-wc-ean-edit.php:176
@@ -45,12 +45,12 @@ msgid "EAN: %s"
 msgstr ""
 
 #: includes/class-alg-wc-ean-display.php:296
-#: includes/class-alg-wc-ean-display.php:349
+#: includes/class-alg-wc-ean-display.php:350
 #: includes/settings/class-alg-wc-ean-settings-general.php:265
 msgid "EAN: %ean%"
 msgstr ""
 
-#: includes/class-alg-wc-ean-display.php:376
+#: includes/class-alg-wc-ean-display.php:377
 msgid "EAN:"
 msgstr ""
 
@@ -74,65 +74,65 @@ msgstr ""
 msgid "Duplicated EAN"
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:102
+#: includes/class-alg-wc-ean-tools.php:110
 #, php-format
 msgid "Settings imported (%d option(s) deleted, %d option(s) updated)."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:105
+#: includes/class-alg-wc-ean-tools.php:113
 #, php-format
 msgid "Import file error: %s"
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:236
-#: includes/settings/class-alg-wc-ean-settings-tools.php:332
+#: includes/class-alg-wc-ean-tools.php:244
+#: includes/settings/class-alg-wc-ean-settings-tools.php:352
 msgid "Generate EAN"
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:237
-#: includes/settings/class-alg-wc-ean-settings-tools.php:333
+#: includes/class-alg-wc-ean-tools.php:245
+#: includes/settings/class-alg-wc-ean-settings-tools.php:353
 msgid "Delete EAN"
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:276
+#: includes/class-alg-wc-ean-tools.php:284
 #, php-format
 msgid "EAN deleted for %s order items."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:297
+#: includes/class-alg-wc-ean-tools.php:305
 #, php-format
 msgid "EAN added for %s order items."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:374
+#: includes/class-alg-wc-ean-tools.php:382
 #, php-format
 msgid "EAN deleted for %s products."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:482
+#: includes/class-alg-wc-ean-tools.php:490
 msgid "Please set the \"Meta key\" option."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:488
+#: includes/class-alg-wc-ean-tools.php:496
 msgid "Please set the \"List\" option."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:545
+#: includes/class-alg-wc-ean-tools.php:553
 #, php-format
 msgid "EAN generated for %s products (%s total products)."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:548
+#: includes/class-alg-wc-ean-tools.php:556
 #, php-format
 msgid "EAN assigned for %s products (%s total products)."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:551
+#: includes/class-alg-wc-ean-tools.php:559
 #, php-format
 msgid "%s products without EAN (%s total products)."
 msgstr ""
 
-#: includes/class-alg-wc-ean-tools.php:554
+#: includes/class-alg-wc-ean-tools.php:562
 #, php-format
 msgid "EAN copied for %s products (%s total products)."
 msgstr ""
@@ -1524,7 +1524,7 @@ msgid "Do not include"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:297
-#: includes/settings/class-alg-wc-ean-settings-tools.php:346
+#: includes/settings/class-alg-wc-ean-settings-tools.php:366
 msgid "Add"
 msgstr ""
 
@@ -1637,22 +1637,22 @@ msgid "Generate"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:39
-#: includes/settings/class-alg-wc-ean-settings-tools.php:197
+#: includes/settings/class-alg-wc-ean-settings-tools.php:217
 msgid "Copy product SKU"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:40
-#: includes/settings/class-alg-wc-ean-settings-tools.php:204
+#: includes/settings/class-alg-wc-ean-settings-tools.php:224
 msgid "Copy product ID"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:41
-#: includes/settings/class-alg-wc-ean-settings-tools.php:211
+#: includes/settings/class-alg-wc-ean-settings-tools.php:231
 msgid "Copy product meta"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:42
-#: includes/settings/class-alg-wc-ean-settings-tools.php:232
+#: includes/settings/class-alg-wc-ean-settings-tools.php:252
 msgid "Assign from the list"
 msgstr ""
 
@@ -1699,8 +1699,8 @@ msgid ""
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:126
-#: includes/settings/class-alg-wc-ean-settings-tools.php:266
-#: includes/settings/class-alg-wc-ean-settings-tools.php:353
+#: includes/settings/class-alg-wc-ean-settings-tools.php:286
+#: includes/settings/class-alg-wc-ean-settings-tools.php:373
 msgid "Delete"
 msgstr ""
 
@@ -1734,9 +1734,9 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:164
 #: includes/settings/class-alg-wc-ean-settings-tools.php:181
-#: includes/settings/class-alg-wc-ean-settings-tools.php:188
-#: includes/settings/class-alg-wc-ean-settings-tools.php:189
-#: includes/settings/class-alg-wc-ean-settings-tools.php:225
+#: includes/settings/class-alg-wc-ean-settings-tools.php:208
+#: includes/settings/class-alg-wc-ean-settings-tools.php:209
+#: includes/settings/class-alg-wc-ean-settings-tools.php:245
 msgid "optional"
 msgstr ""
 
@@ -1767,157 +1767,185 @@ msgstr ""
 msgid "Seed prefix"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:188
-msgid "Product attribute"
+#: includes/settings/class-alg-wc-ean-settings-tools.php:182
+msgid "Or manufacturer code."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:189
+msgid "Seed"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:190
+msgid "Or product code."
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:196
+msgid "Product ID"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:197
+msgid "Counter"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:201
+msgid "Seed counter"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:201
+msgid "ignored unless \"Seed\" option is set to \"Counter\""
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:208
+msgid "Product attribute"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:209
 msgid ""
 "If enabled, will copy the generated EAN to the selected product attribute as "
 "well."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:198
+#: includes/settings/class-alg-wc-ean-settings-tools.php:218
 msgid "Copy EAN from product SKU for all products"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:205
+#: includes/settings/class-alg-wc-ean-settings-tools.php:225
 msgid "Copy EAN from product ID for all products"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:212
+#: includes/settings/class-alg-wc-ean-settings-tools.php:232
 msgid "Copy EAN from product meta for all products"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:218
+#: includes/settings/class-alg-wc-ean-settings-tools.php:238
 #, php-format
 msgid "Meta key, e.g. %s"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:219
+#: includes/settings/class-alg-wc-ean-settings-tools.php:239
 msgid "Product meta key to copy from."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:225
+#: includes/settings/class-alg-wc-ean-settings-tools.php:245
 msgid "Meta sub key"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:226
+#: includes/settings/class-alg-wc-ean-settings-tools.php:246
 msgid "Optional sub key. This is used when meta was saved in an array."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:233
+#: includes/settings/class-alg-wc-ean-settings-tools.php:253
 msgid "Assign EAN from the list for all products"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:239
+#: includes/settings/class-alg-wc-ean-settings-tools.php:259
 msgid "Product categories"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:240
+#: includes/settings/class-alg-wc-ean-settings-tools.php:260
 msgid ""
 "Sets which product categories to include when assigning the EANs (i.e. all "
 "other categories will be skipped)."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:241
+#: includes/settings/class-alg-wc-ean-settings-tools.php:261
 msgid "Leave blank to use all product categories."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:249
+#: includes/settings/class-alg-wc-ean-settings-tools.php:269
 msgid "Reuse deleted"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:250
+#: includes/settings/class-alg-wc-ean-settings-tools.php:270
 msgid "Will add EANs from the deleted products to the \"List\" option."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:256
+#: includes/settings/class-alg-wc-ean-settings-tools.php:276
 msgid "List"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:257
+#: includes/settings/class-alg-wc-ean-settings-tools.php:277
 msgid "EAN list to assign from."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:258
+#: includes/settings/class-alg-wc-ean-settings-tools.php:278
 msgid "One EAN per line."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:259
+#: includes/settings/class-alg-wc-ean-settings-tools.php:279
 msgid "Used (i.e. assigned) EANs will be automatically removed from the list."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:267
+#: includes/settings/class-alg-wc-ean-settings-tools.php:287
 msgid "Delete all EANs for all products"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:273
-#: includes/settings/class-alg-wc-ean-settings-tools.php:275
+#: includes/settings/class-alg-wc-ean-settings-tools.php:293
+#: includes/settings/class-alg-wc-ean-settings-tools.php:295
 msgid "Get stats"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:274
+#: includes/settings/class-alg-wc-ean-settings-tools.php:294
 msgid ""
 "This tool will not assign/delete any EANs, instead it will count how many "
 "products in your shop do not have EAN."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:285
+#: includes/settings/class-alg-wc-ean-settings-tools.php:305
 msgid "Product Actions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:290
+#: includes/settings/class-alg-wc-ean-settings-tools.php:310
 msgid "Automatic actions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:291
+#: includes/settings/class-alg-wc-ean-settings-tools.php:311
 msgid "New product"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:292
+#: includes/settings/class-alg-wc-ean-settings-tools.php:312
 msgid "Sets actions to be automatically performed when new product is added."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:300
+#: includes/settings/class-alg-wc-ean-settings-tools.php:320
 msgid "Update product"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:301
+#: includes/settings/class-alg-wc-ean-settings-tools.php:321
 msgid "Sets actions to be automatically performed when product is updated."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:309
+#: includes/settings/class-alg-wc-ean-settings-tools.php:329
 msgid "Periodic action"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:310
+#: includes/settings/class-alg-wc-ean-settings-tools.php:330
 msgid ""
 "Sets action to be automatically performed on a periodic basis (for all "
 "products)."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:318
+#: includes/settings/class-alg-wc-ean-settings-tools.php:338
 msgid "Periodic action interval in seconds"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:325
+#: includes/settings/class-alg-wc-ean-settings-tools.php:345
 msgid "\"Products > Bulk actions\""
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:326
+#: includes/settings/class-alg-wc-ean-settings-tools.php:346
 msgid "Sets actions to be added to the \"Products > Bulk actions\" dropdown."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:341
+#: includes/settings/class-alg-wc-ean-settings-tools.php:361
 msgid "Order Tools"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:347
+#: includes/settings/class-alg-wc-ean-settings-tools.php:367
 msgid "Add EANs to all order items"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-tools.php:354
+#: includes/settings/class-alg-wc-ean-settings-tools.php:374
 msgid "Delete EANs from all order items"
 msgstr ""
 

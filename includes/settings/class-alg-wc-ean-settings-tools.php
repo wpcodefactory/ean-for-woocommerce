@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.7.2
+ * @version 3.8.1
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -92,7 +92,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.7.2
+	 * @version 3.8.1
 	 * @since   2.2.5
 	 *
 	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
@@ -179,10 +179,30 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'     => __( 'Seed prefix', 'ean-for-woocommerce' ) . ' (' . __( 'optional', 'ean-for-woocommerce' ) . ')',
+				'desc_tip' => __( 'Or manufacturer code.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_generate[seed_prefix]',
 				'default'  => '',
 				'type'     => 'text',
 				'custom_attributes' => array( 'pattern' => '[0-9]+' ),
+			),
+			array(
+				'desc'     => __( 'Seed', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Or product code.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_generate[seed_method]',
+				'default'  => 'product_id',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'product_id' => __( 'Product ID', 'ean-for-woocommerce' ),
+					'counter'    => __( 'Counter', 'ean-for-woocommerce' ),
+				),
+			),
+			array(
+				'desc'     => __( 'Seed counter', 'ean-for-woocommerce' ) . ' (' . __( 'ignored unless "Seed" option is set to "Counter"', 'ean-for-woocommerce' ) . ')',
+				'id'       => 'alg_wc_ean_tool_product_generate_seed_counter',
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
 			),
 			array(
 				'desc'     => __( 'Product attribute', 'ean-for-woocommerce' ) . ' (' . __( 'optional', 'ean-for-woocommerce' ) . ')',

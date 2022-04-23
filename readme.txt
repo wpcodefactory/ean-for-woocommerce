@@ -63,8 +63,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 
 ### &#128472; Feedback ###
 
-* We are open to your suggestions and feedback.
-* Thank you for using or trying out one of our plugins!
+* We are open to your suggestions and feedback. Thank you for using or trying out one of our plugins!
 * [Visit plugin site](https://wpfactory.com/item/ean-for-woocommerce/).
 
 == Installation ==
@@ -82,6 +81,14 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 3.8.1 - 23/04/2022 =
+* Dev - Tools - Product Tools - Generate:
+    * "Seed" options added.
+    * Admin settings descriptions updated.
+    * Code refactoring.
+* Dev - Developers - `alg_wc_ean_display` filter added.
+* WC tested up to: 6.4.
 
 = 3.8.0 - 07/04/2022 =
 * Dev - Compatibility:
