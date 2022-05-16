@@ -1,8 +1,8 @@
 <?php
 /**
- * EAN for WooCommerce - Tools Class
+ * EAN for WooCommerce - Product Tools Class
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -10,27 +10,23 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'Alg_WC_EAN_Tools' ) ) :
+if ( ! class_exists( 'Alg_WC_EAN_Product_Tools' ) ) :
 
-class Alg_WC_EAN_Tools {
+class Alg_WC_EAN_Product_Tools {
 
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 3.9.0
 	 * @since   2.1.0
 	 *
 	 * @todo    [now] [!!] (feature) copy from attribute
-	 * @todo    [now] [!!] (feature) copy to attribute (as a separate tool; not as "Generate" option)?
-	 * @todo    [now] [!] (dev) Export/Import Settings: move to a separate class/file?
+	 * @todo    [now] [!!] (feature) copy to meta
+	 * @todo    [now] [!] (dev) split into more files/classes, e.g. `class-alg-wc-ean-crons.php`?
 	 * @todo    [maybe] (feature) Automatic actions: `updated_postmeta`?
 	 * @todo    [maybe] (dev) Automatic actions: `woocommerce_after_product_object_save`?
 	 */
 	function __construct() {
-
-		// Export/Import Settings
-		add_action( 'alg_wc_ean_settings_saved', array( $this, 'import_settings' ) );
-		add_action( 'alg_wc_ean_settings_saved', array( $this, 'export_settings' ) );
 
 		// Products Tools
 		add_action( 'alg_wc_ean_settings_saved', array( $this, 'products_delete' ) );
@@ -51,10 +47,6 @@ class Alg_WC_EAN_Tools {
 		add_filter( 'bulk_actions-edit-product', array( $this, 'add_product_bulk_actions' ) );
 		add_filter( 'handle_bulk_actions-edit-product', array( $this, 'handle_product_bulk_actions' ), 10, 3 );
 
-		// Orders Tools
-		add_action( 'alg_wc_ean_settings_saved', array( $this, 'orders_add' ) );
-		add_action( 'alg_wc_ean_settings_saved', array( $this, 'orders_delete' ) );
-
 		// Assign from the list: Reuse deleted
 		add_action( 'before_delete_post', array( $this, 'reuse_deleted' ), 10, 2 );
 
@@ -66,6 +58,7 @@ class Alg_WC_EAN_Tools {
 	 * @version 3.7.0
 	 * @since   3.7.0
 	 *
+	 * @todo    [now] [!!] (dev) `product_variation` + `alg_wc_ean_tool_product_variable`?
 	 * @todo    [maybe] (feature) add option to add to the end of the list (i.e. not to the beginning of the list, as it is now)
 	 */
 	function reuse_deleted( $postid, $post ) {
@@ -77,74 +70,6 @@ class Alg_WC_EAN_Tools {
 		) {
 			$data = ( '' !== ( $data = get_option( 'alg_wc_ean_tool_product_assign_list', '' ) ) ? array_map( 'trim', explode( PHP_EOL, $data ) ) : array() );
 			update_option( 'alg_wc_ean_tool_product_assign_list', implode( PHP_EOL, array_merge( array( $ean ), $data ) ) );
-		}
-	}
-
-	/**
-	 * import_settings.
-	 *
-	 * @version 3.8.0
-	 * @since   3.1.0
-	 *
-	 * @todo    [now] [!!] (feature) separate "Reset all settings" tool?
-	 * @todo    [maybe] (dev) better data validation?
-	 */
-	function import_settings() {
-		if ( ! empty( $_FILES['alg_wc_ean_import_settings']['tmp_name'] ) ) {
-			$content = file_get_contents( $_FILES['alg_wc_ean_import_settings']['tmp_name'] );
-			$content = json_decode( $content, true );
-			if ( JSON_ERROR_NONE === json_last_error() ) {
-				// Reset
-				global $wpdb;
-				$deleted = $wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'alg_wc_ean%'" );
-				// Import
-				$counter = 0;
-				foreach ( $content as $row ) {
-					if ( 'alg_wc_ean_version' !== $row['option_name'] ) {
-						if ( update_option( $row['option_name'], $row['option_value'] ) ) {
-							$counter++;
-						}
-					}
-				}
-				if ( is_callable( array( 'WC_Admin_Settings', 'add_message' ) ) ) {
-					WC_Admin_Settings::add_message( sprintf( __( 'Settings imported (%d option(s) deleted, %d option(s) updated).', 'ean-for-woocommerce' ), $deleted, $counter ) );
-				}
-			} elseif ( is_callable( array( 'WC_Admin_Settings', 'add_message' ) ) ) {
-				WC_Admin_Settings::add_message( sprintf( __( 'Import file error: %s', 'ean-for-woocommerce' ), json_last_error_msg() ) );
-			}
-		}
-	}
-
-	/**
-	 * export_settings.
-	 *
-	 * @version 3.8.0
-	 * @since   3.1.0
-	 *
-	 * @todo    [now] [!] (dev) remove `length`?
-	 * @todo    [now] [!] (dev) recheck headers?
-	 * @todo    [now] (dev) redirect page?
-	 */
-	function export_settings() {
-		if ( 'yes' === get_option( 'alg_wc_ean_export_settings', 'no' ) ) {
-			update_option( 'alg_wc_ean_export_settings', 'no' );
-			global $wpdb;
-			$content = $wpdb->get_results( "SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE 'alg_wc_ean%'" );
-			foreach ( $content as &$row ) {
-				$row->option_value = maybe_unserialize( $row->option_value );
-			}
-			$content = json_encode( $content );
-			$length  = strlen( $content );
-			header( 'Content-Description: File Transfer' );
-			header( 'Content-Type: text/plain' );
-			header( 'Content-Disposition: attachment; filename=alg-wc-ean-settings.txt' );
-			header( 'Content-Transfer-Encoding: binary' );
-			header( 'Content-Length: ' . $length );
-			header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
-			header( 'Expires: 0' );
-			header( 'Pragma: public' );
-			echo $content;
-			exit;
 		}
 	}
 
@@ -194,7 +119,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * handle_product_bulk_actions.
 	 *
-	 * @version 3.7.2
+	 * @version 3.9.0
 	 * @since   2.7.0
 	 *
 	 * @todo    [now] [!!] (feature) all other actions, e.g. "Copy EAN from SKU", etc.
@@ -206,8 +131,23 @@ class Alg_WC_EAN_Tools {
 			$data  = ( 'alg_wc_ean_generate' === $action ? $this->get_generate_data() : false );
 			$count = 0;
 			foreach ( $post_ids as $post_id ) {
-				$variations  = array_keys( get_children( array( 'post_parent' => $post_id, 'posts_per_page' => -1, 'post_type' => 'product_variation' ), 'ARRAY_N' ) );
-				$product_ids = array_merge( array( $post_id ), $variations );
+				$product = wc_get_product( $post_id );
+				if ( $product->is_type( 'variable' ) ) {
+					$variations = array_keys( get_children( array( 'post_parent' => $post_id, 'posts_per_page' => -1, 'post_type' => 'product_variation' ), 'ARRAY_N' ) );
+					switch ( get_option( 'alg_wc_ean_tool_product_variable', 'all' ) ) {
+						case 'variations_only':
+							$product_ids = $variations;
+							break;
+						case 'variable_only':
+							$product_ids = array( $post_id );
+							break;
+						default: // 'all'
+							$product_ids = array_merge( array( $post_id ), $variations );
+							break;
+					}
+				} else {
+					$product_ids = array( $post_id );
+				}
 				foreach ( $product_ids as $product_id ) {
 					switch ( $action ) {
 						case 'alg_wc_ean_generate':
@@ -247,71 +187,9 @@ class Alg_WC_EAN_Tools {
 	}
 
 	/**
-	 * get_orders.
-	 *
-	 * @version 2.1.0
-	 * @since   2.1.0
-	 *
-	 * @see     https://github.com/woocommerce/woocommerce/wiki/wc_get_orders-and-WC_Order_Query
-	 */
-	function get_orders() {
-		return wc_get_orders( array( 'limit' => -1, 'return' => 'ids' ) );
-	}
-
-	/**
-	 * orders_delete.
-	 *
-	 * @version 2.9.0
-	 * @since   2.1.0
-	 */
-	function orders_delete() {
-		if ( 'yes' === get_option( 'alg_wc_ean_tool_orders_delete', 'no' ) ) {
-			update_option( 'alg_wc_ean_tool_orders_delete', 'no' );
-			if ( current_user_can( 'manage_woocommerce' ) ) {
-				$count = 0;
-				foreach ( $this->get_orders() as $order_id ) {
-					$order = wc_get_order( $order_id );
-					if ( ! $order ) {
-						continue;
-					}
-					foreach ( $order->get_items() as $item_id => $item ) {
-						if ( wc_delete_order_item_meta( $item_id, alg_wc_ean()->core->ean_key ) ) {
-							$count++;
-						}
-					}
-				}
-				if ( method_exists( 'WC_Admin_Settings', 'add_message' ) ) {
-					WC_Admin_Settings::add_message( sprintf( __( 'EAN deleted for %s order items.', 'ean-for-woocommerce' ), $count ) );
-				}
-			}
-		}
-	}
-
-	/**
-	 * orders_add.
-	 *
-	 * @version 2.9.0
-	 * @since   2.1.0
-	 */
-	function orders_add() {
-		if ( 'yes' === get_option( 'alg_wc_ean_tool_orders_add', 'no' ) ) {
-			update_option( 'alg_wc_ean_tool_orders_add', 'no' );
-			if ( current_user_can( 'manage_woocommerce' ) ) {
-				$count = 0;
-				foreach ( $this->get_orders() as $order_id ) {
-					$count += alg_wc_ean()->core->orders->add_ean_to_order_items_meta( $order_id );
-				}
-				if ( method_exists( 'WC_Admin_Settings', 'add_message' ) ) {
-					WC_Admin_Settings::add_message( sprintf( __( 'EAN added for %s order items.', 'ean-for-woocommerce' ), $count ) );
-				}
-			}
-		}
-	}
-
-	/**
 	 * get_products.
 	 *
-	 * @version 3.0.0
+	 * @version 3.9.0
 	 * @since   2.1.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/wiki/wc_get_products-and-WC_Product_Query
@@ -320,14 +198,25 @@ class Alg_WC_EAN_Tools {
 	 * @todo    [now] [!] (feature) optional: `meta_query`: `ean` not empty
 	 */
 	function get_products( $action = false ) {
+
+		// Get product types
+		$product_types = array_merge( array_keys( wc_get_product_types() ), array( 'variation' ) );
+		if ( 'all' !== ( $variable_products = get_option( 'alg_wc_ean_tool_product_variable', 'all' ) ) ) {
+			$unset = ( 'variations_only' === $variable_products ? 'variable' : 'variation' );
+			if ( false !== ( $key = array_search( $unset, $product_types ) ) ) {
+				unset( $product_types[ $key ] );
+			}
+		}
+
 		// Query args
 		$args = array(
 			'limit'   => -1,
 			'return'  => 'ids',
 			'orderby' => 'ID',
 			'order'   => 'ASC',
-			'type'    => array_merge( array_keys( wc_get_product_types() ), array( 'variation' ) ),
+			'type'    => $product_types,
 		);
+
 		// Product options
 		$product_options = false;
 		switch ( $action ) {
@@ -343,6 +232,7 @@ class Alg_WC_EAN_Tools {
 				}
 			}
 		}
+
 		// Query
 		return wc_get_products( $args );
 	}
@@ -412,59 +302,82 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 3.7.2
+	 * @version 3.9.0
 	 * @since   2.2.8
 	 *
 	 * @todo    [now] [!] (dev) merge with `products_create()`?
 	 * @todo    [now] [!] (dev) stop on first `update_post_meta`?
-	 * @todo    [next] (feature) `product_variation`: make it optional?
 	 */
 	function product_on_insert_post( $post_id, $post, $update ) {
 		$action = get_option( ( $update ? 'alg_wc_ean_tool_product_action_on_update' : 'alg_wc_ean_tool_product_action_on_new' ), '' );
 		if (
 			! empty( $action ) &&
 			in_array( $post->post_type, array( 'product', 'product_variation' ) ) &&
-			'' === get_post_meta( $post_id, alg_wc_ean()->core->ean_key, true ) &&
 			$this->is_valid_product( $post_id, $action )
 		) {
-			$ean = '';
-			switch ( $action ) {
-				case 'generate':
-					$data = $this->get_generate_data();
-					$ean  = $this->generate_ean( $post_id, $data );
-					break;
-				case 'copy_sku':
-					$ean = ( ( $product = wc_get_product( $post_id ) ) ? $product->get_sku() : get_post_meta( $post_id, '_sku', true ) );
-					break;
-				case 'copy_id':
-					$ean = $post_id;
-					break;
-				case 'copy_meta':
-					$data = array_replace( array( 'key' => '', 'sub_key' => '' ), get_option( 'alg_wc_ean_tool_product_copy_meta', array() ) );
-					if ( '' !== $data['key'] ) {
-						$ean = get_post_meta( $post_id, $data['key'], true );
-						if ( '' !== $data['sub_key'] ) {
-							$ean = ( isset( $ean[ $data['sub_key'] ] ) ? $ean[ $data['sub_key'] ] : '' );
-						}
-					}
-					break;
-				case 'assign_list':
-					$data = get_option( 'alg_wc_ean_tool_product_assign_list', '' );
-					if ( '' !== $data ) {
-						$data = array_map( 'trim', explode( PHP_EOL, $data ) );
-						$ean  = array_shift( $data );
-						update_option( 'alg_wc_ean_tool_product_assign_list', ( empty( $data ) ? '' : implode( PHP_EOL, $data ) ) );
-					}
-					break;
-			}
-			if ( '' !== $ean ) {
-				update_post_meta( $post_id, alg_wc_ean()->core->ean_key, $ean );
-				if ( 'generate' === $action && '' !== $data['product_attribute'] ) {
-					$this->add_product_attribute( $post_id, $ean, $data['product_attribute'] );
+			$product = wc_get_product( $post_id );
+			if ( 'all' !== ( $variable_products = get_option( 'alg_wc_ean_tool_product_variable', 'all' ) ) ) {
+				if (
+					( $product->is_type( 'variable' )  && 'variations_only' === $variable_products ) ||
+					( $product->is_type( 'variation' ) && 'variable_only'   === $variable_products )
+				) {
+					return;
 				}
-				// Prevent the new EAN from being overwritten by the variation's `input` field on the product edit page
-				if ( 'product_variation' === $post->post_type && isset( alg_wc_ean()->core->edit ) ) {
-					remove_action( 'woocommerce_save_product_variation', array( alg_wc_ean()->core->edit, 'save_ean_input_variation' ), 10 );
+			}
+			if ( '' === ( $current_ean = get_post_meta( $post_id, alg_wc_ean()->core->ean_key, true ) ) ) {
+				// Action: Generate, Copy from SKU/ID/meta, Assign from the list
+				$ean = '';
+				switch ( $action ) {
+					case 'generate':
+						$data = $this->get_generate_data();
+						$ean  = $this->generate_ean( $post_id, $data );
+						break;
+					case 'copy_sku':
+						$ean = ( $product ? $product->get_sku() : get_post_meta( $post_id, '_sku', true ) );
+						break;
+					case 'copy_id':
+						$ean = $post_id;
+						break;
+					case 'copy_meta':
+						$data = array_replace( array( 'key' => '', 'sub_key' => '' ), get_option( 'alg_wc_ean_tool_product_copy_meta', array() ) );
+						if ( '' !== $data['key'] ) {
+							$ean = get_post_meta( $post_id, $data['key'], true );
+							if ( '' !== $data['sub_key'] ) {
+								$ean = ( isset( $ean[ $data['sub_key'] ] ) ? $ean[ $data['sub_key'] ] : '' );
+							}
+						}
+						break;
+					case 'assign_list':
+						$data = get_option( 'alg_wc_ean_tool_product_assign_list', '' );
+						if ( '' !== $data ) {
+							$data = array_map( 'trim', explode( PHP_EOL, $data ) );
+							$ean  = array_shift( $data );
+							update_option( 'alg_wc_ean_tool_product_assign_list', ( empty( $data ) ? '' : implode( PHP_EOL, $data ) ) );
+						}
+						break;
+				}
+				if ( '' !== $ean ) {
+					update_post_meta( $post_id, alg_wc_ean()->core->ean_key, $ean );
+					if ( 'generate' === $action && '' !== $data['product_attribute'] ) {
+						$this->add_product_attribute( $post_id, $ean, $data['product_attribute'] );
+					}
+					// Prevent the new EAN from being overwritten by the variation's `input` field on the product edit page
+					if ( 'product_variation' === $post->post_type && isset( alg_wc_ean()->core->edit ) ) {
+						remove_action( 'woocommerce_save_product_variation', array( alg_wc_ean()->core->edit, 'save_ean_input_variation' ), 10 );
+					}
+				}
+			} else {
+				// Action: Copy to product SKU/attribute
+				switch ( $action ) {
+					case 'copy_to_sku':
+						update_post_meta( $post_id, '_sku', $current_ean );
+						break;
+					case 'copy_to_attr':
+						$data = get_option( 'alg_wc_ean_tool_product_copy_to_attr', array() );
+						if ( isset( $data['product_attribute'] ) && '' !== $data['product_attribute'] ) {
+							$this->add_product_attribute( $post_id, $current_ean, $data['product_attribute'] );
+						}
+						break;
 				}
 			}
 		}
@@ -476,6 +389,7 @@ class Alg_WC_EAN_Tools {
 	 * @version 3.7.2
 	 * @since   2.9.0
 	 *
+	 * @todo    [now] [!!] (dev) Copy to: do NOT overwrite?
 	 * @todo    [now] (dev) `array_shift()` vs `array_reverse()` + `array_pop()`?
 	 */
 	function process_action_for_all_products( $action ) {
@@ -498,6 +412,10 @@ class Alg_WC_EAN_Tools {
 					$data = array_map( 'trim', explode( PHP_EOL, $data ) );
 				}
 				break;
+			case 'copy_to_attr':
+				$data = get_option( 'alg_wc_ean_tool_product_copy_to_attr', array() );
+				$data['product_attribute'] = ( isset( $data['product_attribute'] ) ? $data['product_attribute'] : '' );
+				break;
 		}
 		// Product loop
 		$products = $this->get_products( $action );
@@ -505,12 +423,31 @@ class Alg_WC_EAN_Tools {
 		$count    = 0;
 		foreach ( $products as $product_id ) {
 			$current_ean = get_post_meta( $product_id, alg_wc_ean()->core->ean_key, true );
+			// Action: Get stats
 			if ( 'get_stats' === $action ) {
 				if ( '' === $current_ean ) {
 					$count++;
 				}
 				continue;
 			}
+			// Action: Copy to product SKU/attribute
+			if ( 'copy_to_sku' === $action ) {
+				if ( '' !== $current_ean ) {
+					if ( update_post_meta( $product_id, '_sku', $current_ean ) ) {
+						$count++;
+					}
+				}
+				continue;
+			}
+			if ( 'copy_to_attr' === $action && '' !== $data['product_attribute'] ) {
+				if ( '' !== $current_ean ) {
+					if ( $this->add_product_attribute( $product_id, $current_ean, $data['product_attribute'] ) ) {
+						$count++;
+					}
+				}
+				continue;
+			}
+			// Action: Generate, Copy from SKU/ID/meta, Assign from the list
 			if ( '' !== $current_ean ) {
 				continue;
 			}
@@ -567,7 +504,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * products_create.
 	 *
-	 * @version 3.7.0
+	 * @version 3.9.0
 	 * @since   2.1.0
 	 *
 	 * @todo    [now] (dev) message: "success/error" (i.e. check `$response['result']`)
@@ -575,8 +512,16 @@ class Alg_WC_EAN_Tools {
 	 * @todo    [maybe] (dev) better notice(s)?
 	 */
 	function products_create() {
-		$tools = array_replace( array( 'generate' => 'no', 'copy_sku' => 'no', 'copy_id' => 'no', 'copy_meta' => 'no', 'assign_list' => 'no', 'get_stats' => 'no'  ),
-			get_option( 'alg_wc_ean_tool_product', array() ) );
+		$tools = array_replace( array(
+			'generate'     => 'no',
+			'copy_sku'     => 'no',
+			'copy_id'      => 'no',
+			'copy_meta'    => 'no',
+			'assign_list'  => 'no',
+			'get_stats'    => 'no',
+			'copy_to_sku'  => 'no',
+			'copy_to_attr' => 'no',
+		), get_option( 'alg_wc_ean_tool_product', array() ) );
 		if ( in_array( 'yes', $tools ) ) {
 			delete_option( 'alg_wc_ean_tool_product' );
 			if ( current_user_can( 'manage_woocommerce' ) ) {
@@ -597,7 +542,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * add_product_attribute.
 	 *
-	 * @version 3.7.2
+	 * @version 3.9.0
 	 * @since   3.7.2
 	 *
 	 * @todo    [next] (feature) local (i.e. per product; non-taxonomy) product attribute
@@ -616,13 +561,13 @@ class Alg_WC_EAN_Tools {
 			'is_variation' => 0,
 			'is_taxonomy'  => 1,
 		);
-		update_post_meta( $product_id, '_product_attributes', $product_attributes );
+		return update_post_meta( $product_id, '_product_attributes', $product_attributes );
 	}
 
 	/**
 	 * get_generate_data.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.2.8
 	 *
 	 * @todo    [now] [!] (dev) `ISBN13`, `JAN`
@@ -688,8 +633,8 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * get_rand_prefix.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function get_rand_prefix( $from, $to, $length ) {
 		return str_pad( substr( rand( $from, $to ), 0, $length ), $length, '0', STR_PAD_LEFT );
@@ -698,8 +643,8 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * get_seed.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 *
 	 * @todo    [now] [!!] (dev) `counter`: (optional) max value?
 	 */
@@ -725,7 +670,7 @@ class Alg_WC_EAN_Tools {
 	/**
 	 * generate_ean.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.2.8
 	 */
 	function generate_ean( $product_id, $data ) {
@@ -757,4 +702,4 @@ class Alg_WC_EAN_Tools {
 
 endif;
 
-return new Alg_WC_EAN_Tools();
+return new Alg_WC_EAN_Product_Tools();

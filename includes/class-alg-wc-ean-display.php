@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -324,7 +324,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   1.0.0
 	 *
 	 * @todo    [now] (dev) template: shortcode vs placeholder?
@@ -343,7 +343,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_single.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.1.0
 	 */
 	function add_ean_single() {
@@ -353,7 +353,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_loop.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 *
 	 * @todo    [maybe] (feature) customizable template; position(s)?

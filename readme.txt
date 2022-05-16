@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 5.9
-Stable tag: 3.8.0
+Stable tag: 3.9.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -34,11 +34,13 @@ Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, Custom.
 
 Plugin has tools that will help you generate, copy, assign and delete EANs in bulk, automatically or periodically.
 
-* **Generate** EANs automatically with customizable EAN type, country prefix(es) and seed prefix.
-* **Copy** EANs from product **SKU**, product **ID** or product **meta**.
+* **Generate** EANs automatically with customizable EAN type, country prefix(es) and seed.
+* **Copy** EANs **from** product **SKU**, product **ID** or product **meta**.
 * **Assign** EANs from the predefined **list**.
 * **Delete** EANs for all products at once.
+* **Copy** EANs **to** product **SKU** or product **attribute**.
 * **Add** or **delete** EANs for all **orders** at once.
+* And more...
 
 ### &#129309; Compatibility ###
 
@@ -82,13 +84,16 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 
 == Changelog ==
 
-= 3.8.1 - 23/04/2022 =
-* Dev - Tools - Product Tools - Generate:
-    * "Seed" options added.
+= 3.9.0 - 16/05/2022 =
+* Dev - Tools - Product Tools:
+    * "Copy to product SKU" tool added.
+    * "Copy to product attribute" tool added.
+    * "Variable products" option added.
+    * Generate - "Seed" options added (defaults to "Product ID").
     * Admin settings descriptions updated.
     * Code refactoring.
 * Dev - Developers - `alg_wc_ean_display` filter added.
-* WC tested up to: 6.4.
+* WC tested up to: 6.5.
 
 = 3.8.0 - 07/04/2022 =
 * Dev - Compatibility:

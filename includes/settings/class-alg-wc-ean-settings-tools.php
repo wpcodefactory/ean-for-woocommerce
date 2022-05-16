@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -29,17 +29,19 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_product_actions_list.
 	 *
-	 * @version 2.9.0
+	 * @version 3.9.0
 	 * @since   2.9.0
 	 */
 	function get_product_actions_list() {
 		return array(
-			''            => __( 'Disabled', 'ean-for-woocommerce' ),
-			'generate'    => __( 'Generate', 'ean-for-woocommerce' ),
-			'copy_sku'    => __( 'Copy product SKU', 'ean-for-woocommerce' ),
-			'copy_id'     => __( 'Copy product ID', 'ean-for-woocommerce' ),
-			'copy_meta'   => __( 'Copy product meta', 'ean-for-woocommerce' ),
-			'assign_list' => __( 'Assign from the list', 'ean-for-woocommerce' ),
+			''             => __( 'Disabled', 'ean-for-woocommerce' ),
+			'generate'     => __( 'Generate', 'ean-for-woocommerce' ),
+			'copy_sku'     => __( 'Copy from product SKU', 'ean-for-woocommerce' ),
+			'copy_id'      => __( 'Copy from product ID', 'ean-for-woocommerce' ),
+			'copy_meta'    => __( 'Copy from product meta', 'ean-for-woocommerce' ),
+			'assign_list'  => __( 'Assign from the list', 'ean-for-woocommerce' ),
+			'copy_to_sku'  => __( 'Copy to product SKU', 'ean-for-woocommerce' ),
+			'copy_to_attr' => __( 'Copy to product attribute', 'ean-for-woocommerce' ),
 		);
 	}
 
@@ -72,12 +74,12 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_product_attributes.
 	 *
-	 * @version 3.7.2
+	 * @version 3.9.0
 	 * @since   3.7.2
 	 */
-	function get_product_attributes() {
+	function get_product_attributes( $none_title = false ) {
 		$options     = array();
-		$options[''] = esc_html__( 'Disable', 'ean-for-woocommerce' );
+		$options[''] = ( $none_title ? $none_title : esc_html__( 'Disable', 'ean-for-woocommerce' ) );
 		$taxonomies  = wc_get_attribute_taxonomies();
 		if ( ! empty( $taxonomies ) ) {
 			foreach ( $taxonomies as $tax ) {
@@ -92,7 +94,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.2.5
 	 *
 	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
@@ -214,21 +216,21 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'options'  => $this->get_product_attributes(),
 			),
 			array(
-				'title'    => __( 'Copy product SKU', 'ean-for-woocommerce' ),
+				'title'    => __( 'Copy from product SKU', 'ean-for-woocommerce' ),
 				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Copy EAN from product SKU for all products', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product[copy_sku]',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Copy product ID', 'ean-for-woocommerce' ),
+				'title'    => __( 'Copy from product ID', 'ean-for-woocommerce' ),
 				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Copy EAN from product ID for all products', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product[copy_id]',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Copy product meta', 'ean-for-woocommerce' ),
+				'title'    => __( 'Copy from product meta', 'ean-for-woocommerce' ),
 				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Copy EAN from product meta for all products', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product[copy_meta]',
 				'default'  => 'no',
@@ -290,12 +292,47 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
+				'title'    => __( 'Copy to product SKU', 'ean-for-woocommerce' ),
+				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Copy EAN to the product SKU for all products', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product[copy_to_sku]',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Copy to product attribute', 'ean-for-woocommerce' ),
+				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Copy EAN to the product attribute for all products', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product[copy_to_attr]',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Product attribute', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_copy_to_attr[product_attribute]',
+				'default'  => '',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => $this->get_product_attributes( __( 'Select attribute...', 'ean-for-woocommerce' ) ),
+			),
+			array(
 				'title'    => __( 'Get stats', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'This tool will not assign/delete any EANs, instead it will count how many products in your shop do not have EAN.', 'ean-for-woocommerce' ),
 				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Get stats', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product[get_stats]',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Variable products', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Sets how variable products should be handled in all product tools.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_variable',
+				'default'  => 'all',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'all'             => __( 'All (variable and variations)', 'ean-for-woocommerce' ),
+					'variations_only' => __( 'Variations only', 'ean-for-woocommerce' ),
+					'variable_only'   => __( 'Variable only', 'ean-for-woocommerce' ),
+				),
 			),
 			array(
 				'type'     => 'sectionend',
