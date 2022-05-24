@@ -296,7 +296,7 @@ msgid "Get barcode PDF"
 msgstr ""
 
 #: includes/pro/class-alg-wc-ean-print.php:246
-#: includes/settings/class-alg-wc-ean-settings-print.php:290
+#: includes/settings/class-alg-wc-ean-settings-print.php:292
 msgid "Variations"
 msgstr ""
 
@@ -419,10 +419,10 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-general.php:320
 #: includes/settings/class-alg-wc-ean-settings-general.php:337
 #: includes/settings/class-alg-wc-ean-settings-general.php:380
-#: includes/settings/class-alg-wc-ean-settings-print.php:304
-#: includes/settings/class-alg-wc-ean-settings-print.php:367
-#: includes/settings/class-alg-wc-ean-settings-print.php:375
-#: includes/settings/class-alg-wc-ean-settings-print.php:384
+#: includes/settings/class-alg-wc-ean-settings-print.php:306
+#: includes/settings/class-alg-wc-ean-settings-print.php:369
+#: includes/settings/class-alg-wc-ean-settings-print.php:377
+#: includes/settings/class-alg-wc-ean-settings-print.php:386
 msgid "Enable"
 msgstr ""
 
@@ -726,7 +726,7 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:153
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:215
 #: includes/settings/class-alg-wc-ean-settings-general.php:262
-#: includes/settings/class-alg-wc-ean-settings-print.php:260
+#: includes/settings/class-alg-wc-ean-settings-print.php:262
 msgid "Template"
 msgstr ""
 
@@ -860,12 +860,12 @@ msgid "Automatic"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:260
-#: includes/settings/class-alg-wc-ean-settings-print.php:383
+#: includes/settings/class-alg-wc-ean-settings-print.php:385
 msgid "Suppress errors"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:261
-#: includes/settings/class-alg-wc-ean-settings-print.php:384
+#: includes/settings/class-alg-wc-ean-settings-print.php:386
 msgid "recommended"
 msgstr ""
 
@@ -1412,32 +1412,31 @@ msgid "Page format: Custom: Height"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:121
-#: includes/settings/class-alg-wc-ean-settings-print.php:178
+#: includes/settings/class-alg-wc-ean-settings-print.php:179
 msgid "Cell width"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:122
-#: includes/settings/class-alg-wc-ean-settings-print.php:186
+#: includes/settings/class-alg-wc-ean-settings-print.php:187
 msgid "Cell height"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:123
-#: includes/settings/class-alg-wc-ean-settings-print.php:205
+#: includes/settings/class-alg-wc-ean-settings-print.php:207
 msgid "Top margin"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:124
-#: includes/settings/class-alg-wc-ean-settings-print.php:213
+#: includes/settings/class-alg-wc-ean-settings-print.php:215
 msgid "Left margin"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:125
-#: includes/settings/class-alg-wc-ean-settings-print.php:221
+#: includes/settings/class-alg-wc-ean-settings-print.php:223
 msgid "Right margin"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:126
-#: includes/settings/class-alg-wc-ean-settings-print.php:229
 msgid "Page break margin"
 msgstr ""
 
@@ -1449,12 +1448,12 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:145
 #: includes/settings/class-alg-wc-ean-settings-print.php:155
-#: includes/settings/class-alg-wc-ean-settings-print.php:179
-#: includes/settings/class-alg-wc-ean-settings-print.php:187
-#: includes/settings/class-alg-wc-ean-settings-print.php:206
-#: includes/settings/class-alg-wc-ean-settings-print.php:214
-#: includes/settings/class-alg-wc-ean-settings-print.php:222
-#: includes/settings/class-alg-wc-ean-settings-print.php:230
+#: includes/settings/class-alg-wc-ean-settings-print.php:180
+#: includes/settings/class-alg-wc-ean-settings-print.php:188
+#: includes/settings/class-alg-wc-ean-settings-print.php:208
+#: includes/settings/class-alg-wc-ean-settings-print.php:216
+#: includes/settings/class-alg-wc-ean-settings-print.php:224
+#: includes/settings/class-alg-wc-ean-settings-print.php:232
 #, php-format
 msgid "In %s."
 msgstr ""
@@ -1473,145 +1472,157 @@ msgstr ""
 msgid "Columns"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:194
+#: includes/settings/class-alg-wc-ean-settings-print.php:178
+msgid "Cell"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print.php:195
 msgid "Cell border"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:200
+#: includes/settings/class-alg-wc-ean-settings-print.php:201
 msgid "No"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:201
+#: includes/settings/class-alg-wc-ean-settings-print.php:202
 msgid "Yes"
 msgstr ""
 
+#: includes/settings/class-alg-wc-ean-settings-print.php:206
+msgid "Page margins"
+msgstr ""
+
 #: includes/settings/class-alg-wc-ean-settings-print.php:231
+msgid "Page break (i.e. bottom) margin"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print.php:233
 msgid ""
 "Distance from the bottom of the page that defines the automatic page "
 "breaking triggering limit."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:238
+#: includes/settings/class-alg-wc-ean-settings-print.php:240
 msgid "Font"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:239
+#: includes/settings/class-alg-wc-ean-settings-print.php:241
 #, php-format
 msgid ""
 "If you are having issues displaying your language specific letters, select "
 "\"%s\" font."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:253
+#: includes/settings/class-alg-wc-ean-settings-print.php:255
 msgid "Font size"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:261
+#: includes/settings/class-alg-wc-ean-settings-print.php:263
 #, php-format
 msgid "You should use shortcodes here: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:282
+#: includes/settings/class-alg-wc-ean-settings-print.php:284
 msgid "Style"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:283
+#: includes/settings/class-alg-wc-ean-settings-print.php:285
 msgid "Defines style information (CSS) for the labels."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:296
+#: includes/settings/class-alg-wc-ean-settings-print.php:298
 msgid "Do not include"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:297
+#: includes/settings/class-alg-wc-ean-settings-print.php:299
 #: includes/settings/class-alg-wc-ean-settings-tools.php:403
 msgid "Add"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:298
+#: includes/settings/class-alg-wc-ean-settings-print.php:300
 msgid "Replace"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:302
+#: includes/settings/class-alg-wc-ean-settings-print.php:304
 msgid "Use stock quantity"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:303
+#: includes/settings/class-alg-wc-ean-settings-print.php:305
 msgid "Print separate label for each product inventory item."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:319
+#: includes/settings/class-alg-wc-ean-settings-print.php:321
 msgid "Admin Options"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:324
+#: includes/settings/class-alg-wc-ean-settings-print.php:326
 msgid "Print buttons"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:330
+#: includes/settings/class-alg-wc-ean-settings-print.php:332
 msgid "Products > Bulk actions"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:331
-#: includes/settings/class-alg-wc-ean-settings-print.php:338
-#: includes/settings/class-alg-wc-ean-settings-print.php:346
+#: includes/settings/class-alg-wc-ean-settings-print.php:333
+#: includes/settings/class-alg-wc-ean-settings-print.php:340
+#: includes/settings/class-alg-wc-ean-settings-print.php:348
 msgid "Single product"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:332
-#: includes/settings/class-alg-wc-ean-settings-print.php:338
+#: includes/settings/class-alg-wc-ean-settings-print.php:334
+#: includes/settings/class-alg-wc-ean-settings-print.php:340
 msgid "Single order"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:336
+#: includes/settings/class-alg-wc-ean-settings-print.php:338
 #, php-format
 msgid "Print buttons style, e.g. %s"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:337
+#: includes/settings/class-alg-wc-ean-settings-print.php:339
 #, php-format
 msgid "Applied to the \"%s\" and \"%s\" print buttons."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:344
+#: includes/settings/class-alg-wc-ean-settings-print.php:346
 msgid "Variations print buttons"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:345
+#: includes/settings/class-alg-wc-ean-settings-print.php:347
 #, php-format
 msgid "Applied to the \"%s\" print buttons."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:352
+#: includes/settings/class-alg-wc-ean-settings-print.php:354
 msgid "Variations tab"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:353
+#: includes/settings/class-alg-wc-ean-settings-print.php:355
 msgid "Meta box"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:361
+#: includes/settings/class-alg-wc-ean-settings-print.php:363
 msgid "Advanced Print Options"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:366
+#: includes/settings/class-alg-wc-ean-settings-print.php:368
 msgid "Skip products without EAN"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:368
+#: includes/settings/class-alg-wc-ean-settings-print.php:370
 msgid "Skip products without EAN when generating PDF."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:374
+#: includes/settings/class-alg-wc-ean-settings-print.php:376
 msgid "Use Print.js"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:376
+#: includes/settings/class-alg-wc-ean-settings-print.php:378
 #, php-format
 msgid "Use %s library for printing PDFs."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:385
+#: includes/settings/class-alg-wc-ean-settings-print.php:387
 msgid "Suppress PHP errors when generating PDF."
 msgstr ""
 

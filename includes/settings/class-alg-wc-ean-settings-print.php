@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 3.8.0
+ * @version 3.9.1
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.8.0
+	 * @version 3.9.1
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
@@ -175,7 +175,8 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 1 ),
 			),
 			array(
-				'title'    => __( 'Cell width', 'ean-for-woocommerce' ),
+				'title'    => __( 'Cell', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Cell width', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_width]',
 				'default'  => 4,
@@ -183,7 +184,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 0.000001, 'step' => 0.000001 ),
 			),
 			array(
-				'title'    => __( 'Cell height', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Cell height', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_height]',
 				'default'  => 1.5,
@@ -191,7 +192,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 0.000001, 'step' => 0.000001 ),
 			),
 			array(
-				'title'    => __( 'Cell border', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Cell border', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_border]',
 				'default'  => 0,
 				'type'     => 'select',
@@ -202,7 +203,8 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				),
 			),
 			array(
-				'title'    => __( 'Top margin', 'ean-for-woocommerce' ),
+				'title'    => __( 'Page margins', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Top margin', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[margin_top]',
 				'default'  => 1.13,
@@ -210,7 +212,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 0, 'step' => 0.000001 ),
 			),
 			array(
-				'title'    => __( 'Left margin', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Left margin', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[margin_left]',
 				'default'  => 0.46,
@@ -218,7 +220,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 0, 'step' => 0.000001 ),
 			),
 			array(
-				'title'    => __( 'Right margin', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Right margin', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[margin_right]',
 				'default'  => 0.31,
@@ -226,7 +228,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 0, 'step' => 0.000001 ),
 			),
 			array(
-				'title'    => __( 'Page break margin', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Page break (i.e. bottom) margin', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ) . '<br><br>' .
 					__( 'Distance from the bottom of the page that defines the automatic page breaking triggering limit.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[page_break_margin]',
