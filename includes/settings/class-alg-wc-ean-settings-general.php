@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 3.8.0
+ * @version 3.9.2
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,11 +87,12 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.8.0
+	 * @version 3.9.2
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
 	 *
+	 * @todo    [now] [!!!] (desc) `alg_wc_ean_backend_add_generate_button`
 	 * @todo    [now] [!!] (dev) `alg_wc_ean_order_items_table_templates`: translate?
 	 * @todo    [now] [!!] (dev) deprecate placeholders
 	 * @todo    [now] [!] (dev) `alg_wc_ean_type`: rename `C128` to `CUSTOM`
@@ -201,6 +202,14 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'desc'     => __( 'Check if unique', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'This will check if product EAN is unique in your shop.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_backend_is_unique',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => '',
+			),
+			array(
+				'desc'     => __( 'Add "Generate" button', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This will add "Generate" button to the admin product edit pages.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_backend_add_generate_button',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 				'checkboxgroup' => 'end',

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -670,13 +670,21 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * generate_ean.
 	 *
-	 * @version 3.9.0
+	 * @version 3.9.2
 	 * @since   2.2.8
 	 */
 	function generate_ean( $product_id, $data ) {
-		$prefix = ( $data['is_rand_prefix'] ? $this->get_rand_prefix( $data['prefix']['from'], $data['prefix']['to'], $data['prefix_length'] ) : $data['prefix'] );
-		$seed   = $this->get_seed( $data['seed_method'], $data['seed_length'], array( 'product_id' => $product_id ) );
-		$ean    = $prefix . $data['seed_prefix'] . $seed;
+
+		$prefix      = ( $data['is_rand_prefix'] ? $this->get_rand_prefix( $data['prefix']['from'], $data['prefix']['to'], $data['prefix_length'] ) : $data['prefix'] );
+		$prefix      = apply_filters( 'alg_wc_ean_product_tools_generate_ean_country_prefix', $prefix, $product_id );
+
+		$seed_prefix = apply_filters( 'alg_wc_ean_product_tools_generate_ean_seed_prefix', $data['seed_prefix'], $product_id );
+
+		$seed        = $this->get_seed( $data['seed_method'], $data['seed_length'], array( 'product_id' => $product_id ) );
+		$seed        = apply_filters( 'alg_wc_ean_product_tools_generate_ean_seed', $seed, $product_id );
+
+		$ean         = $prefix . $seed_prefix . $seed;
+
 		return $ean . $this->get_checksum( $ean );
 	}
 

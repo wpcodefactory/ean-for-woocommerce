@@ -84,6 +84,14 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 
 == Changelog ==
 
+= 3.9.2 - 03/06/2022 =
+* Dev - General - Admin product edit page - 'Add "Generate" button' option added.
+* Dev - Shortcodes - `[alg_wc_ean_product_author_id]` shortcode added.
+* Dev - Developers - Tools - Product Tools - Generate:
+    * `alg_wc_ean_product_tools_generate_ean_country_prefix` filter added.
+    * `alg_wc_ean_product_tools_generate_ean_seed_prefix` filter added.
+    * `alg_wc_ean_product_tools_generate_ean_seed` filter added.
+
 = 3.9.1 - 24/05/2022 =
 * Dev - Print - Admin settings rearranged.
 * Tested up to: 6.0.

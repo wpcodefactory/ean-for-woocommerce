@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 3.8.0
+ * @version 3.9.2
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,22 +17,98 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.2
 	 * @since   2.0.0
 	 */
 	function __construct() {
 		if ( is_admin() && apply_filters( 'alg_wc_ean_edit', true ) ) {
+
 			// Admin product edit page
 			add_action( get_option( 'alg_wc_ean_backend_position', 'woocommerce_product_options_sku' ), array( $this, 'add_ean_input' ) );
-			add_action( 'save_post_product',                                                            array( $this, 'save_ean_input' ), 10, 2 );
+			add_action( 'save_post_product', array( $this, 'save_ean_input' ), 10, 2 );
+
 			// Variations
 			add_action( 'woocommerce_variation_options_pricing', array( $this, 'add_ean_input_variation' ), 10, 3 );
-			add_action( 'woocommerce_save_product_variation',    array( $this, 'save_ean_input_variation' ), 10, 2 );
+			add_action( 'woocommerce_save_product_variation', array( $this, 'save_ean_input_variation' ), 10, 2 );
+
 			// Quick and Bulk edit
-			add_action( 'woocommerce_product_quick_edit_end',      array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
-			add_action( 'woocommerce_product_bulk_edit_end',       array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
+			add_action( 'woocommerce_product_quick_edit_end', array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
+			add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
 			add_action( 'woocommerce_product_bulk_and_quick_edit', array( $this, 'save_bulk_and_quick_edit_fields' ), PHP_INT_MAX, 2 );
+
+			// "Generate" button
+			$this->add_generate_button = ( 'yes' === get_option( 'alg_wc_ean_backend_add_generate_button', 'no' ) );
+			if ( $this->add_generate_button ) {
+				add_action( 'admin_footer', array( $this, 'generate_button_script' ) );
+				add_action( 'wp_ajax_alg_wc_ean_generate_ajax', array( $this, 'generate_button_ajax' ) );
+			}
+
 		}
+	}
+
+	/**
+	 * generate_button_script.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 *
+	 * @todo    [now] [!!!] (dev) WCFM
+	 * @todo    [now] [!!!] (dev) add spinner
+	 * @todo    [now] [!!!] (dev) recheck `return false;`
+	 * @todo    [now] [!!!] (dev) recheck `ajaxurl`
+	 * @todo    [now] [!!!] (dev) use `admin_enqueue_scripts`?
+	 */
+	function generate_button_script() {
+		?><script type="text/javascript" >
+			jQuery( document ).ready( function () {
+				jQuery( 'body' ).on( 'click', '.alg_wc_ean_generate_ajax', function () {
+					var data = {
+						'action':  'alg_wc_ean_generate_ajax',
+						'product': jQuery( this ).data( 'product' ),
+						'input' :  jQuery( this ).data( 'input' ),
+					};
+					jQuery.post( ajaxurl, data, function( response ) {
+						if ( response ) {
+							jQuery( '#' + data['input'] ).val( response );
+						}
+					} );
+					return false;
+				} );
+			} );
+		</script> <?php
+	}
+
+	/**
+	 * generate_button_ajax.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function generate_button_ajax() {
+		echo alg_wc_ean()->core->product_tools->generate_ean( intval( $_POST['product'] ), alg_wc_ean()->core->product_tools->get_generate_data() );
+		die();
+	}
+
+	/**
+	 * get_generate_button.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function get_generate_button( $product_id, $input_html_id, $do_wrap_in_p = false ) {
+		return ( $this->add_generate_button ?
+			( $do_wrap_in_p ? '<p>' : '' ) .
+				'<button' .
+					' type="button"' .
+					' class="button' .
+					' alg_wc_ean_generate_ajax"' .
+					' data-product="' . $product_id . '"' .
+					' data-input="' . $input_html_id . '"' .
+				'>' .
+					sprintf( esc_html__( 'Generate %s', 'ean-for-woocommerce' ), get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) ) ) .
+				'</button>' .
+			( $do_wrap_in_p ? '</p>' : '' ) :
+			'' );
 	}
 
 	/**
@@ -131,7 +207,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_ean_input_variation.
 	 *
-	 * @version 2.4.0
+	 * @version 3.9.2
 	 * @since   1.0.0
 	 */
 	function add_ean_input_variation( $loop, $variation_data, $variation ) {
@@ -143,7 +219,8 @@ class Alg_WC_EAN_Edit {
 			'label'             => esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
 			'wrapper_class'     => 'form-row form-row-full',
 			'placeholder'       => alg_wc_ean()->core->get_ean( $variation->post_parent ),
-			'description'       => ( ! empty( $variation_data[ $key ][0] ) ? $this->get_ean_input_desc( $variation_data[ $key ][0], $variation->ID ) : '' ),
+			'description'       => ( ! empty( $variation_data[ $key ][0] ) ? $this->get_ean_input_desc( $variation_data[ $key ][0], $variation->ID ) :
+				$this->get_generate_button( $variation->ID, "variable{$key}_{$loop}", true ) ),
 			'custom_attributes' => $this->get_ean_input_pattern( $variation->ID ),
 		) );
 	}
@@ -164,7 +241,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_ean_input.
 	 *
-	 * @version 2.4.0
+	 * @version 3.9.2
 	 * @since   1.0.0
 	 */
 	function add_ean_input() {
@@ -174,7 +251,8 @@ class Alg_WC_EAN_Edit {
 			'id'                => alg_wc_ean()->core->ean_key,
 			'value'             => $value,
 			'label'             => esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
-			'description'       => ( ! empty( $value ) ? $this->get_ean_input_desc( $value, $product_id ) : '' ),
+			'description'       => ( ! empty( $value ) ? $this->get_ean_input_desc( $value, $product_id ) :
+				$this->get_generate_button( $product_id, alg_wc_ean()->core->ean_key ) ),
 			'custom_attributes' => $this->get_ean_input_pattern( $product_id ),
 		) );
 	}

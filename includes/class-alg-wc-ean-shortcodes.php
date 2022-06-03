@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 3.6.0
+ * @version 3.9.2
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.2
 	 * @since   3.5.0
 	 *
 	 * @todo    [maybe] (feature) add `[alg_wc_ean_type]` shortcode?
@@ -25,15 +25,16 @@ class Alg_WC_EAN_Shortcodes {
 	function __construct() {
 		$this->data = array();
 		// Shortcodes
-		add_shortcode( 'alg_wc_ean',                  array( $this, 'ean_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_attr',     array( $this, 'product_attr_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_image',    array( $this, 'product_image_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_name',     array( $this, 'product_name_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_sku',      array( $this, 'product_sku_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_price',    array( $this, 'product_price_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_id',       array( $this, 'product_id_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_meta',     array( $this, 'product_meta_shortcode' ) );
-		add_shortcode( 'alg_wc_ean_product_function', array( $this, 'product_function_shortcode' ) );
+		add_shortcode( 'alg_wc_ean',                   array( $this, 'ean_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_attr',      array( $this, 'product_attr_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_image',     array( $this, 'product_image_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_name',      array( $this, 'product_name_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_sku',       array( $this, 'product_sku_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_price',     array( $this, 'product_price_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_id',        array( $this, 'product_id_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_author_id', array( $this, 'product_author_id_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_meta',      array( $this, 'product_meta_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_product_function',  array( $this, 'product_function_shortcode' ) );
 	}
 
 	/**
@@ -350,6 +351,40 @@ class Alg_WC_EAN_Shortcodes {
 		// Result
 		$product_id = $this->get_shortcode_att( 'product_id', $atts, get_the_ID() );
 		$result     = ( 'yes' === $atts['parent'] && 0 != ( $product_parent_id = wp_get_post_parent_id ( $product_id ) ) ? $product_parent_id : $product_id );
+
+		return $this->output( $result, $atts );
+	}
+
+	/**
+	 * product_author_id_shortcode.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function product_author_id_shortcode( $atts, $content = '' ) {
+
+		// Atts
+		$default_atts = array(
+			'product_id' => false,
+			'min_length' => 0,
+			'before'     => '',
+			'after'      => '',
+			'on_empty'   => '',
+			'parent'     => 'no',
+		);
+		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean_product_author_id' );
+
+		// Product ID
+		if ( ! ( $product_id = $this->get_shortcode_att( 'product_id', $atts, get_the_ID() ) ) ) {
+			return '';
+		}
+		$product_id = ( 'yes' === $atts['parent'] && 0 != ( $product_parent_id = wp_get_post_parent_id ( $product_id ) ) ? $product_parent_id : $product_id );
+
+		// Author ID
+		$result = get_post_field( 'post_author', $product_id );
+		if ( ! empty( $atts['min_length'] ) ) {
+			$result = str_pad( $result, $atts['min_length'], '0', STR_PAD_LEFT );
+		}
 
 		return $this->output( $result, $atts );
 	}
