@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Settings
  *
- * @version 3.8.0
+ * @version 4.0.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,28 +17,44 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 4.0.0
 	 * @since   1.0.0
 	 */
 	function __construct() {
 		$this->id    = 'alg_wc_ean';
 		$this->label = apply_filters( 'alg_wc_ean_settings_page_label', __( 'EAN', 'ean-for-woocommerce' ) );
 		parent::__construct();
-		// Sections
+
+		// Sections: EAN
 		require_once( 'class-alg-wc-ean-settings-section.php' );
 		require_once( 'class-alg-wc-ean-settings-general.php' );
 		require_once( 'class-alg-wc-ean-settings-tools.php' );
 		require_once( 'class-alg-wc-ean-settings-compatibility.php' );
+
+		// Sections: Barcodes
 		require_once( 'class-alg-wc-ean-settings-barcodes.php' );
 		require_once( 'class-alg-wc-ean-settings-barcodes-compatibility.php' );
 		new Alg_WC_EAN_Settings_Barcodes( '1d' );
 		new Alg_WC_EAN_Settings_Barcodes_Compatibility( '1d' );
 		new Alg_WC_EAN_Settings_Barcodes( '2d' );
 		new Alg_WC_EAN_Settings_Barcodes_Compatibility( '2d' );
+
+		// Sections: Print
 		require_once( 'class-alg-wc-ean-settings-print.php' );
+
+		// Sections: Advanced
 		require_once( 'class-alg-wc-ean-settings-advanced.php' );
+
+		// Sections: Extra fields
+		require_once( 'class-alg-wc-ean-settings-extra-fields.php' );
+		require_once( 'class-alg-wc-ean-settings-extra-field.php' );
+		for ( $i = 1; $i <= get_option( 'alg_wc_ean_extra_fields_num_total', 0 ); $i++ ) {
+			new Alg_WC_EAN_Settings_Extra_Field( $i );
+		}
+
 		// Custom fields
 		add_action( 'woocommerce_admin_field_' . 'alg_wc_ean_file', array( $this, 'alg_wc_ean_file' ) );
+
 	}
 
 	/**
@@ -146,14 +162,27 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 	/**
 	 * save.
 	 *
-	 * @version 2.1.0
+	 * @version 4.0.0
 	 * @since   1.0.0
+	 *
+	 * @todo    [next] (dev) `wp_safe_redirect`: better solution?
 	 */
 	function save() {
-		parent::save();
-		$this->maybe_reset_settings();
+
 		global $current_section;
+
+		parent::save();
+
+		$this->maybe_reset_settings();
+
 		do_action( 'alg_wc_ean_settings_saved', $current_section );
+
+		$_section = 'extra_field';
+		if ( 'advanced' === $current_section || $_section === substr( $current_section, 0, strlen( $_section ) ) ) {
+			wp_safe_redirect( add_query_arg( array() ) );
+			exit;
+		}
+
 	}
 
 }

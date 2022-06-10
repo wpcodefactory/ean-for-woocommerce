@@ -20,7 +20,7 @@ class Alg_WC_EAN_Display {
 	 * @version 3.7.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [now] [!!] (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php` or `class-alg-wc-ean-admin.php`?
+	 * @todo    [next] (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php` or `class-alg-wc-ean-admin.php`?
 	 * @todo    [next] (dev) remove `! is_admin()` and `is_admin()`?
 	 * @todo    [next] (feature) frontend: customizable position and template for loop, cart, etc. (now implemented for "single product page" only)
 	 * @todo    [later] frontend: order?
@@ -76,8 +76,8 @@ class Alg_WC_EAN_Display {
 	 *
 	 * @see     https://wordpress.org/plugins/seo-by-rank-math/
 	 *
-	 * @todo    [now] (dev) simplify?
-	 * @todo    [now] (dev) move to the "Compatibility" class (and settings section)?
+	 * @todo    [next] (dev) simplify?
+	 * @todo    [next] (dev) move to the "Compatibility" class (and settings section)?
 	 */
 	function add_ean_to_product_structured_data_rank_math_seo( $data, $json_ld = false ) {
 		if (
@@ -102,8 +102,8 @@ class Alg_WC_EAN_Display {
 	 * @version 3.0.0
 	 * @since   3.0.0
 	 *
-	 * @todo    [now] (dev) make this optional? (same for barcodes)
-	 * @todo    [now] (dev) load only on `edit.php?post_type=product` etc.? (same for barcodes)
+	 * @todo    [next] (dev) make this optional? (same for barcodes)
+	 * @todo    [next] (dev) load only on `edit.php?post_type=product` etc.? (same for barcodes)
 	 */
 	function product_columns_style() {
 		?><style>
@@ -230,7 +230,7 @@ class Alg_WC_EAN_Display {
 	 * @see     https://schema.org/Product
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L328
 	 *
-	 * @todo    [now] (dev) what to do if there is no markup data? see: https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L324
+	 * @todo    [next] (dev) what to do if there is no markup data? see: https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L324
 	 * @todo    [next] (dev) maybe always use `gtin` (... all-numeric string of either 8, 12, 13 or 14 digits...)
 	 * @todo    [next] (dev) `default` (`C128`): maybe no markup then?
 	 */
@@ -327,7 +327,7 @@ class Alg_WC_EAN_Display {
 	 * @version 3.9.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [now] (dev) template: shortcode vs placeholder?
+	 * @todo    [next] (dev) template: shortcode vs placeholder?
 	 * @todo    [maybe] customizable wrapping HTML (same for all frontend/backend options) - `ean` class must be present though (for the variations' JS)
 	 * @todo    [maybe] `esc_html__( 'N/A', 'ean-for-woocommerce' )`
 	 */

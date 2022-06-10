@@ -22,8 +22,8 @@ class Alg_WC_EAN_REST_API {
 	 *
 	 * @see     https://woocommerce.github.io/woocommerce-rest-api-docs/
 	 *
-	 * @todo    [now] [!!] (feature) `create_product`
-	 * @todo    [now] [!!] (feature) `create_order`
+	 * @todo    [next] (feature) `create_product`
+	 * @todo    [next] (feature) `create_order`
 	 */
 	function __construct() {
 
@@ -53,7 +53,7 @@ class Alg_WC_EAN_REST_API {
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php#L340
 	 *
-	 * @todo    [now] [!!] (dev) use `meta_query` instead?
+	 * @todo    [next] (dev) use `meta_query` instead?
 	 */
 	function product_search( $args, $request ) {
 		if ( isset( $request['ean'] ) ) {

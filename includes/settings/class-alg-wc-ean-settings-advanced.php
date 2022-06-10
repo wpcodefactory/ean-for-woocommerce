@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Advanced Section Settings
  *
- * @version 3.1.0
+ * @version 4.0.0
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,11 +29,11 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.1.0
+	 * @version 4.0.0
 	 * @since   2.2.9
 	 *
-	 * @todo    [now] [!] (dev) Import/Export: move to "Tools", and/or add dashicons?
-	 * @todo    [now] [!] (desc) `alg_wc_ean_meta_key`
+	 * @todo    [next] (dev) Import/Export: move to "Tools", and/or add dashicons?
+	 * @todo    [next] (desc) `alg_wc_ean_meta_key`
 	 * @todo    [later] (desc) `alg_wc_ean_js_variations_form_closest`: better desc
 	 */
 	function get_settings() {
@@ -73,13 +73,13 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_advanced_options',
 			),
 			array(
-				'title'    => __( 'Export/Import Plugin Settings', 'ean-for-woocommerce' ),
+				'title'    => __( 'Export/Import/Reset Plugin Settings', 'ean-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_ean_export_import_settings_options',
 			),
 			array(
 				'title'    => __( 'Export', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Export', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Export all settings', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'Check the box and "Save changes" to export.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_export_settings',
 				'default'  => 'no',
@@ -90,6 +90,14 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 				'desc'     => __( 'Choose file and "Save changes" to import.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_import_settings',
 				'type'     => 'alg_wc_ean_file',
+			),
+			array(
+				'title'    => __( 'Reset', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Reset all settings', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Check the box and "Save changes" to reset.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_reset_settings',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',

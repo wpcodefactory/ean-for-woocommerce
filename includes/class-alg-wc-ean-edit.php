@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.0.0
 	 */
 	function __construct() {
@@ -37,9 +37,9 @@ class Alg_WC_EAN_Edit {
 			add_action( 'woocommerce_product_bulk_and_quick_edit', array( $this, 'save_bulk_and_quick_edit_fields' ), PHP_INT_MAX, 2 );
 
 			// "Generate" button
-			$this->add_generate_button = ( 'yes' === get_option( 'alg_wc_ean_backend_add_generate_button', 'no' ) );
-			if ( $this->add_generate_button ) {
-				add_action( 'admin_footer', array( $this, 'generate_button_script' ) );
+			$this->do_add_generate_button = ( 'yes' === get_option( 'alg_wc_ean_backend_add_generate_button', 'no' ) );
+			if ( $this->do_add_generate_button ) {
+				add_action( 'admin_footer', array( $this, 'add_generate_button' ) );
 				add_action( 'wp_ajax_alg_wc_ean_generate_ajax', array( $this, 'generate_button_ajax' ) );
 			}
 
@@ -47,44 +47,59 @@ class Alg_WC_EAN_Edit {
 	}
 
 	/**
-	 * generate_button_script.
+	 * add_generate_button.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
-	 *
-	 * @todo    [now] [!!!] (dev) WCFM
-	 * @todo    [now] [!!!] (dev) add spinner
-	 * @todo    [now] [!!!] (dev) recheck `return false;`
-	 * @todo    [now] [!!!] (dev) recheck `ajaxurl`
-	 * @todo    [now] [!!!] (dev) use `admin_enqueue_scripts`?
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
-	function generate_button_script() {
-		?><script type="text/javascript" >
+	function add_generate_button() {
+		if ( is_admin() && function_exists( 'get_current_screen' ) && ( $screen = get_current_screen() ) && 'product' === $screen->post_type ) {
+			$this->generate_button_js();
+		}
+	}
+
+	/**
+	 * generate_button_js.
+	 *
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 *
+	 * @todo    [next] (dev) static? (3x)
+	 * @todo    [next] (dev) recheck `return false;`
+	 * @todo    [next] (dev) recheck `ajaxurl`
+	 * @todo    [next] (dev) use `admin_enqueue_scripts`?
+	 */
+	static function generate_button_js() {
+		?><script>
 			jQuery( document ).ready( function () {
 				jQuery( 'body' ).on( 'click', '.alg_wc_ean_generate_ajax', function () {
+					var product = jQuery( this ).data( 'product' )
+					var input   = jQuery( this ).data( 'input' );
+					jQuery( '#spinner-' + input ).addClass( 'is-active' );
 					var data = {
 						'action':  'alg_wc_ean_generate_ajax',
-						'product': jQuery( this ).data( 'product' ),
-						'input' :  jQuery( this ).data( 'input' ),
+						'product': product,
+						'input' :  input,
 					};
 					jQuery.post( ajaxurl, data, function( response ) {
 						if ( response ) {
 							jQuery( '#' + data['input'] ).val( response );
 						}
+						jQuery( '#spinner-' + data['input'] ).removeClass( 'is-active' );
 					} );
 					return false;
 				} );
 			} );
-		</script> <?php
+		</script><?php
 	}
 
 	/**
 	 * generate_button_ajax.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
-	function generate_button_ajax() {
+	static function generate_button_ajax() {
 		echo alg_wc_ean()->core->product_tools->generate_ean( intval( $_POST['product'] ), alg_wc_ean()->core->product_tools->get_generate_data() );
 		die();
 	}
@@ -92,23 +107,24 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * get_generate_button.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 *
+	 * @todo    [next] (dev) spinner: styling?
+	 * @todo    [next] (dev) spinner: `float: none;`?
+	 * @todo    [next] (dev) spinner: wcfm
 	 */
-	function get_generate_button( $product_id, $input_html_id, $do_wrap_in_p = false ) {
-		return ( $this->add_generate_button ?
-			( $do_wrap_in_p ? '<p>' : '' ) .
-				'<button' .
-					' type="button"' .
-					' class="button' .
-					' alg_wc_ean_generate_ajax"' .
-					' data-product="' . $product_id . '"' .
-					' data-input="' . $input_html_id . '"' .
-				'>' .
-					sprintf( esc_html__( 'Generate %s', 'ean-for-woocommerce' ), get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) ) ) .
-				'</button>' .
-			( $do_wrap_in_p ? '</p>' : '' ) :
-			'' );
+	static function get_generate_button( $product_id, $input_html_id ) {
+		return '<button' .
+				' type="button"' .
+				' class="button' .
+				' alg_wc_ean_generate_ajax"' .
+				' data-product="' . $product_id . '"' .
+				' data-input="' . $input_html_id . '"' .
+			'>' .
+				sprintf( esc_html__( 'Generate %s', 'ean-for-woocommerce' ), get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) ) ) .
+			'</button>' .
+			'<span class="spinner" id="spinner-' . $input_html_id . '" style="float:none;"></span>';
 	}
 
 	/**
@@ -161,6 +177,8 @@ class Alg_WC_EAN_Edit {
 	 *
 	 * @version 3.6.0
 	 * @since   1.0.1
+	 *
+	 * @todo    [next] (dev) replace `style` with `class`
 	 */
 	function get_ean_input_desc( $ean, $product_id = false ) {
 		$desc = array();
@@ -207,8 +225,10 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_ean_input_variation.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   1.0.0
+	 *
+	 * @todo    [next] (dev) `variable{$key}` to `variable_{$key}`?
 	 */
 	function add_ean_input_variation( $loop, $variation_data, $variation ) {
 		$key = alg_wc_ean()->core->ean_key;
@@ -220,7 +240,7 @@ class Alg_WC_EAN_Edit {
 			'wrapper_class'     => 'form-row form-row-full',
 			'placeholder'       => alg_wc_ean()->core->get_ean( $variation->post_parent ),
 			'description'       => ( ! empty( $variation_data[ $key ][0] ) ? $this->get_ean_input_desc( $variation_data[ $key ][0], $variation->ID ) :
-				$this->get_generate_button( $variation->ID, "variable{$key}_{$loop}", true ) ),
+				( $this->do_add_generate_button ? '<p>' . $this->get_generate_button( $variation->ID, "variable{$key}_{$loop}" ) . '</p>' : '' ) ),
 			'custom_attributes' => $this->get_ean_input_pattern( $variation->ID ),
 		) );
 	}
@@ -241,7 +261,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_ean_input.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   1.0.0
 	 */
 	function add_ean_input() {
@@ -252,7 +272,7 @@ class Alg_WC_EAN_Edit {
 			'value'             => $value,
 			'label'             => esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
 			'description'       => ( ! empty( $value ) ? $this->get_ean_input_desc( $value, $product_id ) :
-				$this->get_generate_button( $product_id, alg_wc_ean()->core->ean_key ) ),
+				( $this->do_add_generate_button ? $this->get_generate_button( $product_id, alg_wc_ean()->core->ean_key ) : '' ) ),
 			'custom_attributes' => $this->get_ean_input_pattern( $product_id ),
 		) );
 	}

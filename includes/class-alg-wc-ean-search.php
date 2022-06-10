@@ -20,7 +20,7 @@ class Alg_WC_EAN_Search {
 	 * @version 2.1.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [now] (dev) Flatsome to `class-alg-wc-ean-compatibility.php`?
+	 * @todo    [next] (dev) Flatsome to `class-alg-wc-ean-compatibility.php`?
 	 * @todo    [next] (dev) remove `! is_admin()` and `is_admin()`?
 	 * @todo    [next] (dev) `alg_wc_ean_frontend_search_ajax_flatsome`: better solution?
 	 * @todo    [later] search by EAN in "New Order"?

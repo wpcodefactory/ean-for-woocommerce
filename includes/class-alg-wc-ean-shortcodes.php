@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.5.0
 	 *
 	 * @todo    [maybe] (feature) add `[alg_wc_ean_type]` shortcode?
@@ -288,8 +288,8 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.5.0
 	 * @since   3.5.0
 	 *
-	 * @todo    [now] [!] (dev) `sale`: do we really need to use `get_regular_price()` as a fallback?
-	 * @todo    [now] [!] (desc) `sale` and `regular` prices won't work for a) variable products, b) parent of a variation
+	 * @todo    [next] (dev) `sale`: do we really need to use `get_regular_price()` as a fallback?
+	 * @todo    [next] (desc) `sale` and `regular` prices won't work for a) variable products, b) parent of a variation
 	 */
 	function product_price_shortcode( $atts, $content = '' ) {
 
@@ -358,8 +358,8 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * product_author_id_shortcode.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function product_author_id_shortcode( $atts, $content = '' ) {
 
@@ -395,9 +395,9 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.5.0
 	 * @since   2.7.0
 	 *
-	 * @todo    [now] [!!] (feature) multiple attributes (comma-separated)
-	 * @todo    [now] [!!] (feature) all attributes at once (maybe use `WC_Product::get_attributes()`?
-	 * @todo    [now] [!!] (feature) all attributes starting with X
+	 * @todo    [next] (feature) multiple attributes (comma-separated)
+	 * @todo    [next] (feature) all attributes at once (maybe use `WC_Product::get_attributes()`?
+	 * @todo    [next] (feature) all attributes starting with X
 	 */
 	function product_attr_shortcode( $atts, $content = '' ) {
 
@@ -432,7 +432,7 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.6.0
 	 * @since   1.5.1
 	 *
-	 * @todo    [now] [!!] (feature) `parent`? (same for barcodes)
+	 * @todo    [next] (feature) `parent`? (same for barcodes)
 	 * @todo    [maybe] (dev) check if valid?
 	 * @todo    [maybe] (feature) add `children` attribute to all shortcodes, e.g. `product_attr_shortcode()`
 	 */

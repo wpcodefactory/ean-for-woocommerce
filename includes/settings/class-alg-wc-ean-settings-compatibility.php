@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 3.8.0
+ * @version 4.0.0
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,8 +29,10 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.8.0
+	 * @version 4.0.0
 	 * @since   2.2.9
+	 *
+	 * @todo    [next] (desc) `alg_wc_ean_wcfm_add_generate_button`: better desc?
 	 */
 	function get_settings() {
 		return array(
@@ -201,6 +203,14 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'default'  => __( 'The International Article Number (also known as European Article Number or EAN) is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.', 'ean-for-woocommerce' ),
 				'type'     => 'textarea',
 				'css'      => 'height:110px;',
+			),
+			array(
+				'desc'     => __( 'Add "Generate" button', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'This will add "Generate %s" button to the vendor product edit pages.', 'ean-for-woocommerce' ),
+					get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
+				'id'       => 'alg_wc_ean_wcfm_add_generate_button',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 3.9.0
+ * @version 4.0.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,11 +17,11 @@ class Alg_WC_EAN_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.0.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [now] [!] (dev) wpml-config.xml?
-	 * @todo    [now] [!] (dev) `alg_wc_ean_meta_key`: search for `alg_ean`
+	 * @todo    [next] (dev) wpml-config.xml?
+	 * @todo    [next] (dev) `alg_wc_ean_meta_key`: search for `alg_ean`
 	 * @todo    [next] (dev) WPML/Polylang (use default language product ID)
 	 */
 	function __construct() {
@@ -37,7 +37,7 @@ class Alg_WC_EAN_Core {
 			$this->rest_api               = require_once( 'class-alg-wc-ean-rest-api.php' );
 			$this->product_tools          = require_once( 'class-alg-wc-ean-product-tools.php' );
 			$this->order_tools            = require_once( 'class-alg-wc-ean-order-tools.php' );
-			$this->settings_import_export = require_once( 'class-alg-wc-ean-settings-import-export.php' );
+			$this->settings_import_export = require_once( 'class-alg-wc-ean-manage-settings.php' );
 			$this->compatibility          = require_once( 'class-alg-wc-ean-compatibility.php' );
 			$this->shortcodes             = require_once( 'class-alg-wc-ean-shortcodes.php' );
 		}
@@ -63,7 +63,7 @@ class Alg_WC_EAN_Core {
 	 * @version 3.3.0
 	 * @since   1.5.0
 	 *
-	 * @todo    [now] (dev) rename function?
+	 * @todo    [next] (dev) rename function?
 	 */
 	function get_type_by_ean_length( $ean ) {
 		$length = strlen( $ean );
@@ -140,7 +140,7 @@ class Alg_WC_EAN_Core {
 	 * @see     https://stackoverflow.com/questions/29076255/how-do-i-validate-a-barcode-number-using-php
 	 * @see     http://www.gs1.org/how-calculate-check-digit-manually
 	 *
-	 * @todo    [now] [!] (feature) add more formats/standards, e.g. ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
+	 * @todo    [next] (feature) add more formats/standards, e.g. ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
 	 */
 	function is_valid_ean( $value, $product_id = false ) {
 		$type = $this->get_type( $value, false, $product_id );

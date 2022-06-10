@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Section Settings
  *
- * @version 3.1.0
+ * @version 4.0.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -21,7 +21,7 @@ class Alg_WC_EAN_Settings_Section {
 	 * @since   1.0.0
 	 */
 	function __construct() {
-		add_filter( 'woocommerce_get_sections_alg_wc_ean',              array( $this, 'settings_section' ) );
+		add_filter( 'woocommerce_get_sections_alg_wc_ean', array( $this, 'settings_section' ) );
 		add_filter( 'woocommerce_get_settings_alg_wc_ean_' . $this->id, array( $this, 'get_settings' ), PHP_INT_MAX );
 	}
 
@@ -39,12 +39,12 @@ class Alg_WC_EAN_Settings_Section {
 	/**
 	 * pro_msg.
 	 *
-	 * @version 2.0.0
+	 * @version 4.0.0
 	 * @since   2.0.0
 	 */
-	function pro_msg() {
+	function pro_msg( $msg = 'enable this section' ) {
 		return apply_filters( 'alg_wc_ean_settings', '<p style="padding:15px;color:black;background-color:white;font-weight:bold;">' .
-			'You will need <a target="_blank" href="https://wpfactory.com/item/ean-for-woocommerce/">EAN for WooCommerce Pro</a> plugin version to enable this section.' .
+			sprintf( 'You will need <a target="_blank" href="https://wpfactory.com/item/ean-for-woocommerce/">EAN for WooCommerce Pro</a> plugin version to %s.', $msg ) .
 		'</p>' );
 	}
 

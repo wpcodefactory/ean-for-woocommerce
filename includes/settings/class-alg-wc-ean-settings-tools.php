@@ -97,11 +97,11 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	 * @version 3.9.0
 	 * @since   2.2.5
 	 *
-	 * @todo    [now] (dev) "Product tags" (similar to "Product categories")
-	 * @todo    [now] (dev) add "Product categories" (and "Product tags") to all tools (now only in "Assign from the list")
-	 * @todo    [now] [!] (desc) add subsections, e.g.: "Automatic and Periodic Actions", "Bulk Actions"
-	 * @todo    [now] [!] (desc) Periodic action: rename?
-	 * @todo    [now] (desc) `seed_prefix`
+	 * @todo    [next] (dev) "Product tags" (similar to "Product categories")
+	 * @todo    [next] (dev) add "Product categories" (and "Product tags") to all tools (now only in "Assign from the list")
+	 * @todo    [next] (desc) add subsections, e.g.: "Automatic and Periodic Actions", "Bulk Actions"
+	 * @todo    [next] (desc) Periodic action: rename?
+	 * @todo    [next] (desc) `seed_prefix`
 	 * @todo    [next] (desc) "Order Tools": add info about "General > Orders" options (i.e. "Add EAN to new order items meta", etc.)
 	 * @todo    [maybe] (desc) better desc for all tools?
 	 */

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 3.8.0
+ * @version 4.0.0
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -20,7 +20,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 3.8.0
 	 * @since   2.2.0
 	 *
-	 * @todo    [now] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
+	 * @todo    [next] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
 	 * @todo    [next] (feature) WCFM: customizable position, i.e. instead of right below the "SKU" field in "Inventory" tab
 	 * @todo    [next] (feature) Dokan: customizable position, i.e. instead of `dokan_new_product_after_product_tags` and `dokan_product_edit_after_product_tags`
 	 * @todo    [maybe] (feature) https://wordpress.org/plugins/woocommerce-xml-csv-product-import/ (WooCommerce add-on for "WP All Import")
@@ -46,6 +46,11 @@ class Alg_WC_EAN_Compatibility {
 		if ( 'yes' === get_option( 'alg_wc_ean_wcfm', 'no' ) ) {
 			add_filter( 'wcfm_product_fields_stock',            array( $this, 'wcfm_add_ean_field' ), 10, 3 );
 			add_action( 'after_wcfm_products_manage_meta_save', array( $this, 'wcfm_save_ean_field' ), 10, 2 );
+
+			// Variations
+			add_filter( 'wcfm_variation_edit_data',               array( $this, 'wcfm_variation_edit_data' ), 10, 3 );
+			add_filter( 'wcfm_product_manage_fields_variations',  array( $this, 'wcfm_variation_add_ean_field' ) );
+			add_action( 'after_wcfm_product_variation_meta_save', array( $this, 'wcfm_variation_save_ean_field' ), 10, 3 );
 		}
 
 		// "Print Invoice & Delivery Notes for WooCommerce" plugin
@@ -107,7 +112,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 3.8.0
 	 * @since   3.8.0
 	 *
-	 * @todo    [now] [!!] (dev) `item_ean` to `item_alg_wc_ean`?
+	 * @todo    [next] (dev) `item_ean` to `item_alg_wc_ean`?
 	 * @todo    [next] (dev) XML (at least in `OrderLineItems`)?
 	 */
 	function wc_customer_order_export_add_column( $data_sources, $export_type, $output_type ) {
@@ -196,7 +201,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 3.0.0
 	 * @since   3.0.0
 	 *
-	 * @todo    [now] (dev) make this optional?
+	 * @todo    [next] (dev) make this optional?
 	 */
 	function add_to_woocommerce_gpf_custom_field_list( $fields ) {
 		$fields[ 'meta:' . alg_wc_ean()->core->ean_key ] = __( 'EAN', 'ean-for-woocommerce' );
@@ -256,21 +261,30 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * wcfm_add_ean_field.
 	 *
-	 * @version 2.2.2
+	 * @version 4.0.0
 	 * @since   2.2.2
 	 *
 	 * @see     https://plugins.svn.wordpress.org/wc-frontend-manager/tags/6.5.10/views/products-manager/wcfm-view-products-manage-tabs.php
 	 *
-	 * @todo    [now] (dev) do we need `esc_html` everywhere, e.g. in `hints`? (same for `dokan_add_ean_field()`)
-	 * @todo    [next] (dev) variable products?
+	 * @todo    [next] (dev) `generate_button`: move `add_action` (3x) to constructor?
+	 * @todo    [next] (dev) do we need `esc_html` everywhere, e.g. in `hints`? (same for `dokan_add_ean_field()`)
 	 * @todo    [next] (feature) optional EAN validation
 	 */
 	function wcfm_add_ean_field( $fields, $product_id, $product_type ) {
-		$_fields  = array();
-		$is_added = false;
-		$_key     = 'wcfm_' . alg_wc_ean()->core->ean_key;
-		$_field   = array(
+		$_key = 'wcfm_' . alg_wc_ean()->core->ean_key;
+
+		// "Generate" button
+		$do_add_generate_button = ( 'yes' === get_option( 'alg_wc_ean_wcfm_add_generate_button', 'no' ) && $product_id );
+		if ( $do_add_generate_button ) {
+			add_action( 'wp_footer', array( 'Alg_WC_EAN_Edit', 'generate_button_js' ) );
+			add_action( 'wp_ajax_alg_wc_ean_generate_ajax', array( 'Alg_WC_EAN_Edit', 'generate_button_ajax' ) );
+			add_action( 'wp_footer', array( $this, 'wcfm_generate_button_css' ) );
+		}
+
+		// Field data
+		$_field = array(
 			'label'       => esc_html( get_option( 'alg_wc_ean_wcfm_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
+			'desc'        => ( $do_add_generate_button ? '<p class="alg_wc_ean_generate_button_wrapper">' . Alg_WC_EAN_Edit::get_generate_button( $product_id, $_key ) . '</p>' : '' ),
 			'type'        => 'text',
 			'class'       => 'wcfm-text',
 			'label_class' => 'wcfm_title',
@@ -278,17 +292,144 @@ class Alg_WC_EAN_Compatibility {
 			'hints'       => esc_html( get_option( 'alg_wc_ean_wcfm_hints', __( 'The International Article Number (also known as European Article Number or EAN) is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.', 'ean-for-woocommerce' ) ) ),
 			'placeholder' => esc_html( get_option( 'alg_wc_ean_wcfm_placeholder', __( 'Product EAN...', 'ean-for-woocommerce' ) ) ),
 		);
+
+		// Add field
+		$_fields  = array();
+		$is_added = false;
 		foreach ( $fields as $key => $field ) {
 			$_fields[ $key ] = $field;
 			if ( 'sku' === $key ) {
 				$_fields[ $_key ] = $_field;
-				$is_added         = true;
+				$is_added = true;
 			}
 		}
 		if ( ! $is_added ) {
 			$_fields[ $_key ] = $_field; // fallback
 		}
+
 		return $_fields;
+	}
+
+	/**
+	 * wcfm_generate_button_css.
+	 *
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 *
+	 * @todo    [next] (dev) use `admin_enqueue_scripts`?
+	 */
+	function wcfm_generate_button_css() {
+		?><style>
+			.alg_wc_ean_generate_button_wrapper {
+				text-align: right;
+			}
+		</style><?php
+	}
+
+	/**
+	 * wcfm_variation_save_ean_field.
+	 *
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 *
+	 * @todo    [maybe] (dev) merge with `wcfm_save_ean_field()`?
+	 */
+	function wcfm_variation_save_ean_field( $product_id, $variation_id, $data ) {
+		$id = 'wcfm_' . alg_wc_ean()->core->ean_key;
+		if ( isset( $data[ $id ] ) ) {
+			update_post_meta( $variation_id, alg_wc_ean()->core->ean_key, wc_clean( $data[ $id ] ) );
+		}
+	}
+
+	/**
+	 * wcfm_variation_add_ean_field.
+	 *
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 *
+	 * @todo    [next] (dev) placeholder: parent product's EAN?
+	 * @todo    [next] (dev) `wcfm_half_ele`?
+	 * @todo    [next] (dev) `generate_button`: move `add_action` to constructor?
+	 * @todo    [maybe] (dev) merge with `wcfm_add_ean_field()`?
+	 */
+	function wcfm_variation_add_ean_field( $fields ) {
+
+		// "Generate" button
+		if ( 'yes' === get_option( 'alg_wc_ean_wcfm_add_generate_button', 'no' ) ) {
+			add_action( 'wp_footer', array( $this, 'wcfm_variation_get_generate_button_js' ) );
+		}
+
+		// Field data
+		$_field = array(
+			'label'       => esc_html( get_option( 'alg_wc_ean_wcfm_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
+			'type'        => 'text',
+			'class'       => 'wcfm-text wcfm_ele wcfm_half_ele variable variable-subscription pw-gift-card',
+			'label_class' => 'wcfm_title wcfm_half_ele_title',
+			'hints'       => esc_html( get_option( 'alg_wc_ean_wcfm_hints', __( 'The International Article Number (also known as European Article Number or EAN) is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.', 'ean-for-woocommerce' ) ) ),
+			'placeholder' => esc_html( get_option( 'alg_wc_ean_wcfm_placeholder', __( 'Product EAN...', 'ean-for-woocommerce' ) ) ),
+		);
+
+		// Add field
+		$_fields  = array();
+		$_key     = 'wcfm_' . alg_wc_ean()->core->ean_key;
+		$is_added = false;
+		foreach ( $fields as $key => $field ) {
+			$_fields[ $key ] = $field;
+			if ( 'sku' === $key ) {
+				$_fields[ $_key ] = $_field;
+				$is_added = true;
+			}
+		}
+		if ( ! $is_added ) {
+			$_fields[ $_key ] = $_field; // fallback
+		}
+
+		return $_fields;
+
+	}
+
+	/**
+	 * wcfm_variation_edit_data.
+	 *
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 */
+	function wcfm_variation_edit_data( $variations, $variation_id, $variation_id_key ) {
+		if ( $variation_id ) {
+			$variations[ $variation_id_key ][ 'wcfm_' . alg_wc_ean()->core->ean_key ] = alg_wc_ean()->core->get_ean( $variation_id );
+		}
+		return $variations;
+	}
+
+	/**
+	 * wcfm_variation_get_generate_button_js.
+	 *
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 *
+	 * @todo    [maybe] (dev) merge with `Alg_WC_EAN_Edit::get_generate_button()`?
+	 */
+	function wcfm_variation_get_generate_button_js() {
+		$button_label = sprintf( esc_html__( 'Generate %s', 'ean-for-woocommerce' ), get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) ) );
+		?><script>
+			jQuery( document ).ready( function () {
+				jQuery( '.variation_id' ).each( function () {
+					var variation_id = jQuery( this ).val();
+					var input_id     = jQuery( this ).attr( 'id' ).replace( 'variations_id_', 'variations_wcfm_' + '<?php echo alg_wc_ean()->core->ean_key; ?>' + '_' );
+					jQuery( '#' + input_id ).after( '<p class="alg_wc_ean_generate_button_wrapper">' +
+							'<button' +
+								' type="button"' +
+								' class="button alg_wc_ean_generate_ajax wcfm_ele variable variable-subscription pw-gift-card"' +
+								' data-product="' + variation_id + '"' +
+								' data-input="' + input_id + '"' +
+							'>' +
+								'<?php echo $button_label; ?>' +
+							'</button>' +
+						'</p>'
+					);
+				} );
+			} );
+		</script><?php
 	}
 
 	/**
@@ -375,8 +516,8 @@ class Alg_WC_EAN_Compatibility {
 	 *
 	 * @see     https://woocommerce.com/products/point-of-sale-for-woocommerce/
 	 *
-	 * @todo    [now] [!!] (dev) `get_route()`: better solution, e.g. exact match with `/wc-pos/products`?
-	 * @todo    [now] [!!] (dev) find better solution, e.g. add elsewhere, not to the name?
+	 * @todo    [next] (dev) `get_route()`: better solution, e.g. exact match with `/wc-pos/products`?
+	 * @todo    [next] (dev) find better solution, e.g. add elsewhere, not to the name?
 	 */
 	function wc_pos_add_ean_to_product_name( $response, $product, $request ) {
 		if ( ( false !== strpos( $request->get_route(), '/wc-pos/' ) ) && '' !== ( $ean = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {

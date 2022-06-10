@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.0
-Stable tag: 3.9.1
+Stable tag: 4.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -62,6 +62,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * Generate and display **barcode image** for your product EAN (frontend, backend, order items table (including emails), REST API, etc.).
 * Barcodes can be **one-dimensional** (1D barcodes) or **two-dimensional** (2D barcodes, QR codes).
 * Additionally you can **print** multiple EANs and barcodes to **PDF** file.
+* Add multiple **extra fields**, e.g., single product can have **EAN** and **MPN** fields simultaneously.
 
 ### &#128472; Feedback ###
 
@@ -84,8 +85,14 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 
 == Changelog ==
 
-= 3.9.2 - 03/06/2022 =
+= 4.0.0 - 10/06/2022 =
+* Dev - Pro - "Extra Fields" sections added.
+* Dev - Pro - Shortcodes - Barcodes - `img_w` and `img_h` attributes added (both defaults to `false`).
 * Dev - General - Admin product edit page - 'Add "Generate" button' option added.
+* Dev - Compatibility - WCFM - Variations are supported now.
+* Dev - Compatibility - WCFM - 'Add "Generate" button' option added.
+* Dev - Advanced - Export/Import Plugin Settings - "Reset" tool added.
+* Dev - Advanced - Export/Import Plugin Settings - Code refactoring.
 * Dev - Shortcodes - `[alg_wc_ean_product_author_id]` shortcode added.
 * Dev - Developers - Tools - Product Tools - Generate:
     * `alg_wc_ean_product_tools_generate_ean_country_prefix` filter added.
