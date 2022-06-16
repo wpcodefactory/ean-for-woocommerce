@@ -116,7 +116,7 @@ class Alg_WC_EAN_Search {
 			$new_meta_query = array(
 				'key'     => alg_wc_ean()->core->ean_key,
 				'value'   => $search_term,
-				'compare' => 'LIKE'
+				'compare' => 'LIKE',
 			);
 			$old_meta_query = ( isset( $query->query_vars['meta_query'] ) ? $query->query_vars['meta_query'] : false );
 			if ( ! empty( $old_meta_query ) ) {

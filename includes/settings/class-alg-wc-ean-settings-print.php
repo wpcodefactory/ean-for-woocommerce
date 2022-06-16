@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 3.9.1
+ * @version 4.1.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.9.1
+	 * @version 4.1.0
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
@@ -392,6 +392,44 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_advanced_options',
+			),
+			array(
+				'title'    => __( 'Print Tools', 'ean-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_tools',
+			),
+			array(
+				'title'    => __( 'Print', 'ean-for-woocommerce' ),
+				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Print', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Check the box and "Save changes" to run the tool.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_tool',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Product(s)', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_tool_data[products]',
+				'default'  => array(),
+				'type'     => 'multiselect',
+				'class'    => 'wc-product-search',
+				'options'  => array(),
+				'custom_attributes' => array(
+					'data-placeholder' => esc_attr__( 'Search for a product&hellip;', 'woocommerce' ),
+					'data-action'      => 'woocommerce_json_search_products_and_variations',
+					'data-allow_clear' => true,
+				),
+			),
+			array(
+				'desc'     => __( 'Quantity', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_tool_data[qty]',
+				'default'  => 1,
+				'type'     => 'number',
+				'placeholder' => '1',
+				'custom_attributes' => array( 'min' => 1 ),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_tools',
 			),
 		) );
 

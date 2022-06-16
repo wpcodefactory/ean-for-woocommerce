@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 3.9.0
+ * @version 4.1.0
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_product_actions_list.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.0
 	 * @since   2.9.0
 	 */
 	function get_product_actions_list() {
@@ -41,6 +41,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			'copy_meta'    => __( 'Copy from product meta', 'ean-for-woocommerce' ),
 			'assign_list'  => __( 'Assign from the list', 'ean-for-woocommerce' ),
 			'copy_to_sku'  => __( 'Copy to product SKU', 'ean-for-woocommerce' ),
+			'copy_to_meta' => __( 'Copy to product meta', 'ean-for-woocommerce' ),
 			'copy_to_attr' => __( 'Copy to product attribute', 'ean-for-woocommerce' ),
 		);
 	}
@@ -94,7 +95,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.0
 	 * @since   2.2.5
 	 *
 	 * @todo    [next] (dev) "Product tags" (similar to "Product categories")
@@ -297,6 +298,20 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_tool_product[copy_to_sku]',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Copy to product meta', 'ean-for-woocommerce' ),
+				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Copy EAN to the product meta for all products', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product[copy_to_meta]',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => sprintf( __( 'Meta key, e.g. %s', 'ean-for-woocommerce' ), '<code>_gtin</code>' ),
+				'desc_tip' => __( 'Product meta key to copy to.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_copy_to_meta[key]',
+				'default'  => '',
+				'type'     => 'text',
 			),
 			array(
 				'title'    => __( 'Copy to product attribute', 'ean-for-woocommerce' ),

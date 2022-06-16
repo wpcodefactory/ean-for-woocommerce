@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -21,7 +21,6 @@ class Alg_WC_EAN_Product_Tools {
 	 * @since   2.1.0
 	 *
 	 * @todo    [next] (feature) copy from attribute
-	 * @todo    [next] (feature) copy to meta
 	 * @todo    [next] (dev) split into more files/classes, e.g. `class-alg-wc-ean-crons.php`?
 	 * @todo    [maybe] (feature) Automatic actions: `updated_postmeta`?
 	 * @todo    [maybe] (dev) Automatic actions: `woocommerce_after_product_object_save`?
@@ -178,6 +177,8 @@ class Alg_WC_EAN_Product_Tools {
 	 *
 	 * @version 2.9.0
 	 * @since   2.7.0
+	 *
+	 * @todo    [now] (dev) add JS confirmation
 	 */
 	function add_product_bulk_actions( $actions ) {
 		return array_merge( $actions, array_intersect_key( array(
@@ -302,7 +303,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.0
 	 * @since   2.2.8
 	 *
 	 * @todo    [next] (dev) merge with `products_create()`?
@@ -372,6 +373,12 @@ class Alg_WC_EAN_Product_Tools {
 					case 'copy_to_sku':
 						update_post_meta( $post_id, '_sku', $current_ean );
 						break;
+					case 'copy_to_meta':
+						$data = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
+						if ( isset( $data['key'] ) && '' !== $data['key'] ) {
+							update_post_meta( $post_id, $data['key'], $current_ean );
+						}
+						break;
 					case 'copy_to_attr':
 						$data = get_option( 'alg_wc_ean_tool_product_copy_to_attr', array() );
 						if ( isset( $data['product_attribute'] ) && '' !== $data['product_attribute'] ) {
@@ -386,7 +393,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 3.7.2
+	 * @version 4.1.0
 	 * @since   2.9.0
 	 *
 	 * @todo    [next] (dev) Copy to: do NOT overwrite?
@@ -412,6 +419,10 @@ class Alg_WC_EAN_Product_Tools {
 					$data = array_map( 'trim', explode( PHP_EOL, $data ) );
 				}
 				break;
+			case 'copy_to_meta':
+				$data = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
+				$data['key'] = ( isset( $data['key'] ) ? $data['key'] : '' );
+				break;
 			case 'copy_to_attr':
 				$data = get_option( 'alg_wc_ean_tool_product_copy_to_attr', array() );
 				$data['product_attribute'] = ( isset( $data['product_attribute'] ) ? $data['product_attribute'] : '' );
@@ -430,10 +441,18 @@ class Alg_WC_EAN_Product_Tools {
 				}
 				continue;
 			}
-			// Action: Copy to product SKU/attribute
+			// Action: Copy to product SKU/meta/attribute
 			if ( 'copy_to_sku' === $action ) {
 				if ( '' !== $current_ean ) {
 					if ( update_post_meta( $product_id, '_sku', $current_ean ) ) {
+						$count++;
+					}
+				}
+				continue;
+			}
+			if ( 'copy_to_meta' === $action && '' !== $data['key'] ) {
+				if ( '' !== $current_ean ) {
+					if ( update_post_meta( $product_id, $data['key'], $current_ean ) ) {
 						$count++;
 					}
 				}
@@ -504,7 +523,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * products_create.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.0
 	 * @since   2.1.0
 	 *
 	 * @todo    [next] (dev) message: "success/error" (i.e. check `$response['result']`)
@@ -520,6 +539,7 @@ class Alg_WC_EAN_Product_Tools {
 			'assign_list'  => 'no',
 			'get_stats'    => 'no',
 			'copy_to_sku'  => 'no',
+			'copy_to_meta' => 'no',
 			'copy_to_attr' => 'no',
 		), get_option( 'alg_wc_ean_tool_product', array() ) );
 		if ( in_array( 'yes', $tools ) ) {

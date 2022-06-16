@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 4.0.0
+ * @version 4.1.0
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -59,11 +59,18 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * output.
 	 *
-	 * @version 3.5.0
+	 * @version 4.1.0
 	 * @since   3.5.0
+	 *
+	 * @todo    [now] (dev) `max_length`: add everywhere
 	 */
 	function output( $result, $atts ) {
-		return ( '' === $result ? $atts['on_empty'] : ( $atts['before'] . $result . $atts['after'] ) );
+		return ( '' === $result ?
+			$atts['on_empty'] :
+			( $atts['before'] .
+				( ! empty( $atts['max_length'] ) ? substr( $result, 0, $atts['max_length'] ) : $result ) .
+			$atts['after'] )
+		);
 	}
 
 	/**
@@ -253,7 +260,7 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * product_sku_shortcode.
 	 *
-	 * @version 3.5.0
+	 * @version 4.1.0
 	 * @since   3.5.0
 	 */
 	function product_sku_shortcode( $atts, $content = '' ) {
@@ -264,6 +271,7 @@ class Alg_WC_EAN_Shortcodes {
 			'before'     => '',
 			'after'      => '',
 			'on_empty'   => '',
+			'max_length' => false,
 			'parent'     => 'no',
 		);
 		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean_product_sku' );
