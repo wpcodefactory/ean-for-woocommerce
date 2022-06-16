@@ -52,7 +52,7 @@ msgid "Generate %s"
 msgstr ""
 
 #: includes/class-alg-wc-ean-compatibility.php:524
-#: includes/class-alg-wc-ean-search.php:174
+#: includes/class-alg-wc-ean-search.php:177
 #, php-format
 msgid "EAN: %s"
 msgstr ""
@@ -127,30 +127,31 @@ msgstr ""
 msgid "EAN deleted for %s products."
 msgstr ""
 
-#: includes/class-alg-wc-ean-product-tools.php:411
+#: includes/class-alg-wc-ean-product-tools.php:412
+#: includes/class-alg-wc-ean-product-tools.php:427
 msgid "Please set the \"Meta key\" option."
 msgstr ""
 
-#: includes/class-alg-wc-ean-product-tools.php:417
+#: includes/class-alg-wc-ean-product-tools.php:418
 msgid "Please set the \"List\" option."
-msgstr ""
-
-#: includes/class-alg-wc-ean-product-tools.php:509
-#, php-format
-msgid "EAN generated for %s products (%s total products)."
-msgstr ""
-
-#: includes/class-alg-wc-ean-product-tools.php:512
-#, php-format
-msgid "EAN assigned for %s products (%s total products)."
 msgstr ""
 
 #: includes/class-alg-wc-ean-product-tools.php:515
 #, php-format
-msgid "%s products without EAN (%s total products)."
+msgid "EAN generated for %s products (%s total products)."
 msgstr ""
 
 #: includes/class-alg-wc-ean-product-tools.php:518
+#, php-format
+msgid "EAN assigned for %s products (%s total products)."
+msgstr ""
+
+#: includes/class-alg-wc-ean-product-tools.php:521
+#, php-format
+msgid "%s products without EAN (%s total products)."
+msgstr ""
+
+#: includes/class-alg-wc-ean-product-tools.php:524
 #, php-format
 msgid "EAN copied for %s products (%s total products)."
 msgstr ""
@@ -1987,7 +1988,6 @@ msgid "Copy EAN from product meta for all products"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:241
-#: includes/settings/class-alg-wc-ean-settings-tools.php:310
 #, php-format
 msgid "Meta key, e.g. %s"
 msgstr ""
@@ -2056,6 +2056,11 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:304
 msgid "Copy EAN to the product meta for all products"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-tools.php:310
+#, php-format
+msgid "Meta key, e.g.: %s, or comma-separated list of keys, e.g.: %s"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:311

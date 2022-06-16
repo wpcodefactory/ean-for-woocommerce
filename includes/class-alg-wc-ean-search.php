@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Search Class
  *
- * @version 2.4.2
+ * @version 4.1.1
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -94,7 +94,7 @@ class Alg_WC_EAN_Search {
 	/**
 	 * search_backend.
 	 *
-	 * @version 2.0.0
+	 * @version 4.1.1
 	 * @since   1.0.0
 	 *
 	 * @todo    [maybe] rewrite?
@@ -127,11 +127,14 @@ class Alg_WC_EAN_Search {
 				$meta_query = array( $new_meta_query );
 			}
 			$new_query->set( 'meta_query', $meta_query );
-			$new_query->set( 'fields', 'ids' );
+
+			$new_query->set( 'post_status', 'any' );
+			$new_query->set( 'posts_per_page', -1 );
 
 			remove_action( 'pre_get_posts', array( $this, 'search_backend' ) );
 
 			// Search for products
+			$new_query->set( 'fields', 'ids' );
 			$result  = get_posts( $new_query->query_vars );
 			$new_ids = $old_product_in;
 			if ( $result ) {
@@ -146,7 +149,7 @@ class Alg_WC_EAN_Search {
 				$new_ids = array_merge( $new_ids, $result );
 			}
 
-			$query->set( 'post__in', $new_ids );
+			$query->set( 'post__in', array_values( array_unique( $new_ids ) ) );
 		}
 	}
 

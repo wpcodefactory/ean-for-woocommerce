@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.1.0
+ * @version 4.1.1
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -303,7 +303,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 4.1.0
+	 * @version 4.1.1
 	 * @since   2.2.8
 	 *
 	 * @todo    [next] (dev) merge with `products_create()`?
@@ -375,8 +375,9 @@ class Alg_WC_EAN_Product_Tools {
 						break;
 					case 'copy_to_meta':
 						$data = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
-						if ( isset( $data['key'] ) && '' !== $data['key'] ) {
-							update_post_meta( $post_id, $data['key'], $current_ean );
+						$data['keys'] = ( isset( $data['key'] ) && '' !== $data['key'] ? array_filter( explode( ',', $data['key'] ) ) : array() );
+						foreach ( $data['keys'] as $key ) {
+							update_post_meta( $post_id, $key, $current_ean );
 						}
 						break;
 					case 'copy_to_attr':
@@ -393,7 +394,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 4.1.0
+	 * @version 4.1.1
 	 * @since   2.9.0
 	 *
 	 * @todo    [next] (dev) Copy to: do NOT overwrite?
@@ -421,7 +422,10 @@ class Alg_WC_EAN_Product_Tools {
 				break;
 			case 'copy_to_meta':
 				$data = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
-				$data['key'] = ( isset( $data['key'] ) ? $data['key'] : '' );
+				$data['keys'] = ( isset( $data['key'] ) && '' !== $data['key'] ? array_filter( explode( ',', $data['key'] ) ) : array() );
+				if ( empty( $data['keys'] ) ) {
+					return array( 'result' => false, 'message' => __( 'Please set the "Meta key" option.', 'ean-for-woocommerce' ) );
+				}
 				break;
 			case 'copy_to_attr':
 				$data = get_option( 'alg_wc_ean_tool_product_copy_to_attr', array() );
@@ -450,10 +454,12 @@ class Alg_WC_EAN_Product_Tools {
 				}
 				continue;
 			}
-			if ( 'copy_to_meta' === $action && '' !== $data['key'] ) {
+			if ( 'copy_to_meta' === $action ) {
 				if ( '' !== $current_ean ) {
-					if ( update_post_meta( $product_id, $data['key'], $current_ean ) ) {
-						$count++;
+					foreach ( $data['keys'] as $key ) {
+						if ( update_post_meta( $product_id, $key, $current_ean ) ) {
+							$count++;
+						}
 					}
 				}
 				continue;
