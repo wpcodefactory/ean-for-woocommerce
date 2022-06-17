@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.1.1
+ * @version 4.1.2
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.2
 	 * @since   2.1.0
 	 *
 	 * @todo    [next] (feature) copy from attribute
@@ -45,10 +45,38 @@ class Alg_WC_EAN_Product_Tools {
 		// "Products > Bulk actions"
 		add_filter( 'bulk_actions-edit-product', array( $this, 'add_product_bulk_actions' ) );
 		add_filter( 'handle_bulk_actions-edit-product', array( $this, 'handle_product_bulk_actions' ), 10, 3 );
+		add_action( 'admin_footer', array( $this, 'bulk_actions_confirmation_js' ) );
 
 		// Assign from the list: Reuse deleted
 		add_action( 'before_delete_post', array( $this, 'reuse_deleted' ), 10, 2 );
 
+	}
+
+	/**
+	 * bulk_actions_confirmation_js.
+	 *
+	 * @version 4.1.2
+	 * @since   4.1.2
+	 *
+	 * @todo    [next] (dev) load only when needed
+	 * @todo    [next] (dev) use `admin_enqueue_scripts`
+	 */
+	function bulk_actions_confirmation_js() {
+		$actions     = get_option( 'alg_wc_ean_product_bulk_actions',         array( 'alg_wc_ean_delete', 'alg_wc_ean_generate' ) );
+		$confirm     = get_option( 'alg_wc_ean_product_bulk_actions_confirm', array( 'alg_wc_ean_delete' ) );
+		$confirm_ids = array_intersect( $actions, $confirm );
+		if ( ! empty( $confirm_ids ) ) {
+			?><script>
+				const confirm_ids = <?php echo "['" . implode( "','", $confirm_ids ) . "']"; ?>;
+				jQuery( '#doaction' ).on( 'click', function () {
+					if ( -1 != confirm_ids.indexOf( jQuery( 'select[name="action"]' ).val() ) ) {
+						if ( ! confirm( "<?php echo esc_html__( 'Are you sure?', 'ean-for-woocommerce' ); ?>" ) ) {
+							return false;
+						}
+					}
+				} );
+			</script><?php
+		}
 	}
 
 	/**
@@ -177,8 +205,6 @@ class Alg_WC_EAN_Product_Tools {
 	 *
 	 * @version 2.9.0
 	 * @since   2.7.0
-	 *
-	 * @todo    [now] (dev) add JS confirmation
 	 */
 	function add_product_bulk_actions( $actions ) {
 		return array_merge( $actions, array_intersect_key( array(

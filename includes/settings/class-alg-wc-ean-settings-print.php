@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 4.1.0
+ * @version 4.1.2
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.1.0
+	 * @version 4.1.2
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
@@ -353,6 +353,17 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'options'  => array(
 					'variations_tab' => __( 'Variations tab', 'ean-for-woocommerce' ),
 					'meta_box'       => __( 'Meta box', 'ean-for-woocommerce' ),
+				),
+			),
+			array(
+				'desc'     => __( 'Quantity input', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Adds quantity input field for the print buttons.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings_print_qty',
+				'default'  => array(),
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'bulk_actions'   => __( 'Products > Bulk actions', 'ean-for-woocommerce' ),
 				),
 			),
 			array(

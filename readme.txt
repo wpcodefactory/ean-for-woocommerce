@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.0
-Stable tag: 4.1.1
+Stable tag: 4.1.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -84,6 +84,11 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.1.2 - 17/06/2022 =
+* Dev - Tools - Product Actions - Bulk actions - "Require confirmation?" option added (defaults to "Delete EAN").
+* Fix - Pro - Print - Print Tools - Quantity - Quantity input was ignored when products had identical EANs.
+* Dev - Pro - Print - Admin Options - Print buttons - "Quantity input" option added.
 
 = 4.1.1 - 16/06/2022 =
 * Fix - Admin product search - Including all post statuses now (e.g., drafts).

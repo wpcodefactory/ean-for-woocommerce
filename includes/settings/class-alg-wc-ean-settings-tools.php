@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 4.1.1
+ * @version 4.1.2
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -95,9 +95,10 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.1.1
+	 * @version 4.1.2
 	 * @since   2.2.5
 	 *
+	 * @todo    [next] (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
 	 * @todo    [next] (dev) "Product tags" (similar to "Product categories")
 	 * @todo    [next] (dev) add "Product categories" (and "Product tags") to all tools (now only in "Assign from the list")
 	 * @todo    [next] (desc) add subsections, e.g.: "Automatic and Periodic Actions", "Bulk Actions"
@@ -398,6 +399,17 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'desc_tip' => __( 'Sets actions to be added to the "Products > Bulk actions" dropdown.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_product_bulk_actions',
 				'default'  => array( 'alg_wc_ean_delete', 'alg_wc_ean_generate' ),
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'alg_wc_ean_generate' => __( 'Generate EAN', 'ean-for-woocommerce' ),
+					'alg_wc_ean_delete'   => __( 'Delete EAN', 'ean-for-woocommerce' ),
+				),
+			),
+			array(
+				'desc'     => __( 'Require confirmation?', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_product_bulk_actions_confirm',
+				'default'  => array( 'alg_wc_ean_delete' ),
 				'type'     => 'multiselect',
 				'class'    => 'chosen_select',
 				'options'  => array(

@@ -62,7 +62,7 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 4.1.0
 	 * @since   3.5.0
 	 *
-	 * @todo    [now] (dev) `max_length`: add everywhere
+	 * @todo    [next] (dev) `max_length`: add everywhere
 	 */
 	function output( $result, $atts ) {
 		return ( '' === $result ?
