@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.0.0
+ * @version 4.2.0
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 4.2.0
 	 * @since   2.2.0
 	 *
 	 * @todo    [next] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
@@ -32,6 +32,9 @@ class Alg_WC_EAN_Compatibility {
 		if ( 'yes' === get_option( 'alg_wc_ean_wc_pos_search', 'no' ) ) {
 			add_filter( 'woocommerce_rest_prepare_product_object', array( $this, 'wc_pos_add_ean_to_product_name' ), PHP_INT_MAX, 3 );
 		}
+
+		// "Woocommerce OpenPos" plugin
+		add_filter( 'op_barcode_key_setting', array( $this, 'op_barcode_key_setting' ), PHP_INT_MAX );
 
 		// "Dokan – Best WooCommerce Multivendor Marketplace Solution – Build Your Own Amazon, eBay, Etsy" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_dokan', 'no' ) ) {
@@ -104,6 +107,19 @@ class Alg_WC_EAN_Compatibility {
 			add_filter( 'wc_customer_order_export_csv_order_row_one_row_per_item', array( $this, 'wc_customer_order_export_render_column' ), 10, 4 );
 		}
 
+	}
+
+	/**
+	 * op_barcode_key_setting.
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 *
+	 * @todo    [maybe] (desc) add to "WooCommerce > Settings > EAN > Compatibility"?
+	 */
+	function op_barcode_key_setting( $keys ) {
+		$keys[ alg_wc_ean()->core->ean_key ] = get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) );
+		return $keys;
 	}
 
 	/**
@@ -228,18 +244,20 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * add_to_wpo_wcpdf_ean.
 	 *
-	 * @version 2.6.0
+	 * @version 4.2.0
 	 * @since   2.6.0
 	 *
-	 * @todo    [next] (feature) customizable template?
 	 * @todo    [next] (dev) check if valid?
 	 */
 	function add_to_wpo_wcpdf_ean( $type, $item, $order ) {
 		if ( ! empty( $item['item_id'] ) && ( $item = new WC_Order_Item_Product( $item['item_id'] ) ) && false !== ( $ean = alg_wc_ean()->core->get_ean_from_order_item( $item ) ) ) {
-			echo '<dl class="meta">' .
+			$options  = get_option( 'alg_wc_ean_wpo_wcpdf_options', array() );
+			$template = ( isset( $options['content'] ) ? $options['content'] :
+				'<dl class="meta">' .
 					'<dt class="ean">' . esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ) . ':' . '</dt>' .
-					'<dd class="ean">' . $ean . '</dd>' .
-				'</dl>';
+					'<dd class="ean">' . '%ean%' . '</dd>' .
+				'</dl>' );
+			echo str_replace( '%ean%', $ean, $template );
 		}
 	}
 

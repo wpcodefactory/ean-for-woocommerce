@@ -440,6 +440,7 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.6.0
 	 * @since   1.5.1
 	 *
+	 * @todo    [next] (dev) `$atts['ean']`: ` if ( false !== ( $ean = ( '' !== $atts['ean'] ? $atts['ean'] : ( ! empty( $this->data['ean'] ) ? $this->data['ean'] : false ) ) ) ) { return $this->output( $ean, $atts ); }`
 	 * @todo    [next] (feature) `parent`? (same for barcodes)
 	 * @todo    [maybe] (dev) check if valid?
 	 * @todo    [maybe] (feature) add `children` attribute to all shortcodes, e.g. `product_attr_shortcode()`

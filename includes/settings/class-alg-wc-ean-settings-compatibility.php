@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 4.0.0
+ * @version 4.2.0
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.0
 	 * @since   2.2.9
 	 *
 	 * @todo    [next] (desc) `alg_wc_ean_wcfm_add_generate_button`: better desc?
@@ -73,6 +73,16 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_wpo_wcpdf',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Content', 'ean-for-woocommerce' ),
+				'desc_tip' =>  sprintf( __( 'Available placeholder: %s.', 'ean-for-woocommerce' ), '%ean%' ),
+				'id'       => 'alg_wc_ean_wpo_wcpdf_options[content]',
+				'default'  => '<dl class="meta">' .
+						'<dt class="ean">' . esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ) . ':' . '</dt>' .
+						'<dd class="ean">' . '%ean%' . '</dd>' .
+					'</dl>',
+				'type'     => 'textarea',
 			),
 			array(
 				'desc'     => __( 'Position', 'ean-for-woocommerce' ),

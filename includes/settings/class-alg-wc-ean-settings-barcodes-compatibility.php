@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes - Compatibility Section Settings
  *
- * @version 3.8.0
+ * @version 4.2.0
  * @since   3.8.0
  *
  * @author  Algoritmika Ltd
@@ -31,7 +31,7 @@ class Alg_WC_EAN_Settings_Barcodes_Compatibility extends Alg_WC_EAN_Settings_Sec
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.8.0
+	 * @version 4.2.0
 	 * @since   3.8.0
 	 */
 	function get_settings() {
@@ -64,6 +64,12 @@ class Alg_WC_EAN_Settings_Barcodes_Compatibility extends Alg_WC_EAN_Settings_Sec
 				'id'       => "alg_wc_ean_wpo_wcpdf_barcode{$this->dim_suffix}",
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Content', 'ean-for-woocommerce' ),
+				'id'       => "alg_wc_ean_wpo_wcpdf_barcode_options{$this->dim_suffix}[content]",
+				'default'  => '<div class="ean_wrapper' . $this->dim_suffix . '">[alg_wc_ean_barcode' . $this->dim_suffix . ']</div>',
+				'type'     => 'textarea',
 			),
 			array(
 				'desc'     => __( 'Position', 'ean-for-woocommerce' ),

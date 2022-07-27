@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.0
-Stable tag: 4.1.2
+Stable tag: 4.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,6 +45,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 ### &#129309; Compatibility ###
 
 * [Point of Sale for WooCommerce](https://woocommerce.com/products/point-of-sale-for-woocommerce/) plugin.
+* [Woocommerce OpenPos](https://codecanyon.net/item/openpos-a-complete-pos-plugins-for-woocomerce/22613341) plugin.
 * [Dokan marketplace](https://wordpress.org/plugins/dokan-lite/) plugin.
 * [WCFM](https://wordpress.org/plugins/wc-frontend-manager/) and [WCFM Marketplace](https://wordpress.org/plugins/wc-multivendor-marketplace/) plugins.
 * [Print Invoice & Delivery Notes for WooCommerce](https://wordpress.org/plugins/woocommerce-delivery-notes/) plugin.
@@ -84,6 +85,14 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.2.0 - 27/07/2022 =
+* Dev - Compatibility - "Woocommerce OpenPos" compatibility added ("EAN" field is now available in "POS > Setting > Barcode Label > Barcode Meta Key").
+* Dev - Compatibility - WooCommerce PDF Invoices & Packing Slips - "Content" options added. Includes barcodes.
+* Dev - Pro - Code refactoring:
+    * Barcode Generator.
+    * Shortcodes - `[alg_wc_ean_barcode]` and `[alg_wc_ean_barcode_2d]`.
+* WC tested up to: 6.7.
 
 = 4.1.2 - 17/06/2022 =
 * Dev - Tools - Product Actions - Bulk actions - "Require confirmation?" option added (defaults to "Delete EAN").
