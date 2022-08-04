@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 4.0.0
+ * @version 4.3.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,7 +87,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.3.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -467,7 +467,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			array(
 				'desc'     => __( 'Search by EAN', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'E.g.: %s', 'ean-for-woocommerce' ), '<code>https://example.com/wp-json/wc/v3/products?ean=7980441417892</code>' ) .
-					'<br>* ' . sprintf( __( 'Alternatively, you can enable the "Search > This will enable searching by EAN on frontend" option, and then search using the default %s parameter:', 'ean-for-woocommerce' ),
+					'<br>* ' . sprintf( __( 'Alternatively, you can enable the "Search > This will enable searching by EAN on frontend" option, and then search using the standard %s parameter:', 'ean-for-woocommerce' ),
 						'<code>search</code>' ) .
 					'<br>' . sprintf( __( 'E.g.: %s', 'ean-for-woocommerce' ), '<code>https://example.com/wp-json/wc/v3/products?search=7980441417892</code>' ),
 				'id'       => 'alg_wc_ean_product_search_rest',

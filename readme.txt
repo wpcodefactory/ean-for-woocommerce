@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.0
-Stable tag: 4.2.0
+Stable tag: 4.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -85,6 +85,12 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.3.0 - 03/08/2022 =
+* Dev - REST API - Products - Search by EAN - Now including product variations as well.
+* Dev - Pro - Print - Print Tools - "Products List" tool added.
+* Dev - Pro - Print - Admin Options - Print buttons - Quantity input - "Products > Bulk actions > Each product" option added.
+* Dev - Pro - Extra Fields - Admin settings section description updated.
 
 = 4.2.0 - 27/07/2022 =
 * Dev - Compatibility - "Woocommerce OpenPos" compatibility added ("EAN" field is now available in "POS > Setting > Barcode Label > Barcode Meta Key").

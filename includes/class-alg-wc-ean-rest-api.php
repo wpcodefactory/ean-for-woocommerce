@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - REST API Class
  *
- * @version 3.7.0
+ * @version 4.3.0
  * @since   3.7.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_REST_API {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 4.3.0
 	 * @since   3.7.0
 	 *
 	 * @see     https://woocommerce.github.io/woocommerce-rest-api-docs/
@@ -33,6 +33,8 @@ class Alg_WC_EAN_REST_API {
 		}
 		if ( 'yes' === get_option( 'alg_wc_ean_product_search_rest', 'no' ) ) {
 			add_filter( 'woocommerce_rest_product_object_query', array( $this, 'product_search' ), 10, 2 );
+			add_action( 'pre_get_posts', array( $this, 'product_variation_search' ) );
+			add_filter( 'woocommerce_rest_query_vars', array( $this, 'product_variation_search_var' ) );
 		}
 
 		// Orders
@@ -46,9 +48,33 @@ class Alg_WC_EAN_REST_API {
 	}
 
 	/**
+	 * product_variation_search_var.
+	 *
+	 * @version 4.3.0
+	 * @since   4.3.0
+	 */
+	function product_variation_search_var( $vars ) {
+		$vars[] = 'alg_wc_ean_rest_api';
+		return $vars;
+	}
+
+	/**
+	 * product_variation_search.
+	 *
+	 * @version 4.3.0
+	 * @since   4.3.0
+	 */
+	function product_variation_search( $query ) {
+		if ( 'product_search' === $query->get( 'alg_wc_ean_rest_api' ) ) {
+			$query->set( 'post_type', array( 'product', 'product_variation' ) );
+		}
+		return $query;
+	}
+
+	/**
 	 * product_search.
 	 *
-	 * @version 3.7.0
+	 * @version 4.3.0
 	 * @since   3.7.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php#L340
@@ -57,8 +83,14 @@ class Alg_WC_EAN_REST_API {
 	 */
 	function product_search( $args, $request ) {
 		if ( isset( $request['ean'] ) ) {
+
+			// Meta key/value
 			$args['meta_key']   = alg_wc_ean()->core->ean_key;
 			$args['meta_value'] = $request['ean'];
+
+			// For product variations
+			$args['alg_wc_ean_rest_api'] = 'product_search';
+
 		}
 		return $args;
 	}

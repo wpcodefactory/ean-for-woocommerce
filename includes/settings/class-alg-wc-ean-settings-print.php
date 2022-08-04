@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 4.1.2
+ * @version 4.3.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.1.2
+	 * @version 4.3.0
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
@@ -335,7 +335,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				),
 			),
 			array(
-				'desc'     => sprintf( __( 'Print buttons style, e.g. %s', 'ean-for-woocommerce' ), '<code>font-size: 40px; width: 40px; height: 40px;</code>' ),
+				'desc'     => sprintf( __( 'Print buttons style, e.g.: %s', 'ean-for-woocommerce' ), '<code>font-size: 40px; width: 40px; height: 40px;</code>' ),
 				'desc_tip' => sprintf( __( 'Applied to the "%s" and "%s" print buttons.', 'ean-for-woocommerce' ),
 					__( 'Single product', 'ean-for-woocommerce' ), __( 'Single order', 'ean-for-woocommerce' ) ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings_print_buttons_style',
@@ -363,7 +363,8 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'multiselect',
 				'class'    => 'chosen_select',
 				'options'  => array(
-					'bulk_actions'   => __( 'Products > Bulk actions', 'ean-for-woocommerce' ),
+					'bulk_actions'              => __( 'Products > Bulk actions', 'ean-for-woocommerce' ),
+					'bulk_actions_each_product' => __( 'Products > Bulk actions > Each product', 'ean-for-woocommerce' ),
 				),
 			),
 			array(
@@ -437,6 +438,14 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'number',
 				'placeholder' => '1',
 				'custom_attributes' => array( 'min' => 1 ),
+			),
+			array(
+				'title'    => __( 'Products List', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This will add new "Print Products" section to "WooCommerce > Settings > EAN".', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_print_products_list_section',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',

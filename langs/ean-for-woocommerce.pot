@@ -302,49 +302,53 @@ msgstr ""
 msgid "Deprecated placeholders: %s."
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:94
+#: includes/pro/class-alg-wc-ean-print.php:83
+msgid "Print quantity"
+msgstr ""
+
+#: includes/pro/class-alg-wc-ean-print.php:132
 msgid "Qty"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:95
+#: includes/pro/class-alg-wc-ean-print.php:133
 msgid "Leave blank or set to zero to use the default quantity."
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:246
-#: includes/pro/class-alg-wc-ean-print.php:270
-#: includes/pro/class-alg-wc-ean-print.php:285
-#: includes/pro/class-alg-wc-ean-print.php:444
+#: includes/pro/class-alg-wc-ean-print.php:301
+#: includes/pro/class-alg-wc-ean-print.php:325
+#: includes/pro/class-alg-wc-ean-print.php:340
+#: includes/pro/class-alg-wc-ean-print.php:499
 msgid "Print barcodes"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:269
-#: includes/pro/class-alg-wc-ean-print.php:284
+#: includes/pro/class-alg-wc-ean-print.php:324
+#: includes/pro/class-alg-wc-ean-print.php:339
 msgid "Get barcodes PDF"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:277
+#: includes/pro/class-alg-wc-ean-print.php:332
 msgid "Refunded items"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:322
-#: includes/pro/class-alg-wc-ean-print.php:347
-#: includes/pro/class-alg-wc-ean-print.php:365
-#: includes/pro/class-alg-wc-ean-print.php:391
+#: includes/pro/class-alg-wc-ean-print.php:377
+#: includes/pro/class-alg-wc-ean-print.php:402
+#: includes/pro/class-alg-wc-ean-print.php:420
+#: includes/pro/class-alg-wc-ean-print.php:446
 msgid "Print barcode"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:346
-#: includes/pro/class-alg-wc-ean-print.php:364
-#: includes/pro/class-alg-wc-ean-print.php:390
+#: includes/pro/class-alg-wc-ean-print.php:401
+#: includes/pro/class-alg-wc-ean-print.php:419
+#: includes/pro/class-alg-wc-ean-print.php:445
 msgid "Get barcode PDF"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:354
+#: includes/pro/class-alg-wc-ean-print.php:409
 #: includes/settings/class-alg-wc-ean-settings-print.php:292
 msgid "Variations"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:570
+#: includes/pro/class-alg-wc-ean-print.php:628
 #: includes/settings/class-alg-wc-ean-settings-barcodes-compatibility.php:27
 #: includes/settings/class-alg-wc-ean-settings-barcodes-compatibility.php:43
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:27
@@ -468,9 +472,10 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-general.php:347
 #: includes/settings/class-alg-wc-ean-settings-general.php:390
 #: includes/settings/class-alg-wc-ean-settings-print.php:306
-#: includes/settings/class-alg-wc-ean-settings-print.php:380
-#: includes/settings/class-alg-wc-ean-settings-print.php:388
-#: includes/settings/class-alg-wc-ean-settings-print.php:397
+#: includes/settings/class-alg-wc-ean-settings-print.php:381
+#: includes/settings/class-alg-wc-ean-settings-print.php:389
+#: includes/settings/class-alg-wc-ean-settings-print.php:398
+#: includes/settings/class-alg-wc-ean-settings-print.php:444
 msgid "Enable"
 msgstr ""
 
@@ -510,7 +515,7 @@ msgid "Choose file and \"Save changes\" to import."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-advanced.php:95
-#: includes/settings/class-alg-wc-ean-settings.php:119
+#: includes/settings/class-alg-wc-ean-settings.php:122
 msgid "Reset"
 msgstr ""
 
@@ -930,12 +935,12 @@ msgid "Automatic"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:260
-#: includes/settings/class-alg-wc-ean-settings-print.php:396
+#: includes/settings/class-alg-wc-ean-settings-print.php:397
 msgid "Suppress errors"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:261
-#: includes/settings/class-alg-wc-ean-settings-print.php:397
+#: includes/settings/class-alg-wc-ean-settings-print.php:398
 msgid "recommended"
 msgstr ""
 
@@ -1080,7 +1085,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-extra-fields.php:48
 #, php-format
-msgid "Currently supported extra field features are: %s."
+msgid "Currently supported features are: %s."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-extra-fields.php:51
@@ -1447,7 +1452,7 @@ msgstr ""
 #, php-format
 msgid ""
 "Alternatively, you can enable the \"Search > This will enable searching by "
-"EAN on frontend\" option, and then search using the default %s parameter:"
+"EAN on frontend\" option, and then search using the standard %s parameter:"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:480
@@ -1472,10 +1477,23 @@ msgid ""
 "party plugins, e.g. for product import."
 msgstr ""
 
+#: includes/settings/class-alg-wc-ean-settings-print-products.php:26
+msgid "Print Products"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print-products.php:46
+msgid "Save changes"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print-products.php:46
 #: includes/settings/class-alg-wc-ean-settings-print.php:25
-#: includes/settings/class-alg-wc-ean-settings-print.php:413
 #: includes/settings/class-alg-wc-ean-settings-print.php:414
+#: includes/settings/class-alg-wc-ean-settings-print.php:415
 msgid "Print"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print-products.php:60
+msgid "Print Products Tool"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:51
@@ -1719,7 +1737,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:338
 #, php-format
-msgid "Print buttons style, e.g. %s"
+msgid "Print buttons style, e.g.: %s"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:339
@@ -1752,49 +1770,63 @@ msgstr ""
 msgid "Adds quantity input field for the print buttons."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:374
+#: includes/settings/class-alg-wc-ean-settings-print.php:367
+msgid "Products > Bulk actions > Each product"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print.php:375
 msgid "Advanced Print Options"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:379
+#: includes/settings/class-alg-wc-ean-settings-print.php:380
 msgid "Skip products without EAN"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:381
+#: includes/settings/class-alg-wc-ean-settings-print.php:382
 msgid "Skip products without EAN when generating PDF."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:387
+#: includes/settings/class-alg-wc-ean-settings-print.php:388
 msgid "Use Print.js"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:389
+#: includes/settings/class-alg-wc-ean-settings-print.php:390
 #, php-format
 msgid "Use %s library for printing PDFs."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:398
+#: includes/settings/class-alg-wc-ean-settings-print.php:399
 msgid "Suppress PHP errors when generating PDF."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:408
+#: includes/settings/class-alg-wc-ean-settings-print.php:409
 msgid "Print Tools"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:415
+#: includes/settings/class-alg-wc-ean-settings-print.php:416
 msgid "Check the box and \"Save changes\" to run the tool."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:421
+#: includes/settings/class-alg-wc-ean-settings-print.php:422
 msgid "Product(s)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:428
+#: includes/settings/class-alg-wc-ean-settings-print.php:429
 msgid "Search for a product&hellip;"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-print.php:434
+#: includes/settings/class-alg-wc-ean-settings-print.php:435
 msgid "Quantity"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print.php:443
+msgid "Products List"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-print.php:445
+msgid ""
+"This will add new \"Print Products\" section to \"WooCommerce > Settings > "
+"EAN\"."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-section.php:60
@@ -2196,18 +2228,18 @@ msgstr ""
 msgid "Delete EANs from all order items"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings.php:113
+#: includes/settings/class-alg-wc-ean-settings.php:116
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings.php:118
+#: includes/settings/class-alg-wc-ean-settings.php:121
 msgid "Reset section settings"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings.php:120
+#: includes/settings/class-alg-wc-ean-settings.php:123
 msgid "Check the box and save changes to reset."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings.php:159
+#: includes/settings/class-alg-wc-ean-settings.php:163
 msgid "Your settings have been reset."
 msgstr ""
