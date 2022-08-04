@@ -41,7 +41,7 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 
 		// Sections: Print
 		require_once( 'class-alg-wc-ean-settings-print.php' );
-		if ( 'yes' === get_option( 'alg_wc_ean_print_products_list_section', 'no' ) ) {
+		if ( 'yes' === get_option( 'alg_wc_ean_print_products_list_section', 'no' ) && 'yes' === get_option( 'alg_wc_ean_print_barcodes_to_pdf', 'no' ) ) {
 			require_once( 'class-alg-wc-ean-settings-print-products.php' );
 		}
 
