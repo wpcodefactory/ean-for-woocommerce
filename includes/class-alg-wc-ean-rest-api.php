@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - REST API Class
  *
- * @version 4.3.0
+ * @version 4.3.2
  * @since   3.7.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_REST_API {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.0
+	 * @version 4.3.2
 	 * @since   3.7.0
 	 *
 	 * @see     https://woocommerce.github.io/woocommerce-rest-api-docs/
@@ -30,6 +30,7 @@ class Alg_WC_EAN_REST_API {
 		// Products
 		if ( 'yes' === get_option( 'alg_wc_ean_product_rest', 'no' ) ) {
 			add_filter( 'woocommerce_rest_prepare_product_object', array( $this, 'product_add_ean' ), PHP_INT_MAX, 3 );
+			add_filter( 'woocommerce_rest_prepare_product_variation_object', array( $this, 'product_add_ean' ), PHP_INT_MAX, 3 );
 		}
 		if ( 'yes' === get_option( 'alg_wc_ean_product_search_rest', 'no' ) ) {
 			add_filter( 'woocommerce_rest_product_object_query', array( $this, 'product_search' ), 10, 2 );
