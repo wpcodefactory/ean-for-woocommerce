@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.1.2
+ * @version 4.3.3
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -216,7 +216,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * get_products.
 	 *
-	 * @version 3.9.0
+	 * @version 4.3.3
 	 * @since   2.1.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/wiki/wc_get_products-and-WC_Product_Query
@@ -260,8 +260,39 @@ class Alg_WC_EAN_Product_Tools {
 			}
 		}
 
+		// Fix variations `category`
+		if ( ( $do_fix_variations = ( 'variable_only' !== $variable_products && ! empty( $args['category'] ) ) ) ) {
+			$do_remove_variable = false;
+			if ( 'variations_only' === $variable_products ) {
+				// Temporarily get `variable` products
+				$args['type'][] = 'variable';
+				$do_remove_variable = true;
+			}
+		}
+
 		// Query
-		return wc_get_products( $args );
+		$products = wc_get_products( $args );
+
+		// Fix variations `category`: Add variations
+		if ( $do_fix_variations ) {
+			$_products = array();
+			foreach ( $products as $product_id ) {
+				$children = array_keys( get_children( array( 'post_parent' => $product_id, 'posts_per_page' => -1, 'post_type' => 'product_variation' ), 'ARRAY_N' ) );
+				if ( ! empty( $children ) ) {
+					// Variable products
+					if ( ! $do_remove_variable ) {
+						$_products[] = $product_id; // only when `$variable_products` is set to `all` (i.e., not to `variations_only`)
+					}
+					$_products = array_merge( $_products, $children );
+				} else {
+					// Other (e.g., simple) products
+					$_products[] = $product_id;
+				}
+			}
+			$products = $_products;
+		}
+
+		return $products;
 	}
 
 	/**
