@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 4.0.0
+ * @version 4.3.4
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,8 +17,10 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.3.4
 	 * @since   2.0.0
+	 *
+	 * @todo    [next] (dev) position: new tab (for both simple and variable products)
 	 */
 	function __construct() {
 		if ( is_admin() && apply_filters( 'alg_wc_ean_edit', true ) ) {
@@ -28,7 +30,7 @@ class Alg_WC_EAN_Edit {
 			add_action( 'save_post_product', array( $this, 'save_ean_input' ), 10, 2 );
 
 			// Variations
-			add_action( 'woocommerce_variation_options_pricing', array( $this, 'add_ean_input_variation' ), 10, 3 );
+			add_action( get_option( 'alg_wc_ean_backend_position_variation', 'woocommerce_variation_options_pricing' ), array( $this, 'add_ean_input_variation' ), 10, 3 );
 			add_action( 'woocommerce_save_product_variation', array( $this, 'save_ean_input_variation' ), 10, 2 );
 
 			// Quick and Bulk edit

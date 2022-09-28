@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 4.3.0
+ * @version 4.3.4
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,7 +87,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.0
+	 * @version 4.3.4
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -115,6 +115,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	 * @todo    [maybe] (desc) Cart: better desc?
 	 * @todo    [maybe] (desc) `$wcdn_settings`: better desc?
 	 * @todo    [maybe] (dev) `alg_wc_ean_backend_position`: add more positions?
+	 * @todo    [next] (desc) `alg_wc_ean_backend_position`: better names, e.g., "Inventory: SKU" to "Inventory: After SKU", etc.
 	 * @todo    [maybe] (dev) `alg_wc_ean_backend_search_ajax`: remove (i.e. always `yes`)?
 	 */
 	function get_settings() {
@@ -188,6 +189,18 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 					'woocommerce_product_options_inventory_product_data' => __( 'Inventory', 'ean-for-woocommerce' ),
 					'woocommerce_product_options_sku'                    => __( 'Inventory: SKU', 'ean-for-woocommerce' ),
 					'woocommerce_product_options_advanced'               => __( 'Advanced', 'ean-for-woocommerce' ),
+				),
+			),
+			array(
+				'desc'     => __( 'Position (variation product)', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_backend_position_variation',
+				'default'  => 'woocommerce_variation_options_pricing',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'woocommerce_variation_options_pricing'         => __( 'Variations: After pricing', 'ean-for-woocommerce' ),
+					'woocommerce_variation_options_dimensions'      => __( 'Variations: After dimensions', 'ean-for-woocommerce' ),
+					'woocommerce_product_after_variable_attributes' => __( 'Variations: After all', 'ean-for-woocommerce' ),
 				),
 			),
 			array(
