@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Advanced Section Settings
  *
- * @version 4.0.0
+ * @version 4.4.0
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.4.0
 	 * @since   2.2.9
 	 *
 	 * @todo    [next] (dev) Import/Export: move to "Tools", and/or add dashicons?
@@ -51,15 +51,6 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'required' => 'required' ),
 			),
 			array(
-				'title'    => __( 'JS selector in variation', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'This is used only if "%s" option is set to "%s".', 'ean-for-woocommerce' ),
-						__( 'Variable products: Position in variation', 'ean-for-woocommerce' ), __( 'Product meta', 'ean-for-woocommerce' ) ) . ' ' .
-					__( 'Leave at the default value if unsure.', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_js_variations_form_closest',
-				'default'  => '.summary',
-				'type'     => 'text',
-			),
-			array(
 				'title'    => __( 'Force remote image', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'Forces remote images in Barcodes > Order items table > Pages.', 'ean-for-woocommerce' ) . ' ' .
@@ -71,6 +62,30 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_ean_advanced_options',
+			),
+			array(
+				'title'    => __( 'JavaScript Variation Options', 'ean-for-woocommerce' ),
+				'desc'     => sprintf( __( 'This is used only if "%s" option is set to "%s".', 'ean-for-woocommerce' ),
+						__( 'Variable products: Position in variation', 'ean-for-woocommerce' ), __( 'Product meta', 'ean-for-woocommerce' ) ) . ' ' .
+					__( 'Leave at the default value if unsure.', 'ean-for-woocommerce' ),
+				'type'     => 'title',
+				'id'       => 'alg_wc_ean_advanced_js_options',
+			),
+			array(
+				'title'    => __( 'Variations form', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_js_variations_form',
+				'default'  => '.variations_form',
+				'type'     => 'text',
+			),
+			array(
+				'title'    => __( 'Closest container', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_js_variations_form_closest',
+				'default'  => '.summary',
+				'type'     => 'text',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'alg_wc_ean_advanced_js_options',
 			),
 			array(
 				'title'    => __( 'Export/Import/Reset Plugin Settings', 'ean-for-woocommerce' ),

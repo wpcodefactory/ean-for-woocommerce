@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 3.9.0
+ * @version 4.4.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -265,7 +265,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * variations_enqueue_scripts.
 	 *
-	 * @version 2.2.9
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 */
 	function variations_enqueue_scripts() {
@@ -277,7 +277,11 @@ class Alg_WC_EAN_Display {
 				true
 			);
 			wp_localize_script( 'alg-wc-ean-variations',
-				'alg_wc_ean_variations_obj', array( 'variations_form_closest' => get_option( 'alg_wc_ean_js_variations_form_closest', '.summary' ) ) );
+				'alg_wc_ean_variations_obj', array(
+					'variations_form'         => get_option( 'alg_wc_ean_js_variations_form', '.variations_form' ),
+					'variations_form_closest' => get_option( 'alg_wc_ean_js_variations_form_closest', '.summary' ),
+				)
+			);
 		}
 	}
 

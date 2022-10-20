@@ -1,7 +1,7 @@
 /**
  * EAN for WooCommerce - Variations
  *
- * @version 2.2.9
+ * @version 4.4.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -9,8 +9,8 @@
 
 jQuery( document ).ready( function() {
 
-	var variations_form = jQuery( '.variations_form' );
-	if ( jQuery( 'body' ).hasClass( 'single-product' ) && variations_form.length > 0 ) { // is single variable product
+	var variations_form = jQuery( alg_wc_ean_variations_obj.variations_form );
+	if ( jQuery( 'body' ).hasClass( 'single-product' ) && variations_form.length > 0 ) { // is single variable product page
 		var ean = variations_form.closest( alg_wc_ean_variations_obj.variations_form_closest ).find( '.ean' );
 		if ( ean.length > 0 ) { // do ean
 			var ean_reset  = ean.text();

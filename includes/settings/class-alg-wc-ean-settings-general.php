@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 4.3.4
+ * @version 4.4.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,7 +87,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.4
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -216,6 +216,22 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'desc_tip' => __( 'This will check if product EAN is unique in your shop.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_backend_is_unique',
 				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => '',
+			),
+			array(
+				'desc'     => __( 'Require', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This will make the EAN field required on the admin product edit pages.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_required',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => '',
+			),
+			array(
+				'desc'     => __( 'Add pattern', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This will specify a pattern for the EAN input field to be checked against on the admin product edit pages.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_add_pattern',
+				'default'  => 'yes',
 				'type'     => 'checkbox',
 				'checkboxgroup' => '',
 			),

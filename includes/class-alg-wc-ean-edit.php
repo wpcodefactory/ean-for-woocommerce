@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 4.3.4
+ * @version 4.4.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -198,36 +198,51 @@ class Alg_WC_EAN_Edit {
 	}
 
 	/**
-	 * get_ean_input_pattern.
+	 * get_ean_input_custom_atts.
 	 *
-	 * @version 3.3.0
+	 * @version 4.4.0
 	 * @since   1.0.1
 	 *
 	 * @todo    [next] `AUTO`: better maxlength (13); add minlength (8)
 	 * @todo    [maybe] `ean-13`: `array( 'pattern' => '.{0}|[0-9]{13}', 'maxlength' => '13' ) )`
 	 * @todo    [maybe] `ean-13`: `array( 'pattern' => '.{0}|[0-9]+', 'minlength' => '13', 'maxlength' => '13' )`
 	 */
-	function get_ean_input_pattern( $product_id = false, $atts = array() ) {
-		$type = alg_wc_ean()->core->get_type( false, false, $product_id );
-		switch ( $type ) {
-			case 'EAN8':
-			case 'UPCA':
-			case 'EAN13':
-			case 'ISBN13':
-			case 'JAN':
-			case 'AUTO':
-				$result = array_merge( $atts, array( 'pattern' => '[0-9]+', 'maxlength' => ( 'AUTO' === $type ? 13 : alg_wc_ean()->core->get_ean_type_length( $type ) ) ) );
-				break;
-			default:
-				$result = $atts;
+	function get_ean_input_custom_atts( $product_id = false, $atts = array() ) {
+		$result = $atts;
+
+		// Required
+		if ( 'yes' === get_option( 'alg_wc_ean_required', 'no' ) ) {
+			$result = array_merge( $result, array( 'required' => 'required' ) );
 		}
-		return apply_filters( 'alg_wc_ean_input_pattern', $result, $atts, $type );
+
+		// Pattern and max length
+		if ( 'yes' === get_option( 'alg_wc_ean_add_pattern', 'yes' ) ) {
+			$type = alg_wc_ean()->core->get_type( false, false, $product_id );
+			switch ( $type ) {
+				case 'EAN8':
+				case 'UPCA':
+				case 'EAN13':
+				case 'ISBN13':
+				case 'JAN':
+				case 'AUTO':
+					$result = array_merge( $result, array(
+						'pattern'   => '[0-9]+',
+						'maxlength' => ( 'AUTO' === $type ? 13 : alg_wc_ean()->core->get_ean_type_length( $type ) ),
+					) );
+					break;
+			}
+		}
+
+		// Deprecated filter
+		$result = apply_filters( 'alg_wc_ean_input_pattern', $result, $atts, $type );
+
+		return apply_filters( 'alg_wc_ean_input_custom_atts', $result, $product_id, $atts );
 	}
 
 	/**
 	 * add_ean_input_variation.
 	 *
-	 * @version 4.0.0
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 *
 	 * @todo    [next] (dev) `variable{$key}` to `variable_{$key}`?
@@ -243,7 +258,7 @@ class Alg_WC_EAN_Edit {
 			'placeholder'       => alg_wc_ean()->core->get_ean( $variation->post_parent ),
 			'description'       => ( ! empty( $variation_data[ $key ][0] ) ? $this->get_ean_input_desc( $variation_data[ $key ][0], $variation->ID ) :
 				( $this->do_add_generate_button ? '<p>' . $this->get_generate_button( $variation->ID, "variable{$key}_{$loop}" ) . '</p>' : '' ) ),
-			'custom_attributes' => $this->get_ean_input_pattern( $variation->ID ),
+			'custom_attributes' => $this->get_ean_input_custom_atts( $variation->ID ),
 		) );
 	}
 
@@ -263,7 +278,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_ean_input.
 	 *
-	 * @version 4.0.0
+	 * @version 4.4.0
 	 * @since   1.0.0
 	 */
 	function add_ean_input() {
@@ -275,7 +290,7 @@ class Alg_WC_EAN_Edit {
 			'label'             => esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
 			'description'       => ( ! empty( $value ) ? $this->get_ean_input_desc( $value, $product_id ) :
 				( $this->do_add_generate_button ? $this->get_generate_button( $product_id, alg_wc_ean()->core->ean_key ) : '' ) ),
-			'custom_attributes' => $this->get_ean_input_pattern( $product_id ),
+			'custom_attributes' => $this->get_ean_input_custom_atts( $product_id ),
 		) );
 	}
 

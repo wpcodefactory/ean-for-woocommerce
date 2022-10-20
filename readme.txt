@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.0
-Stable tag: 4.3.4
+Stable tag: 4.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -85,6 +85,12 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.4.0 - 20/10/2022 =
+* Dev - General - Admin product edit page - "Require" option added. Defaults to `no`.
+* Dev - General - Admin product edit page - "Add pattern" option added. Defaults to `yes`.
+* Dev - Advanced - JavaScript Variation Options - "Variations form" option added. Defaults to `.variations_form`.
+* WC tested up to: 7.0.
 
 = 4.3.4 - 28/09/2022 =
 * Dev - General - Admin product edit page - "Position (variation product)" option added. Defaults to "Variations: After pricing".
