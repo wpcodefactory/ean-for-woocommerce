@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 4.2.0
+ * @version 4.4.1
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.2.0
+	 * @version 4.4.1
 	 * @since   2.2.9
 	 *
 	 * @todo    [next] (desc) `alg_wc_ean_wcfm_add_generate_button`: better desc?
@@ -170,6 +170,12 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'desc_tip' => sprintf( __( 'This will show EAN in vendor product form of the %s plugin.', 'ean-for-woocommerce' ),
 					'<a target="_blank" href="https://wordpress.org/plugins/dokan-lite/">' . __( 'Dokan', 'ean-for-woocommerce' ) . '</a>' ),
 				'id'       => 'alg_wc_ean_dokan',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Required', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_dokan_required',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

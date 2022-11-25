@@ -7,8 +7,8 @@
 #: includes/class-alg-wc-ean-compatibility.php:382
 #: includes/class-alg-wc-ean-compatibility.php:431
 #: includes/class-alg-wc-ean-compatibility.php:464
-#: includes/class-alg-wc-ean-compatibility.php:506
-#: includes/class-alg-wc-ean-compatibility.php:525
+#: includes/class-alg-wc-ean-compatibility.php:507
+#: includes/class-alg-wc-ean-compatibility.php:527
 #: includes/class-alg-wc-ean-display.php:176
 #: includes/class-alg-wc-ean-display.php:182
 #: includes/class-alg-wc-ean-display.php:367
@@ -18,9 +18,9 @@
 #: includes/class-alg-wc-ean-edit.php:290
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:82
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:141
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:179
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:201
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:220
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:185
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:207
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:226
 #: includes/settings/class-alg-wc-ean-settings-general.php:141
 #: includes/settings/class-alg-wc-ean-settings-general.php:176
 #: includes/settings/class-alg-wc-ean-settings-general.php:241
@@ -31,7 +31,7 @@ msgstr ""
 
 #: includes/class-alg-wc-ean-compatibility.php:310
 #: includes/class-alg-wc-ean-compatibility.php:386
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:213
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:219
 msgid ""
 "The International Article Number (also known as European Article Number or "
 "EAN) is a standard describing a barcode symbology and numbering system used "
@@ -41,9 +41,9 @@ msgstr ""
 
 #: includes/class-alg-wc-ean-compatibility.php:311
 #: includes/class-alg-wc-ean-compatibility.php:387
-#: includes/class-alg-wc-ean-compatibility.php:507
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:185
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:207
+#: includes/class-alg-wc-ean-compatibility.php:508
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:191
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:213
 msgid "Product EAN..."
 msgstr ""
 
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Generate %s"
 msgstr ""
 
-#: includes/class-alg-wc-ean-compatibility.php:542
+#: includes/class-alg-wc-ean-compatibility.php:544
 #: includes/class-alg-wc-ean-search.php:177
 #, php-format
 msgid "EAN: %s"
@@ -434,7 +434,7 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:100
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:160
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:169
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:193
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:199
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:84
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:92
 #: includes/settings/class-alg-wc-ean-settings-general.php:249
@@ -703,8 +703,8 @@ msgid "This will show barcode in vendor product form of the %s plugin."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes-compatibility.php:171
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:177
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:199
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:183
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:205
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:67
 #: includes/settings/class-alg-wc-ean-settings-extra-fields.php:49
 #: includes/settings/class-alg-wc-ean-settings-general.php:173
@@ -1013,35 +1013,39 @@ msgstr ""
 msgid "This will show EAN in vendor product form of the %s plugin."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:183
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:205
-msgid "Placeholder"
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:177
+msgid "Required"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:189
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:191
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:211
+msgid "Placeholder"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:195
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:197
 msgid "WCFM"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:190
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:196
 #, php-format
 msgid "This will show EAN in product forms of the %s and %s plugins."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:192
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:198
 msgid "WCFM Marketplace"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:211
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:217
 msgid "Hints"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:218
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:224
 #: includes/settings/class-alg-wc-ean-settings-general.php:239
 msgid "Add \"Generate\" button"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-compatibility.php:219
+#: includes/settings/class-alg-wc-ean-settings-compatibility.php:225
 #, php-format
 msgid "This will add \"Generate %s\" button to the vendor product edit pages."
 msgstr ""

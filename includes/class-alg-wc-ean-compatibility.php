@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.2.0
+ * @version 4.4.1
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -453,7 +453,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * dokan_add_ean_field_variation.
 	 *
-	 * @version 3.1.2
+	 * @version 4.4.1
 	 * @since   3.1.2
 	 */
 	function dokan_add_ean_field_variation( $loop, $variation_data, $variation ) {
@@ -463,9 +463,10 @@ class Alg_WC_EAN_Compatibility {
 		$value       = alg_wc_ean()->core->get_ean( $variation->ID );
 		$title       = esc_html( get_option( 'alg_wc_ean_dokan_title', __( 'EAN', 'ean-for-woocommerce' ) ) );
 		$placeholder = alg_wc_ean()->core->get_ean( $variation->post_parent );
+		$required    = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? ' required' : '' );
 		echo '<div class="dokan-form-group">' .
 			'<label for="' . $id . '" class="form-label">' . $title . '</label>' .
-			'<input type="text" name="' . $name . '" id="' . $id . '" class="dokan-form-control alg-wc-ean" placeholder="' . $placeholder . '" value="' . $value . '">' .
+			'<input type="text" name="' . $name . '" id="' . $id . '" class="dokan-form-control alg-wc-ean" placeholder="' . $placeholder . '" value="' . $value . '"' . $required . '>' .
 		'</div>';
 	}
 
@@ -491,7 +492,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * dokan_add_ean_field.
 	 *
-	 * @version 2.2.2
+	 * @version 4.4.1
 	 * @since   2.2.2
 	 *
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/new-product.php#L257
@@ -505,9 +506,10 @@ class Alg_WC_EAN_Compatibility {
 		$value       = ( ! empty( $post_id ) ? alg_wc_ean()->core->get_ean( $post_id ) : ( isset( $_REQUEST[ $id ] ) ? esc_html( wc_clean( $_REQUEST[ $id ] ) ) : '' ) ); // Edit product vs Add product
 		$title       = esc_html( get_option( 'alg_wc_ean_dokan_title', __( 'EAN', 'ean-for-woocommerce' ) ) );
 		$placeholder = esc_html( get_option( 'alg_wc_ean_dokan_placeholder', __( 'Product EAN...', 'ean-for-woocommerce' ) ) );
+		$required    = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? ' required' : '' );
 		echo '<div class="dokan-form-group">' .
 			'<label for="' . $id . '" class="form-label">' . $title . '</label>' .
-			'<input type="text" name="' . $id . '" id="' . $id . '" class="dokan-form-control alg-wc-ean" placeholder="' . $placeholder . '" value="' . $value . '">' .
+			'<input type="text" name="' . $id . '" id="' . $id . '" class="dokan-form-control alg-wc-ean" placeholder="' . $placeholder . '" value="' . $value . '"' . $required . '>' .
 		'</div>';
 	}
 
