@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.3.3
+ * @version 4.4.2
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -20,7 +20,6 @@ class Alg_WC_EAN_Product_Tools {
 	 * @version 4.1.2
 	 * @since   2.1.0
 	 *
-	 * @todo    [next] (feature) copy from attribute
 	 * @todo    [next] (dev) split into more files/classes, e.g. `class-alg-wc-ean-crons.php`?
 	 * @todo    [maybe] (feature) Automatic actions: `updated_postmeta`?
 	 * @todo    [maybe] (dev) Automatic actions: `woocommerce_after_product_object_save`?
@@ -360,7 +359,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 4.1.1
+	 * @version 4.4.2
 	 * @since   2.2.8
 	 *
 	 * @todo    [next] (dev) merge with `products_create()`?
@@ -403,6 +402,12 @@ class Alg_WC_EAN_Product_Tools {
 							if ( '' !== $data['sub_key'] ) {
 								$ean = ( isset( $ean[ $data['sub_key'] ] ) ? $ean[ $data['sub_key'] ] : '' );
 							}
+						}
+						break;
+					case 'copy_attr':
+						$data = get_option( 'alg_wc_ean_tool_product_copy_attr', array() );
+						if ( isset( $data['product_attribute'] ) && '' !== $data['product_attribute'] ) {
+							$ean = ( $product ? $product->get_attribute( $data['product_attribute'] ) : get_post_meta( $post_id, 'attribute_' . $data['product_attribute'], true ) );
 						}
 						break;
 					case 'assign_list':
@@ -451,7 +456,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 4.1.1
+	 * @version 4.4.2
 	 * @since   2.9.0
 	 *
 	 * @todo    [next] (dev) Copy to: do NOT overwrite?
@@ -467,6 +472,12 @@ class Alg_WC_EAN_Product_Tools {
 				$data = array_replace( array( 'key' => '', 'sub_key' => '' ), get_option( 'alg_wc_ean_tool_product_copy_meta', array() ) );
 				if ( '' === $data['key'] ) {
 					return array( 'result' => false, 'message' => __( 'Please set the "Meta key" option.', 'ean-for-woocommerce' ) );
+				}
+				break;
+			case 'copy_attr':
+				$data = get_option( 'alg_wc_ean_tool_product_copy_attr', array() );
+				if ( ! isset( $data['product_attribute'] ) || '' === $data['product_attribute'] ) {
+					return array( 'result' => false, 'message' => __( 'Please set the "Product attribute" option.', 'ean-for-woocommerce' ) );
 				}
 				break;
 			case 'assign_list':
@@ -550,6 +561,9 @@ class Alg_WC_EAN_Product_Tools {
 						$ean = ( isset( $ean[ $data['sub_key'] ] ) ? $ean[ $data['sub_key'] ] : '' );
 					}
 					break;
+				case 'copy_attr':
+					$ean = ( ( $product = wc_get_product( $product_id ) ) ? $product->get_attribute( $data['product_attribute'] ) : get_post_meta( $product_id, 'attribute_' . $data['product_attribute'], true ) );
+					break;
 				case 'assign_list':
 					$ean = array_shift( $data );
 					break;
@@ -586,7 +600,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * products_create.
 	 *
-	 * @version 4.1.0
+	 * @version 4.4.2
 	 * @since   2.1.0
 	 *
 	 * @todo    [next] (dev) message: "success/error" (i.e. check `$response['result']`)
@@ -599,6 +613,7 @@ class Alg_WC_EAN_Product_Tools {
 			'copy_sku'     => 'no',
 			'copy_id'      => 'no',
 			'copy_meta'    => 'no',
+			'copy_attr'    => 'no',
 			'assign_list'  => 'no',
 			'get_stats'    => 'no',
 			'copy_to_sku'  => 'no',

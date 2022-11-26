@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.1
-Stable tag: 4.4.1
+Stable tag: 4.4.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -85,6 +85,9 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.4.2 - 26/11/2022 =
+* Dev - Tools - Product Tools - "Copy from product attribute" tool added.
 
 = 4.4.1 - 25/11/2022 =
 * Dev - Compatibility - Dokan - "Required" option added (defaults to `no`).

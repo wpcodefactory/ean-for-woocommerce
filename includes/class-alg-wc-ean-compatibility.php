@@ -481,6 +481,8 @@ class Alg_WC_EAN_Compatibility {
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/includes/Product/functions.php#L127
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/includes/Product/functions.php#L129
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/includes/REST/Manager.php#L172
+	 *
+	 * @todo    [next] (dev) `alg_wc_ean_dokan_required`: add server-side validation
 	 */
 	function dokan_save_ean_field( $product_id, $data ) {
 		$id = 'dokan_' . alg_wc_ean()->core->ean_key;

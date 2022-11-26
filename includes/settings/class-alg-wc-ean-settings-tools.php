@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 4.1.2
+ * @version 4.4.2
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_product_actions_list.
 	 *
-	 * @version 4.1.0
+	 * @version 4.4.2
 	 * @since   2.9.0
 	 */
 	function get_product_actions_list() {
@@ -39,6 +39,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			'copy_sku'     => __( 'Copy from product SKU', 'ean-for-woocommerce' ),
 			'copy_id'      => __( 'Copy from product ID', 'ean-for-woocommerce' ),
 			'copy_meta'    => __( 'Copy from product meta', 'ean-for-woocommerce' ),
+			'copy_attr'    => __( 'Copy from product attribute', 'ean-for-woocommerce' ),
 			'assign_list'  => __( 'Assign from the list', 'ean-for-woocommerce' ),
 			'copy_to_sku'  => __( 'Copy to product SKU', 'ean-for-woocommerce' ),
 			'copy_to_meta' => __( 'Copy to product meta', 'ean-for-woocommerce' ),
@@ -95,7 +96,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.1.2
+	 * @version 4.4.2
 	 * @since   2.2.5
 	 *
 	 * @todo    [next] (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
@@ -251,6 +252,21 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_tool_product_copy_meta[sub_key]',
 				'default'  => '',
 				'type'     => 'text',
+			),
+			array(
+				'title'    => __( 'Copy from product attribute', 'ean-for-woocommerce' ),
+				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Copy EAN from product attribute for all products', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product[copy_attr]',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Product attribute', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_copy_attr[product_attribute]',
+				'default'  => '',
+				'type'     => 'select',
+				'class'    => 'chosen_select',
+				'options'  => $this->get_product_attributes( __( 'Select attribute...', 'ean-for-woocommerce' ) ),
 			),
 			array(
 				'title'    => __( 'Assign from the list', 'ean-for-woocommerce' ),
