@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 4.1.0
+ * @version 4.4.3
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -62,14 +62,17 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 4.1.0
 	 * @since   3.5.0
 	 *
+	 * @todo    [next] (dev) escape: `wp_kses_post()`?
 	 * @todo    [next] (dev) `max_length`: add everywhere
 	 */
 	function output( $result, $atts ) {
 		return ( '' === $result ?
 			$atts['on_empty'] :
-			( $atts['before'] .
-				( ! empty( $atts['max_length'] ) ? substr( $result, 0, $atts['max_length'] ) : $result ) .
-			$atts['after'] )
+			(
+				$atts['before'] .
+					( ! empty( $atts['max_length'] ) ? substr( $result, 0, $atts['max_length'] ) : $result ) .
+				$atts['after']
+			)
 		);
 	}
 
@@ -176,7 +179,7 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * product_image_shortcode.
 	 *
-	 * @version 3.5.0
+	 * @version 4.4.3
 	 * @since   3.5.0
 	 */
 	function product_image_shortcode( $atts, $content = '' ) {
@@ -213,7 +216,7 @@ class Alg_WC_EAN_Shortcodes {
 					$img_url = wc_placeholder_img_src( $atts['size'] );
 				}
 				$img_url = esc_url( $img_url );
-				$result = ( 'url' === $atts['output'] ? $img_url : '<img src="' . $img_url . '" width="' . $atts['width'] . '" height="' . $atts['height'] . '">' );
+				$result = ( 'url' === $atts['output'] ? $img_url : '<img src="' . $img_url . '" width="' . esc_attr( $atts['width'] ) . '" height="' . esc_attr( $atts['height'] ) . '">' );
 			}
 		}
 
