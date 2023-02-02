@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.1
-Stable tag: 4.4.3
+Stable tag: 4.4.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -85,6 +85,11 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.4.4 - 02/02/2023 =
+* Dev - Developers - Admin product search - `alg_wc_ean_search_backend` filter added.
+* Dev - Developers - Search - `alg_wc_ean_search` filter added.
+* WC tested up to: 7.3.
 
 = 4.4.3 - 10/01/2023 =
 * Dev - Shortcodes - `[alg_wc_ean_product_image]` - Security - `height` and `width` attributes are escaped now.

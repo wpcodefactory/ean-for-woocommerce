@@ -54,7 +54,7 @@ msgid "Generate %s"
 msgstr ""
 
 #: includes/class-alg-wc-ean-compatibility.php:546
-#: includes/class-alg-wc-ean-search.php:177
+#: includes/class-alg-wc-ean-search.php:206
 #, php-format
 msgid "EAN: %s"
 msgstr ""

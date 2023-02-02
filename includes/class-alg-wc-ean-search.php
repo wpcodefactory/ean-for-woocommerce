@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Search Class
  *
- * @version 4.1.1
+ * @version 4.4.4
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -28,12 +28,16 @@ class Alg_WC_EAN_Search {
 	 * @todo    [maybe] make `alg_wc_ean_frontend_search_ajax_flatsome` independent from `alg_wc_ean_frontend_search`?
 	 */
 	function __construct() {
+
 		if ( ! is_admin() ) {
+
 			// Frontend
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_search', 'yes' ) ) {
 				add_action( 'pre_get_posts', array( $this, 'search' ), 10 );
 			}
+
 		} else {
+
 			// Backend
 			if ( 'yes' === get_option( 'alg_wc_ean_backend_search', 'yes' ) ) {
 				add_action( 'pre_get_posts', array( $this, 'search_backend' ) );
@@ -41,12 +45,15 @@ class Alg_WC_EAN_Search {
 					add_filter( 'woocommerce_json_search_found_products', array( $this, 'json_search_found_products' ) );
 				}
 			}
+
 		}
+
 		// "Flatsome" theme
 		if ( 'yes' === get_option( 'alg_wc_ean_frontend_search', 'yes' ) && 'yes' === get_option( 'alg_wc_ean_frontend_search_ajax_flatsome', 'no' ) ) {
 			add_filter( 'theme_mod_search_by_sku',       array( $this, 'flatsome_search_ajax_mod' ),  PHP_INT_MAX );
 			add_filter( 'flatsome_ajax_search_function', array( $this, 'flatsome_search_ajax_func' ), PHP_INT_MAX, 4 );
 		}
+
 	}
 
 	/**
@@ -94,25 +101,35 @@ class Alg_WC_EAN_Search {
 	/**
 	 * search_backend.
 	 *
-	 * @version 4.1.1
+	 * @version 4.4.4
 	 * @since   1.0.0
 	 *
 	 * @todo    [maybe] rewrite?
 	 */
 	function search_backend( $query ) {
-		if ( $query->is_main_query() && isset( $query->query['post_type'] ) && 'product' == $query->query['post_type'] ) {
-			$new_query   = clone( $query );
+
+		if (
+			$query->is_main_query() &&
+			isset( $query->query['post_type'] ) && 'product' == $query->query['post_type'] &&
+			apply_filters( 'alg_wc_ean_search_backend', true, $query )
+		) {
+
+			// Check search term
 			$search_term = isset( $_REQUEST['s'] ) ? sanitize_text_field( $_REQUEST['s'] ) : '';
 			if ( empty( $search_term ) ) {
 				return;
 			}
 
+			// Clone query, etc.
+			$new_query = clone( $query );
 			$new_query->query_vars['s'] = '';
 			$old_product_in = $query->query_vars['post__in'];
 
+			// Unset `post__in`
 			unset( $new_query->query['post__in'] );
 			unset( $new_query->query_vars['post__in'] );
 
+			// Set `meta_query`
 			$new_meta_query = array(
 				'key'     => alg_wc_ean()->core->ean_key,
 				'value'   => $search_term,
@@ -128,9 +145,11 @@ class Alg_WC_EAN_Search {
 			}
 			$new_query->set( 'meta_query', $meta_query );
 
+			// Set `post_status` and `posts_per_page`
 			$new_query->set( 'post_status', 'any' );
 			$new_query->set( 'posts_per_page', -1 );
 
+			// Remove action
 			remove_action( 'pre_get_posts', array( $this, 'search_backend' ) );
 
 			// Search for products
@@ -149,8 +168,11 @@ class Alg_WC_EAN_Search {
 				$new_ids = array_merge( $new_ids, $result );
 			}
 
+			// Set `post__in`
 			$query->set( 'post__in', array_values( array_unique( $new_ids ) ) );
+
 		}
+
 	}
 
 	/**
@@ -163,8 +185,13 @@ class Alg_WC_EAN_Search {
 	 * @todo    [maybe] append product_id to the title
 	 */
 	function json_search_found_products( $products ) {
+
 		if ( isset( $_REQUEST['term'] ) && '' !== $_REQUEST['term'] ) {
+
+			// Key
 			$key = alg_wc_ean()->core->ean_key;
+
+			// Get products
 			$found_products = wc_get_products( array(
 				'type'         => array_merge( array_keys( wc_get_product_types() ), array( 'variation' ) ),
 				'limit'        => -1,
@@ -173,39 +200,55 @@ class Alg_WC_EAN_Search {
 				'meta_compare' => 'LIKE',
 				'return'       => 'ids',
 			) );
+
+			// Products loop
 			foreach ( $found_products as $product_id ) {
 				$ean = sprintf( __( 'EAN: %s', 'ean-for-woocommerce' ), get_post_meta( $product_id, $key, true ) );
 				$products[ $product_id ] = get_the_title( $product_id ) . ' (' . $ean . ')';
 			}
+
 		}
+
 		return $products;
 	}
 
 	/**
 	 * search.
 	 *
-	 * @version 2.3.0
+	 * @version 4.4.4
 	 * @since   1.0.0
 	 *
 	 * @todo    [maybe] (dev) rewrite?
 	 */
 	function search( $wp_query ) {
-		global $wpdb;
-		if ( ! isset( $wp_query->query['s'] ) || ! isset( $wp_query->query['post_type'] ) || 'product' != $wp_query->query['post_type'] ) {
+
+		// Pre-check
+		if (
+			! isset( $wp_query->query['s'] ) ||
+			! isset( $wp_query->query['post_type'] ) || 'product' != $wp_query->query['post_type'] ||
+			! apply_filters( 'alg_wc_ean_search', true, $wp_query )
+		) {
 			return;
 		}
+
+		// Get `$posts`
+		global $wpdb;
 		$key   = alg_wc_ean()->core->ean_key;
 		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='{$key}' AND meta_value LIKE %s;",
 			esc_sql( '%' . $wp_query->query['s'] . '%' ) ) );
 		if ( ! $posts ) {
 			return;
 		}
+
+		// Unset `s`
 		unset( $wp_query->query['s'] );
 		unset( $wp_query->query_vars['s'] );
+
+		// Set `post__in`
 		$wp_query->query['post__in'] = array();
 		foreach ( $posts as $id ) {
 			if ( ( $post = get_post( $id ) ) ) {
-				if ( $post->post_type == 'product_variation' ) {
+				if ( 'product_variation' == $post->post_type ) {
 					$wp_query->query['post__in'][]      = $post->post_parent;
 					$wp_query->query_vars['post__in'][] = $post->post_parent;
 				} else {
@@ -213,6 +256,7 @@ class Alg_WC_EAN_Search {
 				}
 			}
 		}
+
 	}
 
 }
