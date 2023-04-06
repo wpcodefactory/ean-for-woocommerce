@@ -49,7 +49,7 @@ class Alg_WC_EAN_Manage_Settings {
 	 * @version 4.0.0
 	 * @since   3.1.0
 	 *
-	 * @todo    [maybe] (dev) better data validation?
+	 * @todo    (dev) better data validation?
 	 */
 	function import_settings() {
 		if ( ! empty( $_FILES['alg_wc_ean_import_settings']['tmp_name'] ) ) {
@@ -79,9 +79,9 @@ class Alg_WC_EAN_Manage_Settings {
 	 * @version 3.8.0
 	 * @since   3.1.0
 	 *
-	 * @todo    [next] (dev) remove `length`?
-	 * @todo    [next] (dev) recheck headers?
-	 * @todo    [next] (dev) redirect page?
+	 * @todo    (dev) remove `length`?
+	 * @todo    (dev) recheck headers?
+	 * @todo    (dev) redirect page?
 	 */
 	function export_settings() {
 		if ( 'yes' === get_option( 'alg_wc_ean_export_settings', 'no' ) ) {

@@ -54,7 +54,7 @@ class Alg_WC_EAN_Settings_Section {
 	 * @version 2.4.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [later] (desc) better desc?
+	 * @todo    (desc) better desc?
 	 */
 	function variable_products_note() {
 		return __( 'Please note that for the <strong>variable</strong> products, <strong>main</strong> product\'s EAN must be set.', 'ean-for-woocommerce' );

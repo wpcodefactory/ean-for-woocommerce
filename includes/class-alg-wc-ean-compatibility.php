@@ -20,10 +20,10 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 4.2.0
 	 * @since   2.2.0
 	 *
-	 * @todo    [next] (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
-	 * @todo    [next] (feature) WCFM: customizable position, i.e. instead of right below the "SKU" field in "Inventory" tab
-	 * @todo    [next] (feature) Dokan: customizable position, i.e. instead of `dokan_new_product_after_product_tags` and `dokan_product_edit_after_product_tags`
-	 * @todo    [maybe] (feature) https://wordpress.org/plugins/woocommerce-xml-csv-product-import/ (WooCommerce add-on for "WP All Import")
+	 * @todo    (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
+	 * @todo    (feature) WCFM: customizable position, i.e. instead of right below the "SKU" field in "Inventory" tab
+	 * @todo    (feature) Dokan: customizable position, i.e. instead of `dokan_new_product_after_product_tags` and `dokan_product_edit_after_product_tags`
+	 * @todo    (feature) https://wordpress.org/plugins/woocommerce-xml-csv-product-import/ (WooCommerce add-on for "WP All Import")
 	 */
 	function __construct() {
 
@@ -115,7 +115,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 4.2.0
 	 * @since   4.2.0
 	 *
-	 * @todo    [maybe] (desc) add to "WooCommerce > Settings > EAN > Compatibility"?
+	 * @todo    (desc) add to "WooCommerce > Settings > EAN > Compatibility"?
 	 */
 	function op_barcode_key_setting( $keys ) {
 		$keys[ alg_wc_ean()->core->ean_key ] = get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) );
@@ -128,8 +128,8 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 3.8.0
 	 * @since   3.8.0
 	 *
-	 * @todo    [next] (dev) `item_ean` to `item_alg_wc_ean`?
-	 * @todo    [next] (dev) XML (at least in `OrderLineItems`)?
+	 * @todo    (dev) `item_ean` to `item_alg_wc_ean`?
+	 * @todo    (dev) XML (at least in `OrderLineItems`)?
 	 */
 	function wc_customer_order_export_add_column( $data_sources, $export_type, $output_type ) {
 		if ( 'orders' === $export_type && 'csv' === $output_type ) {
@@ -217,7 +217,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 3.0.0
 	 * @since   3.0.0
 	 *
-	 * @todo    [next] (dev) make this optional?
+	 * @todo    (dev) make this optional?
 	 */
 	function add_to_woocommerce_gpf_custom_field_list( $fields ) {
 		$fields[ 'meta:' . alg_wc_ean()->core->ean_key ] = __( 'EAN', 'ean-for-woocommerce' );
@@ -230,8 +230,8 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 2.6.0
 	 * @since   1.4.0
 	 *
-	 * @todo    [next] (feature) customizable wrapper
-	 * @todo    [next] (dev) check if valid?
+	 * @todo    (feature) customizable wrapper
+	 * @todo    (dev) check if valid?
 	 */
 	function add_to_wcdn_ean( $product, $order, $item ) {
 		if ( false !== ( $ean = alg_wc_ean()->core->get_ean_from_order_item( $item ) ) ) {
@@ -247,7 +247,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 4.2.0
 	 * @since   2.6.0
 	 *
-	 * @todo    [next] (dev) check if valid?
+	 * @todo    (dev) check if valid?
 	 */
 	function add_to_wpo_wcpdf_ean( $type, $item, $order ) {
 		if ( ! empty( $item['item_id'] ) && ( $item = new WC_Order_Item_Product( $item['item_id'] ) ) && false !== ( $ean = alg_wc_ean()->core->get_ean_from_order_item( $item ) ) ) {
@@ -284,9 +284,9 @@ class Alg_WC_EAN_Compatibility {
 	 *
 	 * @see     https://plugins.svn.wordpress.org/wc-frontend-manager/tags/6.5.10/views/products-manager/wcfm-view-products-manage-tabs.php
 	 *
-	 * @todo    [next] (dev) `generate_button`: move `add_action` (3x) to constructor?
-	 * @todo    [next] (dev) do we need `esc_html` everywhere, e.g. in `hints`? (same for `dokan_add_ean_field()`)
-	 * @todo    [next] (feature) optional EAN validation
+	 * @todo    (dev) `generate_button`: move `add_action` (3x) to constructor?
+	 * @todo    (dev) do we need `esc_html` everywhere, e.g. in `hints`? (same for `dokan_add_ean_field()`)
+	 * @todo    (feature) optional EAN validation
 	 */
 	function wcfm_add_ean_field( $fields, $product_id, $product_type ) {
 		$_key = 'wcfm_' . alg_wc_ean()->core->ean_key;
@@ -334,7 +334,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [next] (dev) use `admin_enqueue_scripts`?
+	 * @todo    (dev) use `admin_enqueue_scripts`?
 	 */
 	function wcfm_generate_button_css() {
 		?><style>
@@ -350,7 +350,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [maybe] (dev) merge with `wcfm_save_ean_field()`?
+	 * @todo    (dev) merge with `wcfm_save_ean_field()`?
 	 */
 	function wcfm_variation_save_ean_field( $product_id, $variation_id, $data ) {
 		$id = 'wcfm_' . alg_wc_ean()->core->ean_key;
@@ -365,10 +365,10 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [next] (dev) placeholder: parent product's EAN?
-	 * @todo    [next] (dev) `wcfm_half_ele`?
-	 * @todo    [next] (dev) `generate_button`: move `add_action` to constructor?
-	 * @todo    [maybe] (dev) merge with `wcfm_add_ean_field()`?
+	 * @todo    (dev) placeholder: parent product's EAN?
+	 * @todo    (dev) `wcfm_half_ele`?
+	 * @todo    (dev) `generate_button`: move `add_action` to constructor?
+	 * @todo    (dev) merge with `wcfm_add_ean_field()`?
 	 */
 	function wcfm_variation_add_ean_field( $fields ) {
 
@@ -425,7 +425,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [maybe] (dev) merge with `Alg_WC_EAN_Edit::get_generate_button()`?
+	 * @todo    (dev) merge with `Alg_WC_EAN_Edit::get_generate_button()`?
 	 */
 	function wcfm_variation_get_generate_button_js() {
 		$button_label = sprintf( esc_html__( 'Generate %s', 'ean-for-woocommerce' ), get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) ) );
@@ -482,7 +482,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/includes/Product/functions.php#L129
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/includes/REST/Manager.php#L172
 	 *
-	 * @todo    [next] (dev) `alg_wc_ean_dokan_required`: add server-side validation
+	 * @todo    (dev) `alg_wc_ean_dokan_required`: add server-side validation
 	 */
 	function dokan_save_ean_field( $product_id, $data ) {
 		$id = 'dokan_' . alg_wc_ean()->core->ean_key;
@@ -501,7 +501,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/tmpl-add-product-popup.php#L148
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/new-product-single.php#L338
 	 *
-	 * @todo    [next] (feature) optional EAN validation
+	 * @todo    (feature) optional EAN validation
 	 */
 	function dokan_add_ean_field( $post = false, $post_id = false ) {
 		$id          = 'dokan_' . alg_wc_ean()->core->ean_key;
@@ -538,8 +538,8 @@ class Alg_WC_EAN_Compatibility {
 	 *
 	 * @see     https://woocommerce.com/products/point-of-sale-for-woocommerce/
 	 *
-	 * @todo    [next] (dev) `get_route()`: better solution, e.g. exact match with `/wc-pos/products`?
-	 * @todo    [next] (dev) find better solution, e.g. add elsewhere, not to the name?
+	 * @todo    (dev) `get_route()`: better solution, e.g. exact match with `/wc-pos/products`?
+	 * @todo    (dev) find better solution, e.g. add elsewhere, not to the name?
 	 */
 	function wc_pos_add_ean_to_product_name( $response, $product, $request ) {
 		if ( ( false !== strpos( $request->get_route(), '/wc-pos/' ) ) && '' !== ( $ean = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {

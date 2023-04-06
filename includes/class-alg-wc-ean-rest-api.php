@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - REST API Class
  *
- * @version 4.3.2
+ * @version 4.4.5
  * @since   3.7.0
  *
  * @author  Algoritmika Ltd
@@ -22,8 +22,8 @@ class Alg_WC_EAN_REST_API {
 	 *
 	 * @see     https://woocommerce.github.io/woocommerce-rest-api-docs/
 	 *
-	 * @todo    [next] (feature) `create_product`
-	 * @todo    [next] (feature) `create_order`
+	 * @todo    (feature) `create_product`
+	 * @todo    (feature) `create_order`
 	 */
 	function __construct() {
 
@@ -80,7 +80,7 @@ class Alg_WC_EAN_REST_API {
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php#L340
 	 *
-	 * @todo    [next] (dev) use `meta_query` instead?
+	 * @todo    (dev) use `meta_query` instead?
 	 */
 	function product_search( $args, $request ) {
 		if ( isset( $request['ean'] ) ) {
@@ -99,13 +99,14 @@ class Alg_WC_EAN_REST_API {
 	/**
 	 * product_add_ean.
 	 *
-	 * @version 2.9.0
+	 * @version 4.4.5
 	 * @since   2.9.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-products-v2-controller.php#L190
 	 */
 	function product_add_ean( $response, $product, $request ) {
-		$response->data['ean'] = alg_wc_ean()->core->get_ean( $product->get_id() );
+		$res_key = apply_filters( 'alg_wc_ean_rest_api_product_ean_key', 'ean', $response, $product, $request );
+		$response->data[ $res_key ] = alg_wc_ean()->core->get_ean( $product->get_id() );
 		return $response;
 	}
 
@@ -117,7 +118,7 @@ class Alg_WC_EAN_REST_API {
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php#L524
 	 *
-	 * @todo    [next] (dev) fallback: get product(s) ID by EAN, then search order items by product ID
+	 * @todo    (dev) fallback: get product(s) ID by EAN, then search order items by product ID
 	 */
 	function order_search( $args, $request ) {
 		if ( ! empty( $request['ean'] ) ) {
@@ -145,18 +146,19 @@ class Alg_WC_EAN_REST_API {
 	/**
 	 * order_add_ean.
 	 *
-	 * @version 3.2.0
+	 * @version 4.4.5
 	 * @since   2.8.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php#L420
 	 */
 	function order_add_ean( $response, $order, $request ) {
+		$res_key = apply_filters( 'alg_wc_ean_rest_api_order_ean_key', 'ean', $response, $order, $request );
 		foreach ( $response->data['line_items'] as $item_key => &$item ) {
 			$is_in_meta = false;
 			if ( ! empty( $item['meta_data'] ) ) {
 				foreach ( $item['meta_data'] as $meta_data ) {
 					if ( isset( $meta_data['key'], $meta_data['value'] ) && alg_wc_ean()->core->ean_key === $meta_data['key'] ) {
-						$item['ean'] = $meta_data['value'];
+						$item[ $res_key ] = $meta_data['value'];
 						$is_in_meta = true;
 						break;
 					}
@@ -165,7 +167,7 @@ class Alg_WC_EAN_REST_API {
 			if ( ! $is_in_meta && isset( $item['product_id'] ) ) {
 				$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
 				if ( '' !== ( $ean = alg_wc_ean()->core->get_ean( $product_id ) ) ) {
-					$item['ean'] = $ean;
+					$item[ $res_key ] = $ean;
 				}
 			}
 		}

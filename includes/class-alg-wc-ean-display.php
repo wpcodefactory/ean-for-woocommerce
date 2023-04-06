@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 4.4.0
+ * @version 4.4.5
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,17 +17,19 @@ class Alg_WC_EAN_Display {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 4.4.5
 	 * @since   2.0.0
 	 *
-	 * @todo    [next] (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php` or `class-alg-wc-ean-admin.php`?
-	 * @todo    [next] (dev) remove `! is_admin()` and `is_admin()`?
-	 * @todo    [next] (feature) frontend: customizable position and template for loop, cart, etc. (now implemented for "single product page" only)
-	 * @todo    [later] frontend: order?
+	 * @todo    (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php` or `class-alg-wc-ean-admin.php`?
+	 * @todo    (dev) remove `! is_admin()` and `is_admin()`?
+	 * @todo    (feature) frontend: customizable position and template for loop, cart, etc. (now implemented for "single product page" only)
+	 * @todo    (dev) frontend: order?
 	 */
 	function __construct() {
+
 		// Frontend
-		if ( ! is_admin() ) {
+		if ( ! is_admin() || wp_doing_ajax() ) {
+
 			// Single product page
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend', 'yes' ) ) {
 				$positions_priorities = get_option( 'alg_wc_ean_frontend_positions_priorities', array() );
@@ -38,14 +40,17 @@ class Alg_WC_EAN_Display {
 				add_action( 'wp_enqueue_scripts',              array( $this, 'variations_enqueue_scripts' ) );
 				add_filter( 'woocommerce_available_variation', array( $this, 'variations_add_params' ), 10, 3 );
 			}
+
 			// Loop
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_loop', 'no' ) ) {
 				add_action( 'woocommerce_after_shop_loop_item_title', array( $this, 'add_ean_loop' ) );
 			}
+
 			// Cart
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_cart', 'no' ) ) {
 				add_action( 'woocommerce_after_cart_item_name', array( $this, 'add_ean_cart' ) );
 			}
+
 			// Product structured data
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_product_structured_data', 'yes' ) ) {
 				add_filter( 'woocommerce_structured_data_product', array( $this, 'add_ean_to_product_structured_data' ), 10, 2 );
@@ -54,9 +59,12 @@ class Alg_WC_EAN_Display {
 					add_filter( 'rank_math/json_ld', array( $this, 'add_ean_to_product_structured_data_rank_math_seo' ), PHP_INT_MAX, 2 );
 				}
 			}
+
 		}
+
 		// Backend
 		if ( is_admin() ) {
+
 			// Admin products list column
 			if ( 'yes' === get_option( 'alg_wc_ean_backend_column', 'yes' ) ) {
 				add_filter( 'manage_edit-product_columns',          array( $this, 'add_product_columns' ) );
@@ -65,7 +73,9 @@ class Alg_WC_EAN_Display {
 				add_action( 'pre_get_posts',                        array( $this, 'product_columns_order_by_column' ) );
 				add_action( 'admin_head',                           array( $this, 'product_columns_style' ) );
 			}
+
 		}
+
 	}
 
 	/**
@@ -76,8 +86,8 @@ class Alg_WC_EAN_Display {
 	 *
 	 * @see     https://wordpress.org/plugins/seo-by-rank-math/
 	 *
-	 * @todo    [next] (dev) simplify?
-	 * @todo    [next] (dev) move to the "Compatibility" class (and settings section)?
+	 * @todo    (dev) simplify?
+	 * @todo    (dev) move to the "Compatibility" class (and settings section)?
 	 */
 	function add_ean_to_product_structured_data_rank_math_seo( $data, $json_ld = false ) {
 		if (
@@ -102,8 +112,8 @@ class Alg_WC_EAN_Display {
 	 * @version 3.0.0
 	 * @since   3.0.0
 	 *
-	 * @todo    [next] (dev) make this optional? (same for barcodes)
-	 * @todo    [next] (dev) load only on `edit.php?post_type=product` etc.? (same for barcodes)
+	 * @todo    (dev) make this optional? (same for barcodes)
+	 * @todo    (dev) load only on `edit.php?post_type=product` etc.? (same for barcodes)
 	 */
 	function product_columns_style() {
 		?><style>
@@ -130,7 +140,7 @@ class Alg_WC_EAN_Display {
 	 * @version 1.5.0
 	 * @since   1.5.0
 	 *
-	 * @todo    [maybe] `$do_exclude_empty_lines`?
+	 * @todo    (dev) `$do_exclude_empty_lines`?
 	 */
 	function product_columns_order_by_column( $query ) {
 		if (
@@ -165,7 +175,7 @@ class Alg_WC_EAN_Display {
 	 * @version 2.2.7
 	 * @since   1.0.0
 	 *
-	 * @todo    [maybe] `__( 'EAN', 'ean-for-woocommerce' )` -> `'EAN'` (everywhere) (i.e. no translation)?
+	 * @todo    (dev) `__( 'EAN', 'ean-for-woocommerce' )` -> `'EAN'` (everywhere) (i.e. no translation)?
 	 */
 	function add_product_columns( $columns ) {
 		$is_added = false;
@@ -230,9 +240,9 @@ class Alg_WC_EAN_Display {
 	 * @see     https://schema.org/Product
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L328
 	 *
-	 * @todo    [next] (dev) what to do if there is no markup data? see: https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L324
-	 * @todo    [next] (dev) maybe always use `gtin` (... all-numeric string of either 8, 12, 13 or 14 digits...)
-	 * @todo    [next] (dev) `default` (`C128`): maybe no markup then?
+	 * @todo    (dev) what to do if there is no markup data? see: https://github.com/woocommerce/woocommerce/blob/6.3.1/plugins/woocommerce/includes/class-wc-structured-data.php#L324
+	 * @todo    (dev) maybe always use `gtin` (... all-numeric string of either 8, 12, 13 or 14 digits...)
+	 * @todo    (dev) `default` (`C128`): maybe no markup then?
 	 */
 	function add_ean_to_product_structured_data( $markup, $product ) {
 		if ( '' !== ( $value = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {
@@ -309,7 +319,7 @@ class Alg_WC_EAN_Display {
 	 * @version 2.2.5
 	 * @since   1.1.0
 	 *
-	 * @todo    [next] better solution for variable products
+	 * @todo    (dev) better solution for variable products
 	 */
 	function get_ean_output_data() {
 		$result = array( 'do_output' => false, 'style' => '', 'value' => alg_wc_ean()->core->get_ean() );
@@ -331,9 +341,9 @@ class Alg_WC_EAN_Display {
 	 * @version 3.9.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [next] (dev) template: shortcode vs placeholder?
-	 * @todo    [maybe] customizable wrapping HTML (same for all frontend/backend options) - `ean` class must be present though (for the variations' JS)
-	 * @todo    [maybe] `esc_html__( 'N/A', 'ean-for-woocommerce' )`
+	 * @todo    (dev) template: shortcode vs placeholder?
+	 * @todo    (dev) customizable wrapping HTML (same for all frontend/backend options) - `ean` class must be present though (for the variations' JS)
+	 * @todo    (dev) `esc_html__( 'N/A', 'ean-for-woocommerce' )`
 	 */
 	function add_ean( $template, $single_or_loop ) {
 		$output_data = $this->get_ean_output_data();
@@ -360,8 +370,8 @@ class Alg_WC_EAN_Display {
 	 * @version 3.9.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [maybe] (feature) customizable template; position(s)?
-	 * @todo    [maybe] (dev) variable: implode variations' EANs?
+	 * @todo    (feature) customizable template; position(s)?
+	 * @todo    (dev) variable: implode variations' EANs?
 	 */
 	function add_ean_loop() {
 		$this->add_ean( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) . ': %ean%', 'loop' );
@@ -373,7 +383,7 @@ class Alg_WC_EAN_Display {
 	 * @version 2.0.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [next] use `$this->add_ean()`?
+	 * @todo    (dev) use `$this->add_ean()`?
 	 */
 	function add_ean_cart( $cart_item ) {
 		$product_id = ( ! empty( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : $cart_item['product_id'] );

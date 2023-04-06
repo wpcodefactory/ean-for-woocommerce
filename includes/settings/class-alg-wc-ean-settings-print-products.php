@@ -108,8 +108,8 @@ class Alg_WC_EAN_Settings_Print_Products extends Alg_WC_EAN_Settings_Section {
 	 * @version 4.3.0
 	 * @since   4.3.0
 	 *
-	 * @todo    [now] (dev) pagination
-	 * @todo    [now] (dev) `set_transient( 'alg_wc_ean_print_products_list', $products, HOUR_IN_SECONDS )`, `get_transient( 'alg_wc_ean_print_products_list' )`?
+	 * @todo    (dev) pagination
+	 * @todo    (dev) `set_transient( 'alg_wc_ean_print_products_list', $products, HOUR_IN_SECONDS )`, `get_transient( 'alg_wc_ean_print_products_list' )`?
 	 */
 	function get_settings() {
 		$settings = array();

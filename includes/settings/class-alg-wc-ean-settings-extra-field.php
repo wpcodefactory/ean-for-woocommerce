@@ -33,7 +33,7 @@ class Alg_WC_EAN_Settings_Extra_Field extends Alg_WC_EAN_Settings_Section {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [next] (dev) this is (almost) duplicated in `Alg_WC_EAN_Extra_Field::get_name()`
+	 * @todo    (dev) this is (almost) duplicated in `Alg_WC_EAN_Extra_Field::get_name()`
 	 */
 	function get_desc() {
 		$name = get_option( 'alg_wc_ean_extra_field_name', array() );

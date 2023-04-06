@@ -32,7 +32,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	 * @version 4.4.1
 	 * @since   2.2.9
 	 *
-	 * @todo    [next] (desc) `alg_wc_ean_wcfm_add_generate_button`: better desc?
+	 * @todo    (desc) `alg_wc_ean_wcfm_add_generate_button`: better desc?
 	 */
 	function get_settings() {
 		return array(

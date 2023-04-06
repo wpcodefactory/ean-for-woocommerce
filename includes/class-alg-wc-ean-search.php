@@ -20,12 +20,13 @@ class Alg_WC_EAN_Search {
 	 * @version 2.1.0
 	 * @since   2.0.0
 	 *
-	 * @todo    [next] (dev) Flatsome to `class-alg-wc-ean-compatibility.php`?
-	 * @todo    [next] (dev) remove `! is_admin()` and `is_admin()`?
-	 * @todo    [next] (dev) `alg_wc_ean_frontend_search_ajax_flatsome`: better solution?
-	 * @todo    [later] search by EAN in "New Order"?
-	 * @todo    [maybe] make `alg_wc_ean_backend_search_ajax` independent from `alg_wc_ean_backend_search`?
-	 * @todo    [maybe] make `alg_wc_ean_frontend_search_ajax_flatsome` independent from `alg_wc_ean_frontend_search`?
+	 * @todo    (dev) [!] replace `( ! is_admin() )` with `( ! is_admin() || wp_doing_ajax() )`?
+	 * @todo    (dev) Flatsome to `class-alg-wc-ean-compatibility.php`?
+	 * @todo    (dev) remove `! is_admin()` and `is_admin()`?
+	 * @todo    (dev) `alg_wc_ean_frontend_search_ajax_flatsome`: better solution?
+	 * @todo    (dev) search by EAN in "New Order"?
+	 * @todo    (dev) make `alg_wc_ean_backend_search_ajax` independent from `alg_wc_ean_backend_search`?
+	 * @todo    (dev) make `alg_wc_ean_frontend_search_ajax_flatsome` independent from `alg_wc_ean_frontend_search`?
 	 */
 	function __construct() {
 
@@ -104,7 +105,7 @@ class Alg_WC_EAN_Search {
 	 * @version 4.4.4
 	 * @since   1.0.0
 	 *
-	 * @todo    [maybe] rewrite?
+	 * @todo    (dev) rewrite?
 	 */
 	function search_backend( $query ) {
 
@@ -181,8 +182,8 @@ class Alg_WC_EAN_Search {
 	 * @version 1.0.2
 	 * @since   1.0.2
 	 *
-	 * @todo    [maybe] customizable `meta_compare` (can be e.g. `=`)
-	 * @todo    [maybe] append product_id to the title
+	 * @todo    (dev) customizable `meta_compare` (can be e.g. `=`)
+	 * @todo    (dev) append product_id to the title
 	 */
 	function json_search_found_products( $products ) {
 
@@ -218,7 +219,7 @@ class Alg_WC_EAN_Search {
 	 * @version 4.4.4
 	 * @since   1.0.0
 	 *
-	 * @todo    [maybe] (dev) rewrite?
+	 * @todo    (dev) rewrite?
 	 */
 	function search( $wp_query ) {
 

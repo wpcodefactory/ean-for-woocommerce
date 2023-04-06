@@ -63,7 +63,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	 * @version 3.0.0
 	 * @since   3.0.0
 	 *
-	 * @todo    [maybe] (desc) add term ID?
+	 * @todo    (desc) add term ID?
 	 */
 	function get_terms( $taxonomy, $option ) {
 		$terms  = get_option( $option, array() );
@@ -99,14 +99,14 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	 * @version 4.4.2
 	 * @since   2.2.5
 	 *
-	 * @todo    [next] (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
-	 * @todo    [next] (dev) "Product tags" (similar to "Product categories")
-	 * @todo    [next] (dev) add "Product categories" (and "Product tags") to all tools (now only in "Assign from the list")
-	 * @todo    [next] (desc) add subsections, e.g.: "Automatic and Periodic Actions", "Bulk Actions"
-	 * @todo    [next] (desc) Periodic action: rename?
-	 * @todo    [next] (desc) `seed_prefix`
-	 * @todo    [next] (desc) "Order Tools": add info about "General > Orders" options (i.e. "Add EAN to new order items meta", etc.)
-	 * @todo    [maybe] (desc) better desc for all tools?
+	 * @todo    (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
+	 * @todo    (dev) "Product tags" (similar to "Product categories")
+	 * @todo    (dev) add "Product categories" (and "Product tags") to all tools (now only in "Assign from the list")
+	 * @todo    (desc) add subsections, e.g.: "Automatic and Periodic Actions", "Bulk Actions"
+	 * @todo    (desc) Periodic action: rename?
+	 * @todo    (desc) `seed_prefix`
+	 * @todo    (desc) "Order Tools": add info about "General > Orders" options (i.e. "Add EAN to new order items meta", etc.)
+	 * @todo    (desc) better desc for all tools?
 	 */
 	function get_settings() {
 		$settings = array(

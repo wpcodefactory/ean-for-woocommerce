@@ -20,7 +20,7 @@ class Alg_WC_EAN_Orders {
 	 * @version 3.7.0
 	 * @since   2.1.0
 	 *
-	 * @todo    [next] (feature) option to add it to `woocommerce_hidden_order_itemmeta`
+	 * @todo    (feature) option to add it to `woocommerce_hidden_order_itemmeta`
 	 */
 	function __construct() {
 		// Orders items meta
@@ -39,7 +39,7 @@ class Alg_WC_EAN_Orders {
 	 * @version 2.1.0
 	 * @since   2.1.0
 	 *
-	 * @todo    [next] (fix) EAN meta is not displayed until order page is reloaded
+	 * @todo    (fix) EAN meta is not displayed until order page is reloaded
 	 */
 	function new_order_item_ajax( $item_id, $item ) {
 		if (
@@ -59,8 +59,8 @@ class Alg_WC_EAN_Orders {
 	 * @version 2.1.0
 	 * @since   2.1.0
 	 *
-	 * @todo    [maybe] (feature) editable field?
-	 * @todo    [maybe] (dev) `( $do_overwrite || '' === wc_get_order_item_meta( $item_id, alg_wc_ean()->core->ean_key, true )`
+	 * @todo    (feature) editable field?
+	 * @todo    (dev) `( $do_overwrite || '' === wc_get_order_item_meta( $item_id, alg_wc_ean()->core->ean_key, true )`
 	 */
 	function add_ean_to_order_items_meta( $order_id ) {
 		$count = 0;

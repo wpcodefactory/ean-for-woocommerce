@@ -20,7 +20,7 @@ class Alg_WC_EAN_Edit {
 	 * @version 4.3.4
 	 * @since   2.0.0
 	 *
-	 * @todo    [next] (dev) position: new tab (for both simple and variable products)
+	 * @todo    (dev) position: new tab (for both simple and variable products)
 	 */
 	function __construct() {
 		if ( is_admin() && apply_filters( 'alg_wc_ean_edit', true ) ) {
@@ -66,10 +66,10 @@ class Alg_WC_EAN_Edit {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [next] (dev) static? (3x)
-	 * @todo    [next] (dev) recheck `return false;`
-	 * @todo    [next] (dev) recheck `ajaxurl`
-	 * @todo    [next] (dev) use `admin_enqueue_scripts`?
+	 * @todo    (dev) static? (3x)
+	 * @todo    (dev) recheck `return false;`
+	 * @todo    (dev) recheck `ajaxurl`
+	 * @todo    (dev) use `admin_enqueue_scripts`?
 	 */
 	static function generate_button_js() {
 		?><script>
@@ -112,9 +112,9 @@ class Alg_WC_EAN_Edit {
 	 * @version 4.0.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [next] (dev) spinner: styling?
-	 * @todo    [next] (dev) spinner: `float: none;`?
-	 * @todo    [next] (dev) spinner: wcfm
+	 * @todo    (dev) spinner: styling?
+	 * @todo    (dev) spinner: `float: none;`?
+	 * @todo    (dev) spinner: wcfm
 	 */
 	static function get_generate_button( $product_id, $input_html_id ) {
 		return '<button' .
@@ -135,8 +135,8 @@ class Alg_WC_EAN_Edit {
 	 * @version 2.2.7
 	 * @since   1.5.0
 	 *
-	 * @todo    [maybe] reposition this (e.g. right after the "SKU" field)?
-	 * @todo    [maybe] actual value (instead of "No change" placeholder)? (probably need to add value to `woocommerce_inline_`) (quick edit only?)
+	 * @todo    (dev) reposition this (e.g. right after the "SKU" field)?
+	 * @todo    (dev) actual value (instead of "No change" placeholder)? (probably need to add value to `woocommerce_inline_`) (quick edit only?)
 	 */
 	function add_bulk_and_quick_edit_fields() {
 		echo ( 'woocommerce_product_quick_edit_end' === current_filter() ? '<br class="clear" />' : '' ) .
@@ -180,7 +180,7 @@ class Alg_WC_EAN_Edit {
 	 * @version 3.6.0
 	 * @since   1.0.1
 	 *
-	 * @todo    [next] (dev) replace `style` with `class`
+	 * @todo    (dev) replace `style` with `class`
 	 */
 	function get_ean_input_desc( $ean, $product_id = false ) {
 		$desc = array();
@@ -203,9 +203,9 @@ class Alg_WC_EAN_Edit {
 	 * @version 4.4.0
 	 * @since   1.0.1
 	 *
-	 * @todo    [next] `AUTO`: better maxlength (13); add minlength (8)
-	 * @todo    [maybe] `ean-13`: `array( 'pattern' => '.{0}|[0-9]{13}', 'maxlength' => '13' ) )`
-	 * @todo    [maybe] `ean-13`: `array( 'pattern' => '.{0}|[0-9]+', 'minlength' => '13', 'maxlength' => '13' )`
+	 * @todo    (dev) `AUTO`: better maxlength (13); add minlength (8)
+	 * @todo    (dev) `ean-13`: `array( 'pattern' => '.{0}|[0-9]{13}', 'maxlength' => '13' ) )`
+	 * @todo    (dev) `ean-13`: `array( 'pattern' => '.{0}|[0-9]+', 'minlength' => '13', 'maxlength' => '13' )`
 	 */
 	function get_ean_input_custom_atts( $product_id = false, $atts = array() ) {
 		$result = $atts;
@@ -245,7 +245,7 @@ class Alg_WC_EAN_Edit {
 	 * @version 4.4.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [next] (dev) `variable{$key}` to `variable_{$key}`?
+	 * @todo    (dev) `variable{$key}` to `variable_{$key}`?
 	 */
 	function add_ean_input_variation( $loop, $variation_data, $variation ) {
 		$key = alg_wc_ean()->core->ean_key;
@@ -300,7 +300,7 @@ class Alg_WC_EAN_Edit {
 	 * @version 3.8.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [maybe] save `$key . '_is_valid'` (same in `save_ean_input_variation()`)
+	 * @todo    (dev) save `$key . '_is_valid'` (same in `save_ean_input_variation()`)
 	 */
 	function save_ean_input( $post_id, $__post ) {
 		if ( isset( $_POST[ alg_wc_ean()->core->ean_key ] ) && empty( $_REQUEST['woocommerce_quick_edit'] ) && empty( $_REQUEST['woocommerce_bulk_edit'] ) ) {

@@ -169,7 +169,7 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 	 * @version 4.3.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [next] (dev) `wp_safe_redirect`: better solution?
+	 * @todo    (dev) `wp_safe_redirect`: better solution?
 	 */
 	function save() {
 

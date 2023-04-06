@@ -20,7 +20,7 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 4.0.0
 	 * @since   3.5.0
 	 *
-	 * @todo    [maybe] (feature) add `[alg_wc_ean_type]` shortcode?
+	 * @todo    (feature) add `[alg_wc_ean_type]` shortcode?
 	 */
 	function __construct() {
 		$this->data = array();
@@ -43,7 +43,7 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.5.0
 	 * @since   3.1.2
 	 *
-	 * @todo    [maybe] (dev) add `set_data()`, `reset_data()` functions?
+	 * @todo    (dev) add `set_data()`, `reset_data()` functions?
 	 */
 	function do_shortcode( $content, $data = array() ) {
 		if ( ! empty( $data ) ) {
@@ -62,8 +62,8 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 4.1.0
 	 * @since   3.5.0
 	 *
-	 * @todo    [next] (dev) escape: `wp_kses_post()`?
-	 * @todo    [next] (dev) `max_length`: add everywhere
+	 * @todo    (dev) escape: `wp_kses_post()`?
+	 * @todo    (dev) `max_length`: add everywhere
 	 */
 	function output( $result, $atts ) {
 		return ( '' === $result ?
@@ -299,8 +299,8 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.5.0
 	 * @since   3.5.0
 	 *
-	 * @todo    [next] (dev) `sale`: do we really need to use `get_regular_price()` as a fallback?
-	 * @todo    [next] (desc) `sale` and `regular` prices won't work for a) variable products, b) parent of a variation
+	 * @todo    (dev) `sale`: do we really need to use `get_regular_price()` as a fallback?
+	 * @todo    (desc) `sale` and `regular` prices won't work for a) variable products, b) parent of a variation
 	 */
 	function product_price_shortcode( $atts, $content = '' ) {
 
@@ -406,9 +406,9 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.5.0
 	 * @since   2.7.0
 	 *
-	 * @todo    [next] (feature) multiple attributes (comma-separated)
-	 * @todo    [next] (feature) all attributes at once (maybe use `WC_Product::get_attributes()`?
-	 * @todo    [next] (feature) all attributes starting with X
+	 * @todo    (feature) multiple attributes (comma-separated)
+	 * @todo    (feature) all attributes at once (maybe use `WC_Product::get_attributes()`?
+	 * @todo    (feature) all attributes starting with X
 	 */
 	function product_attr_shortcode( $atts, $content = '' ) {
 
@@ -443,10 +443,10 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.6.0
 	 * @since   1.5.1
 	 *
-	 * @todo    [next] (dev) `$atts['ean']`: ` if ( false !== ( $ean = ( '' !== $atts['ean'] ? $atts['ean'] : ( ! empty( $this->data['ean'] ) ? $this->data['ean'] : false ) ) ) ) { return $this->output( $ean, $atts ); }`
-	 * @todo    [next] (feature) `parent`? (same for barcodes)
-	 * @todo    [maybe] (dev) check if valid?
-	 * @todo    [maybe] (feature) add `children` attribute to all shortcodes, e.g. `product_attr_shortcode()`
+	 * @todo    (dev) `$atts['ean']`: ` if ( false !== ( $ean = ( '' !== $atts['ean'] ? $atts['ean'] : ( ! empty( $this->data['ean'] ) ? $this->data['ean'] : false ) ) ) ) { return $this->output( $ean, $atts ); }`
+	 * @todo    (feature) `parent`? (same for barcodes)
+	 * @todo    (dev) check if valid?
+	 * @todo    (feature) add `children` attribute to all shortcodes, e.g. `product_attr_shortcode()`
 	 */
 	function ean_shortcode( $atts, $content = '' ) {
 

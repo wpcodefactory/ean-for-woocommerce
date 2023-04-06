@@ -20,9 +20,9 @@ class Alg_WC_EAN_Core {
 	 * @version 4.0.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [next] (dev) wpml-config.xml?
-	 * @todo    [next] (dev) `alg_wc_ean_meta_key`: search for `alg_ean`
-	 * @todo    [next] (dev) WPML/Polylang (use default language product ID)
+	 * @todo    (dev) wpml-config.xml?
+	 * @todo    (dev) `alg_wc_ean_meta_key`: search for `alg_ean`
+	 * @todo    (dev) WPML/Polylang (use default language product ID)
 	 */
 	function __construct() {
 		$this->ean_key = get_option( 'alg_wc_ean_meta_key', '_alg_ean' );
@@ -63,7 +63,7 @@ class Alg_WC_EAN_Core {
 	 * @version 3.3.0
 	 * @since   1.5.0
 	 *
-	 * @todo    [next] (dev) rename function?
+	 * @todo    (dev) rename function?
 	 */
 	function get_type_by_ean_length( $ean ) {
 		$length = strlen( $ean );
@@ -85,7 +85,7 @@ class Alg_WC_EAN_Core {
 	 * @version 3.3.0
 	 * @since   1.4.0
 	 *
-	 * @todo    [next] now used only: `EAN8`, `UPCA`, `EAN13`, `ISBN13`, `JAN`
+	 * @todo    (dev) now used only: `EAN8`, `UPCA`, `EAN13`, `ISBN13`, `JAN`
 	 */
 	function get_ean_type_length( $type ) {
 		switch ( $type ) {
@@ -140,7 +140,7 @@ class Alg_WC_EAN_Core {
 	 * @see     https://stackoverflow.com/questions/29076255/how-do-i-validate-a-barcode-number-using-php
 	 * @see     http://www.gs1.org/how-calculate-check-digit-manually
 	 *
-	 * @todo    [next] (feature) add more formats/standards, e.g. ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
+	 * @todo    (feature) add more formats/standards, e.g. ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
 	 */
 	function is_valid_ean( $value, $product_id = false ) {
 		$type = $this->get_type( $value, false, $product_id );
@@ -224,7 +224,7 @@ class Alg_WC_EAN_Core {
 	 * @version 2.4.0
 	 * @since   1.2.0
 	 *
-	 * @todo    [next] (dev) move to `Alg_WC_EAN_Orders`?
+	 * @todo    (dev) move to `Alg_WC_EAN_Orders`?
 	 */
 	function get_ean_from_order_item( $item ) {
 		return ( is_a( $item, 'WC_Order_Item_Product' ) && (
@@ -239,8 +239,8 @@ class Alg_WC_EAN_Core {
 	 * @version 2.4.0
 	 * @since   2.4.0
 	 *
-	 * @todo    [next] (dev) move to `Alg_WC_EAN_Orders`?
-	 * @todo    [maybe] (dev) `if ( ! is_a( $item, 'WC_Order_Item_Product' ) )` try `( $item = new WC_Order_Item_Product( $item['item_id'] ) )`?
+	 * @todo    (dev) move to `Alg_WC_EAN_Orders`?
+	 * @todo    (dev) `if ( ! is_a( $item, 'WC_Order_Item_Product' ) )` try `( $item = new WC_Order_Item_Product( $item['item_id'] ) )`?
 	 */
 	function get_order_item_product_id( $item ) {
 		return ( is_a( $item, 'WC_Order_Item_Product' ) ?
@@ -255,8 +255,8 @@ class Alg_WC_EAN_Core {
 	 * @version 1.0.0
 	 * @since   1.0.0
 	 *
-	 * @todo    [later] use `$do_try_parent`?
-	 * @todo    [maybe] (dev) rethink `$product_id`?
+	 * @todo    (dev) use `$do_try_parent`?
+	 * @todo    (dev) rethink `$product_id`?
 	 */
 	function get_ean( $product_id = false, $do_try_parent = false ) {
 		if ( ! $product_id ) {

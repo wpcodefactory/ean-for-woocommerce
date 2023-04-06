@@ -32,10 +32,10 @@ class Alg_WC_EAN_Settings_Extra_Fields extends Alg_WC_EAN_Settings_Section {
 	 * @version 4.3.0
 	 * @since   4.0.0
 	 *
-	 * @todo    [next] (dev) `alg_wc_ean_extra_fields_num_total`: JS?
-	 * @todo    [next] (dev) add "Meta key"?
-	 * @todo    [next] (desc) better section desc?
-	 * @todo    [next] (desc) better `pro_msg`?
+	 * @todo    (dev) `alg_wc_ean_extra_fields_num_total`: JS?
+	 * @todo    (dev) add "Meta key"?
+	 * @todo    (desc) better section desc?
+	 * @todo    (desc) better `pro_msg`?
 	 */
 	function get_settings() {
 

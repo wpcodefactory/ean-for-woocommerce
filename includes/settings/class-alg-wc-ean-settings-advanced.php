@@ -32,9 +32,9 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 	 * @version 4.4.0
 	 * @since   2.2.9
 	 *
-	 * @todo    [next] (dev) Import/Export: move to "Tools", and/or add dashicons?
-	 * @todo    [next] (desc) `alg_wc_ean_meta_key`
-	 * @todo    [later] (desc) `alg_wc_ean_js_variations_form_closest`: better desc
+	 * @todo    (dev) Import/Export: move to "Tools", and/or add dashicons?
+	 * @todo    (desc) `alg_wc_ean_meta_key`
+	 * @todo    (desc) `alg_wc_ean_js_variations_form_closest`: better desc
 	 */
 	function get_settings() {
 		return array(
