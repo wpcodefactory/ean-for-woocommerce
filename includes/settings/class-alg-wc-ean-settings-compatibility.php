@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 4.4.1
+ * @version 4.4.6
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.4.1
+	 * @version 4.4.6
 	 * @since   2.2.9
 	 *
 	 * @todo    (desc) `alg_wc_ean_wcfm_add_generate_button`: better desc?
@@ -180,6 +180,13 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
+				'desc'     => sprintf( __( 'Required HTML, e.g.: %s', 'ean-for-woocommerce' ),
+					'<code>' . esc_html( '&amp;nbsp;<abbr class="required" title="' . esc_attr__( 'required', 'woocommerce' ) . '">*</abbr>' ) . '</code>' ),
+				'id'       => 'alg_wc_ean_dokan_required_html',
+				'default'  => '',
+				'type'     => 'textarea',
+			),
+			array(
 				'desc'     => __( 'Title', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_dokan_title',
 				'default'  => __( 'EAN', 'ean-for-woocommerce' ),
@@ -190,6 +197,15 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_dokan_placeholder',
 				'default'  => __( 'Product EAN...', 'ean-for-woocommerce' ),
 				'type'     => 'text',
+			),
+			array(
+				'desc'     => __( 'Description', 'ean-for-woocommerce' ) . '<br>' .
+					sprintf( __( 'You can use HTML and shortcodes here, e.g.: %s', 'ean-for-woocommerce' ),
+					'<code>' . esc_html( '<div>[alg_wc_ean_is_valid] | [alg_wc_ean_is_unique]</div>' ) . '</code>' ),
+				'id'       => 'alg_wc_ean_dokan_desc',
+				'default'  => '',
+				'type'     => 'textarea',
+				'css'      => 'height:100px;',
 			),
 			array(
 				'title'    => __( 'WCFM', 'ean-for-woocommerce' ),

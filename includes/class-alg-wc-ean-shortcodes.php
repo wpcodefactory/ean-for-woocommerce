@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 4.4.3
+ * @version 4.4.6
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -17,15 +17,19 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.4.6
 	 * @since   3.5.0
 	 *
 	 * @todo    (feature) add `[alg_wc_ean_type]` shortcode?
 	 */
 	function __construct() {
+
 		$this->data = array();
+
 		// Shortcodes
 		add_shortcode( 'alg_wc_ean',                   array( $this, 'ean_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_is_unique',         array( $this, 'ean_is_unique_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_is_valid',          array( $this, 'ean_is_valid_shortcode' ) );
 		add_shortcode( 'alg_wc_ean_product_attr',      array( $this, 'product_attr_shortcode' ) );
 		add_shortcode( 'alg_wc_ean_product_image',     array( $this, 'product_image_shortcode' ) );
 		add_shortcode( 'alg_wc_ean_product_name',      array( $this, 'product_name_shortcode' ) );
@@ -35,6 +39,7 @@ class Alg_WC_EAN_Shortcodes {
 		add_shortcode( 'alg_wc_ean_product_author_id', array( $this, 'product_author_id_shortcode' ) );
 		add_shortcode( 'alg_wc_ean_product_meta',      array( $this, 'product_meta_shortcode' ) );
 		add_shortcode( 'alg_wc_ean_product_function',  array( $this, 'product_function_shortcode' ) );
+
 	}
 
 	/**
@@ -432,6 +437,70 @@ class Alg_WC_EAN_Shortcodes {
 			if ( ( $product = wc_get_product( $product_id ) ) && is_callable( array( $product, 'get_attribute' ) ) ) {
 				$result = $product->get_attribute( $atts['attr'] );
 			}
+		}
+
+		return $this->output( $result, $atts );
+	}
+
+	/**
+	 * ean_is_unique_shortcode.
+	 *
+	 * @version 4.4.6
+	 * @since   4.4.6
+	 */
+	function ean_is_unique_shortcode( $atts, $content = '' ) {
+
+		// Atts
+		$default_atts = array(
+			'product_id'     => false,
+			'before'         => '',
+			'after'          => '',
+			'on_empty'       => '',
+			'ean'            => '',
+			'unique_text'    => '<span style="color:green;">' . esc_html__( 'Unique EAN', 'ean-for-woocommerce' )     . '</span>',
+			'duplicate_text' => '<span style="color:red;">'   . esc_html__( 'Duplicated EAN', 'ean-for-woocommerce' ) . '</span>',
+		);
+		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean_is_unique' );
+
+		$ean        = $this->get_shortcode_att( 'ean', $atts, '' );
+		$product_id = $this->get_shortcode_att( 'product_id', $atts, get_the_ID() );
+
+		// Result
+		$result = '';
+		if ( ! empty( $ean ) ) {
+			$result = ( ! alg_wc_ean()->core->do_ean_exist( $ean, $product_id ) ? $atts['unique_text'] : $atts['duplicate_text'] );
+		}
+
+		return $this->output( $result, $atts );
+	}
+
+	/**
+	 * ean_is_valid_shortcode.
+	 *
+	 * @version 4.4.6
+	 * @since   4.4.6
+	 */
+	function ean_is_valid_shortcode( $atts, $content = '' ) {
+
+		// Atts
+		$default_atts = array(
+			'product_id'     => false,
+			'before'         => '',
+			'after'          => '',
+			'on_empty'       => '',
+			'ean'            => '',
+			'valid_text'     => '<span style="color:green;">' . esc_html__( 'Valid EAN', 'ean-for-woocommerce' )   . '</span>',
+			'invalid_text'   => '<span style="color:red;">'   . esc_html__( 'Invalid EAN', 'ean-for-woocommerce' ) . '</span>',
+		);
+		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean_is_valid' );
+
+		$ean        = $this->get_shortcode_att( 'ean', $atts, '' );
+		$product_id = $this->get_shortcode_att( 'product_id', $atts, get_the_ID() );
+
+		// Result
+		$result = '';
+		if ( ! empty( $ean ) ) {
+			$result = ( alg_wc_ean()->core->is_valid_ean( $ean, $product_id ) ? $atts['valid_text'] : $atts['invalid_text'] );
 		}
 
 		return $this->output( $result, $atts );

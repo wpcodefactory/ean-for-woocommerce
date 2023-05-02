@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.4.1
+ * @version 4.4.6
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -453,21 +453,27 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * dokan_add_ean_field_variation.
 	 *
-	 * @version 4.4.1
+	 * @version 4.4.6
 	 * @since   3.1.2
 	 */
 	function dokan_add_ean_field_variation( $loop, $variation_data, $variation ) {
-		$key         = alg_wc_ean()->core->ean_key;
-		$id          = "variable{$key}_{$loop}";
-		$name        = "variable{$key}[{$loop}]";
-		$value       = alg_wc_ean()->core->get_ean( $variation->ID );
-		$title       = esc_html( get_option( 'alg_wc_ean_dokan_title', __( 'EAN', 'ean-for-woocommerce' ) ) );
-		$placeholder = alg_wc_ean()->core->get_ean( $variation->post_parent );
-		$required    = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? ' required' : '' );
+
+		$key           = alg_wc_ean()->core->ean_key;
+		$id            = "variable{$key}_{$loop}";
+		$name          = "variable{$key}[{$loop}]";
+		$value         = alg_wc_ean()->core->get_ean( $variation->ID );
+		$title         = esc_html( get_option( 'alg_wc_ean_dokan_title', __( 'EAN', 'ean-for-woocommerce' ) ) );
+		$placeholder   = alg_wc_ean()->core->get_ean( $variation->post_parent );
+		$required      = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? ' required' : '' );
+		$required_html = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? get_option( 'alg_wc_ean_dokan_required_html', '' ) : '' );
+		$desc          = ( '' !== get_option( 'alg_wc_ean_dokan_desc', '' ) ? alg_wc_ean()->core->shortcodes->do_shortcode( get_option( 'alg_wc_ean_dokan_desc', '' ), array( 'ean' => $value, 'product_id' => $variation->ID ) ) : '' );
+
 		echo '<div class="dokan-form-group">' .
-			'<label for="' . $id . '" class="form-label">' . $title . '</label>' .
+			'<label for="' . $id . '" class="form-label">' . $title . $required_html . '</label>' .
 			'<input type="text" name="' . $name . '" id="' . $id . '" class="dokan-form-control alg-wc-ean" placeholder="' . $placeholder . '" value="' . $value . '"' . $required . '>' .
+			$desc .
 		'</div>';
+
 	}
 
 	/**
@@ -494,25 +500,31 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * dokan_add_ean_field.
 	 *
-	 * @version 4.4.1
+	 * @version 4.4.6
 	 * @since   2.2.2
 	 *
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/new-product.php#L257
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/tmpl-add-product-popup.php#L148
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/new-product-single.php#L338
 	 *
-	 * @todo    (feature) optional EAN validation
+	 * @todo    (feature) JS EAN validation?
 	 */
 	function dokan_add_ean_field( $post = false, $post_id = false ) {
-		$id          = 'dokan_' . alg_wc_ean()->core->ean_key;
-		$value       = ( ! empty( $post_id ) ? alg_wc_ean()->core->get_ean( $post_id ) : ( isset( $_REQUEST[ $id ] ) ? esc_html( wc_clean( $_REQUEST[ $id ] ) ) : '' ) ); // Edit product vs Add product
-		$title       = esc_html( get_option( 'alg_wc_ean_dokan_title', __( 'EAN', 'ean-for-woocommerce' ) ) );
-		$placeholder = esc_html( get_option( 'alg_wc_ean_dokan_placeholder', __( 'Product EAN...', 'ean-for-woocommerce' ) ) );
-		$required    = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? ' required' : '' );
+
+		$id            = 'dokan_' . alg_wc_ean()->core->ean_key;
+		$value         = ( ! empty( $post_id ) ? alg_wc_ean()->core->get_ean( $post_id ) : ( isset( $_REQUEST[ $id ] ) ? esc_html( wc_clean( $_REQUEST[ $id ] ) ) : '' ) ); // Edit product vs Add product
+		$title         = esc_html( get_option( 'alg_wc_ean_dokan_title', __( 'EAN', 'ean-for-woocommerce' ) ) );
+		$placeholder   = esc_html( get_option( 'alg_wc_ean_dokan_placeholder', __( 'Product EAN...', 'ean-for-woocommerce' ) ) );
+		$required      = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? ' required' : '' );
+		$required_html = ( 'yes' === get_option( 'alg_wc_ean_dokan_required', 'no' ) ? get_option( 'alg_wc_ean_dokan_required_html', '' ) : '' );
+		$desc          = ( '' !== get_option( 'alg_wc_ean_dokan_desc', '' ) ? alg_wc_ean()->core->shortcodes->do_shortcode( get_option( 'alg_wc_ean_dokan_desc', '' ), array( 'ean' => $value, 'product_id' => $post_id ) ) : '' );
+
 		echo '<div class="dokan-form-group">' .
-			'<label for="' . $id . '" class="form-label">' . $title . '</label>' .
+			'<label for="' . $id . '" class="form-label">' . $title . $required_html . '</label>' .
 			'<input type="text" name="' . $id . '" id="' . $id . '" class="dokan-form-control alg-wc-ean" placeholder="' . $placeholder . '" value="' . $value . '"' . $required . '>' .
+			$desc .
 		'</div>';
+
 	}
 
 	/**

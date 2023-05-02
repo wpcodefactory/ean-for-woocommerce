@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.2
-Stable tag: 4.4.5
+Stable tag: 4.4.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -85,6 +85,13 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.4.6 - 02/05/2023 =
+* Dev - Shortcodes - `[alg_wc_ean_is_valid]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_is_unique]` shortcode added.
+* Dev - Compatibility - Dokan - "Description" option added.
+* Dev - Compatibility - Dokan - "Required HTML" option added.
+* WC tested up to: 7.6.
 
 = 4.4.5 - 06/04/2023 =
 * Fix - Display - Frontend hooks (including barcodes) now are loaded on AJAX as well.
