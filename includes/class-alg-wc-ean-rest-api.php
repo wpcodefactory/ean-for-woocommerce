@@ -118,6 +118,7 @@ class Alg_WC_EAN_REST_API {
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php#L524
 	 *
+	 * @todo    (test) HPOS compatible?
 	 * @todo    (dev) fallback: get product(s) ID by EAN, then search order items by product ID
 	 */
 	function order_search( $args, $request ) {

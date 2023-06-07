@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 4.3.0
+ * @version 4.5.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,12 +29,12 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
 	 *
-	 * @todo    (feature) predefined templates, e.g. with `<table>`
+	 * @todo    (feature) predefined templates, e.g., with `<table>`
 	 * @todo    (feature) Cell border: add customization options
 	 * @todo    (desc) "Deprecated placeholders" desc tip: remove?
 	 * @todo    (feature) `wpautop()`?
@@ -228,7 +228,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'custom_attributes' => array( 'min' => 0, 'step' => 0.000001 ),
 			),
 			array(
-				'desc'     => __( 'Page break (i.e. bottom) margin', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Page break (i.e., bottom) margin', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ) . '<br><br>' .
 					__( 'Distance from the bottom of the page that defines the automatic page breaking triggering limit.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_print_barcodes_to_pdf_settings[page_break_margin]',

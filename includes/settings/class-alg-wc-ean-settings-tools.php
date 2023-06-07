@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 4.4.2
+ * @version 4.5.0
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -96,7 +96,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.4.2
+	 * @version 4.5.0
 	 * @since   2.2.5
 	 *
 	 * @todo    (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
@@ -105,7 +105,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	 * @todo    (desc) add subsections, e.g.: "Automatic and Periodic Actions", "Bulk Actions"
 	 * @todo    (desc) Periodic action: rename?
 	 * @todo    (desc) `seed_prefix`
-	 * @todo    (desc) "Order Tools": add info about "General > Orders" options (i.e. "Add EAN to new order items meta", etc.)
+	 * @todo    (desc) "Order Tools": add info about "General > Orders" options (i.e., "Add EAN to new order items meta", etc.)
 	 * @todo    (desc) better desc for all tools?
 	 */
 	function get_settings() {
@@ -240,7 +240,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'desc'     => sprintf( __( 'Meta key, e.g. %s', 'ean-for-woocommerce' ), '<code>_gtin</code>' ),
+				'desc'     => sprintf( __( 'Meta key, e.g., %s', 'ean-for-woocommerce' ), '<code>_gtin</code>' ),
 				'desc_tip' => __( 'Product meta key to copy from.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_copy_meta[key]',
 				'default'  => '',
@@ -277,7 +277,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'     => __( 'Product categories', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Sets which product categories to include when assigning the EANs (i.e. all other categories will be skipped).', 'ean-for-woocommerce' ) . ' ' .
+				'desc_tip' => __( 'Sets which product categories to include when assigning the EANs (i.e., all other categories will be skipped).', 'ean-for-woocommerce' ) . ' ' .
 					__( 'Leave blank to use all product categories.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_assign_list_settings[product_cat]',
 				'default'  => array(),
@@ -296,7 +296,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'desc'     => __( 'List', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'EAN list to assign from.', 'ean-for-woocommerce' ) . ' ' .
 					__( 'One EAN per line.', 'ean-for-woocommerce' ) . ' ' .
-					__( 'Used (i.e. assigned) EANs will be automatically removed from the list.', 'ean-for-woocommerce' ),
+					__( 'Used (i.e., assigned) EANs will be automatically removed from the list.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_assign_list',
 				'default'  => '',
 				'type'     => 'textarea',

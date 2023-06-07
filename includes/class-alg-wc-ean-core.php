@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 4.0.0
+ * @version 4.5.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -140,7 +140,7 @@ class Alg_WC_EAN_Core {
 	 * @see     https://stackoverflow.com/questions/29076255/how-do-i-validate-a-barcode-number-using-php
 	 * @see     http://www.gs1.org/how-calculate-check-digit-manually
 	 *
-	 * @todo    (feature) add more formats/standards, e.g. ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
+	 * @todo    (feature) add more formats/standards, e.g., ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
 	 */
 	function is_valid_ean( $value, $product_id = false ) {
 		$type = $this->get_type( $value, false, $product_id );
@@ -267,6 +267,16 @@ class Alg_WC_EAN_Core {
 			$ean = get_post_meta( $parent_id, $this->ean_key, true );
 		}
 		return $ean;
+	}
+
+	/**
+	 * set_ean.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 */
+	function set_ean( $product_id, $value ) {
+		return update_post_meta( $product_id, $this->ean_key, $value );
 	}
 
 }

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -135,7 +135,7 @@ class Alg_WC_EAN_Edit {
 	 * @version 2.2.7
 	 * @since   1.5.0
 	 *
-	 * @todo    (dev) reposition this (e.g. right after the "SKU" field)?
+	 * @todo    (dev) reposition this (e.g., right after the "SKU" field)?
 	 * @todo    (dev) actual value (instead of "No change" placeholder)? (probably need to add value to `woocommerce_inline_`) (quick edit only?)
 	 */
 	function add_bulk_and_quick_edit_fields() {
@@ -151,7 +151,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * save_bulk_and_quick_edit_fields.
 	 *
-	 * @version 2.1.0
+	 * @version 4.5.0
 	 * @since   1.5.0
 	 */
 	function save_bulk_and_quick_edit_fields( $post_id, $post ) {
@@ -169,7 +169,7 @@ class Alg_WC_EAN_Edit {
 		}
 		// Save
 		if ( isset( $_REQUEST['_alg_ean_qb'] ) && '' !== $_REQUEST['_alg_ean_qb'] ) {
-			update_post_meta( $post_id, alg_wc_ean()->core->ean_key, wc_clean( $_REQUEST['_alg_ean_qb'] ) );
+			alg_wc_ean()->core->set_ean( $post_id, wc_clean( $_REQUEST['_alg_ean_qb'] ) );
 		}
 		return $post_id;
 	}
@@ -265,13 +265,13 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * save_ean_input_variation.
 	 *
-	 * @version 1.0.0
+	 * @version 4.5.0
 	 * @since   1.0.0
 	 */
 	function save_ean_input_variation( $variation_id, $i ) {
 		$key = alg_wc_ean()->core->ean_key;
 		if ( isset( $_POST[ 'variable' . $key ][ $i ] ) ) {
-			update_post_meta( $variation_id, $key, wc_clean( $_POST[ 'variable' . $key ][ $i ] ) );
+			alg_wc_ean()->core->set_ean( $variation_id, wc_clean( $_POST[ 'variable' . $key ][ $i ] ) );
 		}
 	}
 
@@ -297,14 +297,14 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * save_ean_input.
 	 *
-	 * @version 3.8.0
+	 * @version 4.5.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) save `$key . '_is_valid'` (same in `save_ean_input_variation()`)
 	 */
 	function save_ean_input( $post_id, $__post ) {
 		if ( isset( $_POST[ alg_wc_ean()->core->ean_key ] ) && empty( $_REQUEST['woocommerce_quick_edit'] ) && empty( $_REQUEST['woocommerce_bulk_edit'] ) ) {
-			update_post_meta( $post_id, alg_wc_ean()->core->ean_key, wc_clean( $_POST[ alg_wc_ean()->core->ean_key ] ) );
+			alg_wc_ean()->core->set_ean( $post_id, wc_clean( $_POST[ alg_wc_ean()->core->ean_key ] ) );
 		}
 	}
 

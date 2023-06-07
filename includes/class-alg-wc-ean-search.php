@@ -182,7 +182,7 @@ class Alg_WC_EAN_Search {
 	 * @version 1.0.2
 	 * @since   1.0.2
 	 *
-	 * @todo    (dev) customizable `meta_compare` (can be e.g. `=`)
+	 * @todo    (dev) customizable `meta_compare` (can be e.g., `=`)
 	 * @todo    (dev) append product_id to the title
 	 */
 	function json_search_found_products( $products ) {

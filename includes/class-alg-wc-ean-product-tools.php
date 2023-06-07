@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.4.2
+ * @version 4.5.0
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -20,7 +20,7 @@ class Alg_WC_EAN_Product_Tools {
 	 * @version 4.1.2
 	 * @since   2.1.0
 	 *
-	 * @todo    (dev) split into more files/classes, e.g. `class-alg-wc-ean-crons.php`?
+	 * @todo    (dev) split into more files/classes, e.g., `class-alg-wc-ean-crons.php`?
 	 * @todo    (feature) Automatic actions: `updated_postmeta`?
 	 * @todo    (dev) Automatic actions: `woocommerce_after_product_object_save`?
 	 */
@@ -85,7 +85,7 @@ class Alg_WC_EAN_Product_Tools {
 	 * @since   3.7.0
 	 *
 	 * @todo    (dev) `product_variation` + `alg_wc_ean_tool_product_variable`?
-	 * @todo    (feature) add option to add to the end of the list (i.e. not to the beginning of the list, as it is now)
+	 * @todo    (feature) add option to add to the end of the list (i.e., not to the beginning of the list, as it is now)
 	 */
 	function reuse_deleted( $postid, $post ) {
 		$assign_list_settings = get_option( 'alg_wc_ean_tool_product_assign_list_settings', array() );
@@ -145,10 +145,10 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * handle_product_bulk_actions.
 	 *
-	 * @version 3.9.0
+	 * @version 4.5.0
 	 * @since   2.7.0
 	 *
-	 * @todo    (feature) all other actions, e.g. "Copy EAN from SKU", etc.
+	 * @todo    (feature) all other actions, e.g., "Copy EAN from SKU", etc.
 	 * @todo    (dev) notices
 	 * @todo    (dev) merge with `products_create()`?
 	 */
@@ -180,7 +180,7 @@ class Alg_WC_EAN_Product_Tools {
 							$result = (
 									'' === get_post_meta( $product_id, alg_wc_ean()->core->ean_key, true ) &&
 									'' !== ( $ean = $this->generate_ean( $product_id, $data ) ) &&
-									update_post_meta( $product_id, alg_wc_ean()->core->ean_key, $ean )
+									alg_wc_ean()->core->set_ean( $product_id, $ean )
 								);
 							if ( $result && '' !== $data['product_attribute'] ) {
 								$this->add_product_attribute( $product_id, $ean, $data['product_attribute'] );
@@ -359,7 +359,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 4.4.2
+	 * @version 4.5.0
 	 * @since   2.2.8
 	 *
 	 * @todo    (dev) merge with `products_create()`?
@@ -420,7 +420,7 @@ class Alg_WC_EAN_Product_Tools {
 						break;
 				}
 				if ( '' !== $ean ) {
-					update_post_meta( $post_id, alg_wc_ean()->core->ean_key, $ean );
+					alg_wc_ean()->core->set_ean( $post_id, $ean );
 					if ( 'generate' === $action && '' !== $data['product_attribute'] ) {
 						$this->add_product_attribute( $post_id, $ean, $data['product_attribute'] );
 					}
@@ -456,7 +456,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 4.4.2
+	 * @version 4.5.0
 	 * @since   2.9.0
 	 *
 	 * @todo    (dev) Copy to: do NOT overwrite?
@@ -568,7 +568,7 @@ class Alg_WC_EAN_Product_Tools {
 					$ean = array_shift( $data );
 					break;
 			}
-			if ( '' !== $ean && update_post_meta( $product_id, alg_wc_ean()->core->ean_key, $ean ) ) {
+			if ( '' !== $ean && alg_wc_ean()->core->set_ean( $product_id, $ean ) ) {
 				if ( 'generate' === $action && '' !== $data['product_attribute'] ) {
 					$this->add_product_attribute( $product_id, $ean, $data['product_attribute'] );
 				}
@@ -603,7 +603,7 @@ class Alg_WC_EAN_Product_Tools {
 	 * @version 4.4.2
 	 * @since   2.1.0
 	 *
-	 * @todo    (dev) message: "success/error" (i.e. check `$response['result']`)
+	 * @todo    (dev) message: "success/error" (i.e., check `$response['result']`)
 	 * @todo    (feature) per individual product (JS or AJAX?)
 	 * @todo    (dev) better notice(s)?
 	 */
@@ -643,7 +643,7 @@ class Alg_WC_EAN_Product_Tools {
 	 * @version 3.9.0
 	 * @since   3.7.2
 	 *
-	 * @todo    (feature) local (i.e. per product; non-taxonomy) product attribute
+	 * @todo    (feature) local (i.e., per product; non-taxonomy) product attribute
 	 * @todo    (dev) use `$product->set_attributes()` instead of `update_post_meta( $product_id, '_product_attributes', $product_attributes )`
 	 */
 	function add_product_attribute( $product_id, $ean, $taxonomy ) {
@@ -670,7 +670,7 @@ class Alg_WC_EAN_Product_Tools {
 	 *
 	 * @todo    (dev) `ISBN13`, `JAN`
 	 * @todo    (fix) `UPCA`: 1+5+5+1 (https://www.cognex.com/resources/symbologies/1-d-linear-barcodes/upc-a-barcodes)
-	 * @todo    (dev) move to a separate class/file, e.g. `class-alg-wc-ean-generator.php`?
+	 * @todo    (dev) move to a separate class/file, e.g., `class-alg-wc-ean-generator.php`?
 	 */
 	function get_generate_data() {
 		$res = array();
@@ -701,7 +701,7 @@ class Alg_WC_EAN_Product_Tools {
 		}
 		$res['seed_length'] = ( $length - $res['prefix_length'] - 1 );
 
-		// Seed prefix, i.e. "Manufacturer code"
+		// Seed prefix, i.e., "Manufacturer code"
 		$seed_prefix         = ( strlen( $data['seed_prefix'] ) > $res['seed_length'] ? substr( $data['seed_prefix'], 0, $res['seed_length'] ) : $data['seed_prefix'] );
 		$res['seed_length'] -= strlen( $seed_prefix );
 		$res['seed_prefix']  = $seed_prefix;
@@ -719,7 +719,7 @@ class Alg_WC_EAN_Product_Tools {
 			str_pad( substr( $data['prefix'], 0, $res['prefix_length'] ), $res['prefix_length'], '0', STR_PAD_LEFT )
 		);
 
-		// Seed method, i.e. "Product code"
+		// Seed method, i.e., "Product code"
 		$res['seed_method'] = $data['seed_method'];
 
 		// Product attribute

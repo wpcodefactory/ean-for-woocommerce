@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes Section Settings
  *
- * @version 3.8.0
+ * @version 4.5.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -31,14 +31,14 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 3.8.0
+	 * @version 4.5.0
 	 * @since   2.0.0
 	 *
 	 * @todo    (desc) Enable section: better desc
 	 * @todo    (desc) `alg_wc_ean_order_items_table_barcode`: "... *may* not work..."?
 	 * @todo    (dev) `alg_wc_ean_backend_column_barcode_data[]`?
 	 * @todo    (desc) `alg_wc_ean_backend_column_barcode_template`: better desc?
-	 * @todo    (dev) Barcode type: add all types from https://github.com/tecnickcom/TCPDF/blob/6.3.5/tcpdf_barcodes_2d.php#L66, i.e. `QRCODE` and `PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6` (last one maybe as an additional "Custom type" option?)
+	 * @todo    (dev) Barcode type: add all types from https://github.com/tecnickcom/TCPDF/blob/6.3.5/tcpdf_barcodes_2d.php#L66, i.e., `QRCODE` and `PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6` (last one maybe as an additional "Custom type" option?)
 	 */
 	function get_settings() {
 		$settings = array(
@@ -109,7 +109,7 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'    => __( 'Shop pages', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'Show barcode on shop (e.g. category) pages on frontend.', 'ean-for-woocommerce' ) . ' ' . $this->variable_products_note(),
+				'desc_tip' => __( 'Show barcode on shop (e.g., category) pages on frontend.', 'ean-for-woocommerce' ) . ' ' . $this->variable_products_note(),
 				'id'       => "alg_wc_ean_frontend_loop_barcode{$this->dim_suffix}",
 				'default'  => 'no',
 				'type'     => 'checkbox',
@@ -160,7 +160,7 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 				'title'    => __( 'Order items table', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Pages', 'ean-for-woocommerce' ),
 				'desc_tip' => __( 'Show barcode image in order items table on <strong>pages</strong>.', 'ean-for-woocommerce' ) . ' ' .
-					__( 'E.g.: "thank you" (i.e. "order received") page, "view order" page (in "my account").', 'ean-for-woocommerce' ),
+					__( 'E.g.: "thank you" (i.e., "order received") page, "view order" page (in "my account").', 'ean-for-woocommerce' ),
 				'id'       => "alg_wc_ean_order_items_table_barcode{$this->dim_suffix}",
 				'default'  => 'no',
 				'type'     => 'checkbox',
@@ -232,7 +232,7 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'title'    => __( 'Barcode type', 'ean-for-woocommerce' ),
-				'desc'     => ( '2d' === $this->dim ? '' : sprintf( __( 'If set to "Automatic", will use the barcode type based on EAN type, i.e. %s for EAN-8, %s for UPC-A, %s for EAN-13, ISBN-13 and JAN, and %s for all other types.', 'ean-for-woocommerce' ),
+				'desc'     => ( '2d' === $this->dim ? '' : sprintf( __( 'If set to "Automatic", will use the barcode type based on EAN type, i.e., %s for EAN-8, %s for UPC-A, %s for EAN-13, ISBN-13 and JAN, and %s for all other types.', 'ean-for-woocommerce' ),
 					'<code>EAN-8</code>', '<code>UPC-A</code>', '<code>EAN-13</code>', '<code>CODE 128</code>' ) ),
 				'id'       => "alg_wc_ean_barcode{$this->dim_suffix}_barcode_type",
 				'default'  => ( '2d' === $this->dim ? 'QRCODE,L' : 'AUTO' ),

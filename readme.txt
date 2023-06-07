@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.2
-Stable tag: 4.4.6
+Stable tag: 4.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,7 +22,7 @@ Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, Custom.
 * **Search by EAN** in backend (including AJAX search) and in frontend.
 * Add sortable EAN column to **admin products list**.
 * Optionally **show EAN** on **single product page**, **shop pages** and/or in **cart** on frontend.
-* Add EAN to **product structured data**, e.g. for Google Search Console.
+* Add EAN to **product structured data**, e.g., for Google Search Console.
 * Add EAN to **WooCommerce REST API** order and product responses; search orders and products by EAN.
 * Show EAN in **order items table**, including emails, "thank you" page, etc.
 * **Export** and **import** EAN.
@@ -85,6 +85,12 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.5.0 - 07/06/2023 =
+* Dev – "High-Performance Order Storage (HPOS)" compatibility.
+* Dev - Admin Settings - Option descriptions updated.
+* Dev - Code refactoring.
+* WC tested up to: 7.7.
 
 = 4.4.6 - 02/05/2023 =
 * Dev - Shortcodes - `[alg_wc_ean_is_valid]` shortcode added.
@@ -291,7 +297,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * Dev - General - Type - Type details - Admin settings restyled.
 * Dev - Tools - Product Tools - Generate - Type - Admin settings description added.
 * Dev - Barcodes - Shortcodes - Optional `ean` attribute added.
-* Dev - Barcodes - Shortcodes - Shortcodes are always available now (even if the corresponding barcodes section is disabled), e.g. for the "Print" section.
+* Dev - Barcodes - Shortcodes - Shortcodes are always available now (even if the corresponding barcodes section is disabled), e.g., for the "Print" section.
 * Dev - Print - Developers - `alg_wc_ean_print_render_meta_box_shop_order_force_refunded` filter added.
 * Dev - Print - Developers - `alg_wc_ean_print_barcode_shop_order_refunded_item_qty` filter added.
 * Dev - Code refactoring.
@@ -306,7 +312,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * Dev - Code refactoring.
 
 = 3.2.0 - 15/02/2022 =
-* Dev - Orders - REST API - Now using current product EAN as a fallback (i.e. if there is no EAN in order item meta).
+* Dev - Orders - REST API - Now using current product EAN as a fallback (i.e., if there is no EAN in order item meta).
 * Dev - Barcodes - "Orders" options added ("Show barcode image on admin order edit page").
 * Dev - Barcodes - "REST API" (product and order) options added.
 * Dev - Barcodes - `[alg_wc_ean_barcode_base64]` and `[alg_wc_ean_barcode_2d_base64]` shortcodes added.
@@ -325,7 +331,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 = 3.1.0 - 04/02/2022 =
 * Dev - Advanced - "Export/Import Plugin Settings" options added.
 * Dev - Advanced - Meta key - Option mark as "required" now.
-* Dev - Order items table - Pages - Outputting barcode directly now (i.e. will work on `localhost` environment now). "Advanced > Force remote image" option added.
+* Dev - Order items table - Pages - Outputting barcode directly now (i.e., will work on `localhost` environment now). "Advanced > Force remote image" option added.
 * Dev - Order items table - "Emails" options added. Includes barcodes.
 * Dev - Order items table - "Template" options ("HTML" and "Plain text (emails only)") added.
 * Dev - Print - Template - `%product_price%` and `%product_price_raw%` placeholders added.
@@ -369,7 +375,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 = 2.7.0 - 12/11/2021 =
 * Dev - Tools - Product Tools - Generate - "Seed prefix" option added (optional). "Prefix" options renamed to "Country prefix".
 * Dev - Tools - Product Tools - "Products > Bulk actions" option added (defaults to "Generate EAN" and "Delete EAN" actions).
-* Dev - Print - "Print barcode" (i.e. vs "Get barcode PDF") buttons added.
+* Dev - Print - "Print barcode" (i.e., vs "Get barcode PDF") buttons added.
 * Dev - Print - Advanced Options - "Use Print.js" option added.
 * Dev - Print - Advanced Options - "Skip products without EAN" option added.
 * Dev - Print - Print buttons - Single product - Separate variation buttons added.
@@ -393,7 +399,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * Dev - Code refactoring.
 
 = 2.5.0 - 28/10/2021 =
-* Dev - Print - "Font" and "Font size" options added. "DejaVu Sans (Unicode)" font added (normal only; italic and bold were not added to reduce the size of the plugin). All other available fonts (i.e. "Times New Roman", "Helvetica" and "Courier") have italic and bold included.
+* Dev - Print - "Font" and "Font size" options added. "DejaVu Sans (Unicode)" font added (normal only; italic and bold were not added to reduce the size of the plugin). All other available fonts (i.e., "Times New Roman", "Helvetica" and "Courier") have italic and bold included.
 * WC tested up to: 5.8.
 
 = 2.4.2 - 30/09/2021 =
@@ -464,7 +470,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * Dev - Admin settings restyled.
 
 = 2.2.1 - 01/08/2021 =
-* Fix - Search - Our frontend search option caused issues on WooCommerce Analytics page, e.g. when searching for a coupon code in filter. This is fixed now.
+* Fix - Search - Our frontend search option caused issues on WooCommerce Analytics page, e.g., when searching for a coupon code in filter. This is fixed now.
 * Fix - Admin settings - "Undefined property" PHP notice fixed. Was occurring in "General" settings section, when "Enable plugin" option was disabled.
 * WC tested up to: 5.5.
 * Tested up to: 5.8.
@@ -500,7 +506,7 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * Dev - Barcodes - Shortcodes - `content` attribute added. Defaults to `ean`. Other possible values: `url`, `admin_url`, `admin_search`, `increase_stock` and `decrease_stock`.
 * Dev - Barcodes - Shortcodes - `w` and `h` attributes added.
 * Dev - Barcodes - Shortcodes - `product_id` defaults to `get_the_ID()` now.
-* Dev - Barcodes - Shortcodes - Now accessible in "Print barcodes (PDF)" section (i.e. in "Template" option).
+* Dev - Barcodes - Shortcodes - Now accessible in "Print barcodes (PDF)" section (i.e., in "Template" option).
 * Dev - Print - General Options - "Variations" option added.
 * Dev - Code refactoring.
 * WC tested up to: 5.1.

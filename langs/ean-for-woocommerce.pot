@@ -172,11 +172,11 @@ msgstr ""
 msgid "EAN copied for %s products (%s total products)."
 msgstr ""
 
-#: includes/class-alg-wc-ean.php:130
+#: includes/class-alg-wc-ean.php:147
 msgid "Settings"
 msgstr ""
 
-#: includes/class-alg-wc-ean.php:133
+#: includes/class-alg-wc-ean.php:150
 msgid "Go Pro"
 msgstr ""
 
@@ -783,7 +783,7 @@ msgid "Shop pages"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:112
-msgid "Show barcode on shop (e.g. category) pages on frontend."
+msgid "Show barcode on shop (e.g., category) pages on frontend."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:118
@@ -839,7 +839,7 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:163
 #: includes/settings/class-alg-wc-ean-settings-general.php:438
 msgid ""
-"E.g.: \"thank you\" (i.e. \"order received\") page, \"view order\" page (in "
+"E.g.: \"thank you\" (i.e., \"order received\") page, \"view order\" page (in "
 "\"my account\")."
 msgstr ""
 
@@ -917,7 +917,7 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:235
 #, php-format
 msgid ""
-"If set to \"Automatic\", will use the barcode type based on EAN type, i.e. "
+"If set to \"Automatic\", will use the barcode type based on EAN type, i.e., "
 "%s for EAN-8, %s for UPC-A, %s for EAN-13, ISBN-13 and JAN, and %s for all "
 "other types."
 msgstr ""
@@ -1095,7 +1095,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:94
 msgid ""
-"This will add the field to the product structured data, e.g. for Google "
+"This will add the field to the product structured data, e.g., for Google "
 "Search Console."
 msgstr ""
 
@@ -1261,7 +1261,7 @@ msgid "EAN input pattern (on the admin product edit pages)"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:154
-msgid "product structured data (e.g. for Google Search Console)"
+msgid "product structured data (e.g., for Google Search Console)"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:155
@@ -1359,7 +1359,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:259
 msgid ""
-"E.g. when searching for a product when creating new order in admin area."
+"E.g., when searching for a product when creating new order in admin area."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:268
@@ -1409,7 +1409,7 @@ msgid "Fine-tune the position."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:344
-msgid "This will show EAN on shop (e.g. category) pages on frontend."
+msgid "This will show EAN on shop (e.g., category) pages on frontend."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:352
@@ -1435,7 +1435,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:378
 msgid ""
-"This will add EAN to the product structured data, e.g. for Google Search "
+"This will add EAN to the product structured data, e.g., for Google Search "
 "Console."
 msgstr ""
 
@@ -1462,7 +1462,7 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-general.php:394
 #, php-format
 msgid ""
-"If enabled, will use the key based on EAN type, i.e. %s for EAN-8, %s for "
+"If enabled, will use the key based on EAN type, i.e., %s for EAN-8, %s for "
 "UPC-A, %s for EAN-13, ISBN-13 and JAN, and %s for all other types."
 msgstr ""
 
@@ -1543,7 +1543,7 @@ msgstr ""
 #, php-format
 msgid ""
 "EAN is stored in product meta with %s key. You may need this for some third-"
-"party plugins, e.g. for product import."
+"party plugins, e.g., for product import."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print-products.php:26
@@ -1722,7 +1722,7 @@ msgid "Page margins"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:231
-msgid "Page break (i.e. bottom) margin"
+msgid "Page break (i.e., bottom) margin"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-print.php:233
@@ -2124,7 +2124,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:243
 #, php-format
-msgid "Meta key, e.g. %s"
+msgid "Meta key, e.g., %s"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:244
@@ -2158,7 +2158,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:280
 msgid ""
-"Sets which product categories to include when assigning the EANs (i.e. all "
+"Sets which product categories to include when assigning the EANs (i.e., all "
 "other categories will be skipped)."
 msgstr ""
 
@@ -2187,7 +2187,7 @@ msgid "One EAN per line."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:299
-msgid "Used (i.e. assigned) EANs will be automatically removed from the list."
+msgid "Used (i.e., assigned) EANs will be automatically removed from the list."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-tools.php:307

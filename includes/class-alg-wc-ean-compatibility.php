@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.4.6
+ * @version 4.5.0
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -21,8 +21,8 @@ class Alg_WC_EAN_Compatibility {
 	 * @since   2.2.0
 	 *
 	 * @todo    (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
-	 * @todo    (feature) WCFM: customizable position, i.e. instead of right below the "SKU" field in "Inventory" tab
-	 * @todo    (feature) Dokan: customizable position, i.e. instead of `dokan_new_product_after_product_tags` and `dokan_product_edit_after_product_tags`
+	 * @todo    (feature) WCFM: customizable position, i.e., instead of right below the "SKU" field in "Inventory" tab
+	 * @todo    (feature) Dokan: customizable position, i.e., instead of `dokan_new_product_after_product_tags` and `dokan_product_edit_after_product_tags`
 	 * @todo    (feature) https://wordpress.org/plugins/woocommerce-xml-csv-product-import/ (WooCommerce add-on for "WP All Import")
 	 */
 	function __construct() {
@@ -264,7 +264,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * wcfm_save_ean_field.
 	 *
-	 * @version 2.2.2
+	 * @version 4.5.0
 	 * @since   2.2.2
 	 *
 	 * @see     https://plugins.svn.wordpress.org/wc-frontend-manager/tags/6.5.10/controllers/products-manager/wcfm-controller-products-manage.php
@@ -272,7 +272,7 @@ class Alg_WC_EAN_Compatibility {
 	function wcfm_save_ean_field( $new_product_id, $wcfm_products_manage_form_data ) {
 		$id = 'wcfm_' . alg_wc_ean()->core->ean_key;
 		if ( isset( $wcfm_products_manage_form_data[ $id ] ) ) {
-			update_post_meta( $new_product_id, alg_wc_ean()->core->ean_key, wc_clean( $wcfm_products_manage_form_data[ $id ] ) );
+			alg_wc_ean()->core->set_ean( $new_product_id, wc_clean( $wcfm_products_manage_form_data[ $id ] ) );
 		}
 	}
 
@@ -285,7 +285,7 @@ class Alg_WC_EAN_Compatibility {
 	 * @see     https://plugins.svn.wordpress.org/wc-frontend-manager/tags/6.5.10/views/products-manager/wcfm-view-products-manage-tabs.php
 	 *
 	 * @todo    (dev) `generate_button`: move `add_action` (3x) to constructor?
-	 * @todo    (dev) do we need `esc_html` everywhere, e.g. in `hints`? (same for `dokan_add_ean_field()`)
+	 * @todo    (dev) do we need `esc_html` everywhere, e.g., in `hints`? (same for `dokan_add_ean_field()`)
 	 * @todo    (feature) optional EAN validation
 	 */
 	function wcfm_add_ean_field( $fields, $product_id, $product_type ) {
@@ -347,7 +347,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * wcfm_variation_save_ean_field.
 	 *
-	 * @version 4.0.0
+	 * @version 4.5.0
 	 * @since   4.0.0
 	 *
 	 * @todo    (dev) merge with `wcfm_save_ean_field()`?
@@ -355,7 +355,7 @@ class Alg_WC_EAN_Compatibility {
 	function wcfm_variation_save_ean_field( $product_id, $variation_id, $data ) {
 		$id = 'wcfm_' . alg_wc_ean()->core->ean_key;
 		if ( isset( $data[ $id ] ) ) {
-			update_post_meta( $variation_id, alg_wc_ean()->core->ean_key, wc_clean( $data[ $id ] ) );
+			alg_wc_ean()->core->set_ean( $variation_id, wc_clean( $data[ $id ] ) );
 		}
 	}
 
@@ -479,7 +479,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * dokan_save_ean_field.
 	 *
-	 * @version 2.2.2
+	 * @version 4.5.0
 	 * @since   2.2.2
 	 *
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/includes/Dashboard/Templates/Products.php#L353
@@ -493,7 +493,7 @@ class Alg_WC_EAN_Compatibility {
 	function dokan_save_ean_field( $product_id, $data ) {
 		$id = 'dokan_' . alg_wc_ean()->core->ean_key;
 		if ( isset( $data[ $id ] ) ) {
-			update_post_meta( $product_id, alg_wc_ean()->core->ean_key, wc_clean( $data[ $id ] ) );
+			alg_wc_ean()->core->set_ean( $product_id, wc_clean( $data[ $id ] ) );
 		}
 	}
 
@@ -550,8 +550,8 @@ class Alg_WC_EAN_Compatibility {
 	 *
 	 * @see     https://woocommerce.com/products/point-of-sale-for-woocommerce/
 	 *
-	 * @todo    (dev) `get_route()`: better solution, e.g. exact match with `/wc-pos/products`?
-	 * @todo    (dev) find better solution, e.g. add elsewhere, not to the name?
+	 * @todo    (dev) `get_route()`: better solution, e.g., exact match with `/wc-pos/products`?
+	 * @todo    (dev) find better solution, e.g., add elsewhere, not to the name?
 	 */
 	function wc_pos_add_ean_to_product_name( $response, $product, $request ) {
 		if ( ( false !== strpos( $request->get_route(), '/wc-pos/' ) ) && '' !== ( $ean = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {

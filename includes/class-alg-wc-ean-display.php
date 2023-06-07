@@ -175,7 +175,7 @@ class Alg_WC_EAN_Display {
 	 * @version 2.2.7
 	 * @since   1.0.0
 	 *
-	 * @todo    (dev) `__( 'EAN', 'ean-for-woocommerce' )` -> `'EAN'` (everywhere) (i.e. no translation)?
+	 * @todo    (dev) `__( 'EAN', 'ean-for-woocommerce' )` -> `'EAN'` (everywhere) (i.e., no translation)?
 	 */
 	function add_product_columns( $columns ) {
 		$is_added = false;
@@ -260,7 +260,7 @@ class Alg_WC_EAN_Display {
 					case 'JAN':
 						$key = 'gtin13';
 						break;
-					default: // e.g. `AUTO`, `C128`
+					default: // e.g., `AUTO`, `C128`
 						$key = apply_filters( 'alg_wc_ean_product_structured_data_markup_key', 'gtin', $type, $product );
 				}
 			} else {

@@ -78,7 +78,7 @@ class Alg_WC_EAN_Order_Items_Table {
 					// It's an email...
 					$do_display = ( $do_display_in_emails ? ( empty( $emails ) || in_array( $this->email->id, $emails ) ) : false );
 				} else {
-					// It's a page, e.g. "Thank you"
+					// It's a page, e.g., "Thank you"
 					$do_display = $do_display_on_pages;
 				}
 			}

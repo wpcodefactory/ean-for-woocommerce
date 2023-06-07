@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Extra Field Section Settings
  *
- * @version 4.0.0
+ * @version 4.5.0
  * @since   4.0.0
  *
  * @author  Algoritmika Ltd
@@ -43,7 +43,7 @@ class Alg_WC_EAN_Settings_Extra_Field extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.5.0
 	 * @since   4.0.0
 	 */
 	function get_settings() {
@@ -91,7 +91,7 @@ class Alg_WC_EAN_Settings_Extra_Field extends Alg_WC_EAN_Settings_Section {
 				'title'    => __( 'Product structured data', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'id'       => "alg_wc_ean_extra_field_structured_data_product[{$this->num}]",
-				'desc_tip' => __( 'This will add the field to the product structured data, e.g. for Google Search Console.', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'This will add the field to the product structured data, e.g., for Google Search Console.', 'ean-for-woocommerce' ),
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),

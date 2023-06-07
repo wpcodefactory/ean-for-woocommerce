@@ -23,14 +23,17 @@ class Alg_WC_EAN_Orders {
 	 * @todo    (feature) option to add it to `woocommerce_hidden_order_itemmeta`
 	 */
 	function __construct() {
+
 		// Orders items meta
 		if ( 'yes' === get_option( 'alg_wc_ean_order_items_meta', 'no' ) ) {
 			add_action( 'woocommerce_checkout_order_processed', array( $this, 'add_ean_to_order_items_meta' ), PHP_INT_MAX, 1 );
 		}
+
 		// Admin new order (AJAX)
 		if ( 'yes' === get_option( 'alg_wc_ean_order_items_meta_admin', 'no' ) ) {
 			add_action( 'woocommerce_new_order_item', array( $this, 'new_order_item_ajax' ), PHP_INT_MAX, 2 );
 		}
+
 	}
 
 	/**
