@@ -76,7 +76,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'     => __( 'Content', 'ean-for-woocommerce' ),
-				'desc_tip' =>  sprintf( __( 'Available placeholder: %s.', 'ean-for-woocommerce' ), '%ean%' ),
+				'desc_tip' => sprintf( __( 'Available placeholder: %s.', 'ean-for-woocommerce' ), '%ean%' ),
 				'id'       => 'alg_wc_ean_wpo_wcpdf_options[content]',
 				'default'  => '<dl class="meta">' .
 						'<dt class="ean">' . esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ) . ':' . '</dt>' .

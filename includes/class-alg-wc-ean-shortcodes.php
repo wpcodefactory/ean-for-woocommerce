@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 4.4.6
+ * @version 4.6.0
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.4.6
+	 * @version 4.6.0
 	 * @since   3.5.0
 	 *
 	 * @todo    (feature) add `[alg_wc_ean_type]` shortcode?
@@ -39,7 +39,10 @@ class Alg_WC_EAN_Shortcodes {
 		add_shortcode( 'alg_wc_ean_product_author_id', array( $this, 'product_author_id_shortcode' ) );
 		add_shortcode( 'alg_wc_ean_product_meta',      array( $this, 'product_meta_shortcode' ) );
 		add_shortcode( 'alg_wc_ean_product_function',  array( $this, 'product_function_shortcode' ) );
-
+		add_shortcode( 'alg_wc_ean_product_terms',     array( $this, 'product_terms_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_if',                array( $this, 'if_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_if_product_cat',    array( $this, 'if_product_cat_shortcode' ) );
+		add_shortcode( 'alg_wc_ean_if_product_tag',    array( $this, 'if_product_tag_shortcode' ) );
 	}
 
 	/**
@@ -104,6 +107,133 @@ class Alg_WC_EAN_Shortcodes {
 			$product_ids = array_merge( $product_ids, $product->get_children() );
 		}
 		return $product_ids;
+	}
+
+	/**
+	 * if_product_term.
+	 *
+	 * @version 4.6.0
+	 * @since   4.6.0
+	 *
+	 * @todo    (dev) `shortcode_atts`
+	 * @todo    (dev) rewrite: use `has_term()` instead?
+	 */
+	function if_product_term( $taxonomy, $atts, $content = '' ) {
+		$value = ( isset( $atts['in'] ) && '' !== $atts['in'] ? $atts['in'] : ( isset( $atts['not_in'] ) && '' !== $atts['not_in'] ? $atts['not_in'] : '' ) );
+		if ( '' !== $value ) {
+			$atts = array_replace( $atts, array(
+				'value1'   => '{alg_wc_ean_product_terms taxonomy="' . $taxonomy . '" return="slug"}',
+				'value2'   => $value,
+				'operator' => ( isset( $atts['in'] ) && '' !== $atts['in'] ? 'intersect' : 'not_intersect' ),
+			) );
+			unset( $atts['in'] );
+			unset( $atts['not_in'] );
+			return $this->if_shortcode( $atts, $content );
+		}
+		return '';
+	}
+
+	/**
+	 * if_product_cat_shortcode.
+	 *
+	 * @version 4.6.0
+	 * @since   4.6.0
+	 */
+	function if_product_cat_shortcode( $atts, $content = '' ) {
+		return $this->if_product_term( 'product_cat', $atts, $content );
+	}
+
+	/**
+	 * if_product_tag_shortcode.
+	 *
+	 * @version 4.6.0
+	 * @since   4.6.0
+	 */
+	function if_product_tag_shortcode( $atts, $content = '' ) {
+		return $this->if_product_term( 'product_tag', $atts, $content );
+	}
+
+	/**
+	 * product_terms_shortcode.
+	 *
+	 * @version 4.6.0
+	 * @since   4.6.0
+	 */
+	function product_terms_shortcode( $atts, $content = '' ) {
+
+		// Atts
+		$default_atts = array(
+			'product_id' => false,
+			'before'     => '',
+			'after'      => '',
+			'on_empty'   => '',
+			'parent'     => 'yes',
+			'taxonomy'   => 'product_cat',
+			'return'     => 'name',
+		);
+		$atts = shortcode_atts( $default_atts, $atts, 'alg_wc_ean_product_terms' );
+
+		// Result
+		$result = '';
+		if ( ( $product_id = $this->get_shortcode_att( 'product_id', $atts, get_the_ID() ) ) ) {
+			if ( 'yes' === $atts['parent'] && 0 != ( $product_parent_id = wp_get_post_parent_id ( $product_id ) ) ) {
+				$product_id = $product_parent_id;
+			}
+			$result = implode( ', ', wp_list_pluck( wc_get_product_terms( $product_id, $atts['taxonomy'] ), $atts['return'] ) );
+		}
+
+		return $this->output( $result, $atts );
+	}
+
+	/**
+	 * if_shortcode.
+	 *
+	 * @version 4.6.0
+	 * @since   4.6.0
+	 *
+	 * @todo    (dev) `shortcode_atts`
+	 */
+	function if_shortcode( $atts, $content = '' ) {
+		if ( ! isset( $atts['value1'], $atts['operator'], $atts['value2'] ) || ( '' === $content && ! isset( $atts['then'] ) ) ) {
+			return '';
+		}
+		$value1 =              do_shortcode( str_replace( array( '{', '}' ), array( '[', ']' ), $atts['value1'] ) );
+		$value2 =              do_shortcode( str_replace( array( '{', '}' ), array( '[', ']' ), $atts['value2'] ) );
+		$then   = ( '' === $content        ? str_replace( array( '{', '}' ), array( '[', ']' ), $atts['then'] ) : $content );
+		$else   = ( isset( $atts['else'] ) ? str_replace( array( '{', '}' ), array( '[', ']' ), $atts['else'] ) : '' );
+		return do_shortcode( ( $this->if_shortcode_operator( $value1, $atts['operator'], $value2 ) ? $then : $else ) );
+	}
+
+	/**
+	 * if_shortcode_operator.
+	 *
+	 * @version 4.6.0
+	 * @since   4.6.0
+	 */
+	function if_shortcode_operator( $value1, $operator, $value2 ) {
+		switch ( $operator ) {
+			case 'equal':
+				return ( $value1 == $value2 );
+			case 'not_equal':
+				return ( $value1 != $value2 );
+			case 'less':
+				return ( $value1 <  $value2 );
+			case 'less_or_equal':
+				return ( $value1 <= $value2 );
+			case 'greater':
+				return ( $value1 >  $value2 );
+			case 'greater_or_equal':
+				return ( $value1 >= $value2 );
+			case 'in':
+				return (   in_array( $value1, array_map( 'trim', explode( ',', $value2 ) ) ) );
+			case 'not_in':
+				return ( ! in_array( $value1, array_map( 'trim', explode( ',', $value2 ) ) ) );
+			case 'intersect':
+				return ( ! empty( array_intersect( array_map( 'trim', explode( ',', $value1 ) ), array_map( 'trim', explode( ',', $value2 ) ) ) ) );
+			case 'not_intersect':
+				return (   empty( array_intersect( array_map( 'trim', explode( ',', $value1 ) ), array_map( 'trim', explode( ',', $value2 ) ) ) ) );
+		}
+		return false;
 	}
 
 	/**

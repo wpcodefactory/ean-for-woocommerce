@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 4.5.0
+ * @version 4.6.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -87,7 +87,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.5.0
+	 * @version 4.6.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -299,9 +299,10 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
-				'desc_tip' =>  sprintf( __( 'Available placeholder: %s.', 'ean-for-woocommerce' ), '%ean%' ),
+				'desc_tip' => sprintf( __( 'Available placeholder: %s.', 'ean-for-woocommerce' ), '%ean%' ) . '<br><br>' .
+					__( 'You can also use shortcodes here.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_template',
-				'default'  => __( 'EAN: %ean%', 'ean-for-woocommerce' ),
+				'default'  => alg_wc_ean()->core->get_default_template(),
 				'type'     => 'textarea',
 			),
 			array(
@@ -345,6 +346,14 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'id'       => 'alg_wc_ean_frontend_loop',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Template', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'Available placeholder: %s.', 'ean-for-woocommerce' ), '%ean%' ) . '<br><br>' .
+					__( 'You can also use shortcodes here.', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_template_loop',
+				'default'  => alg_wc_ean()->core->get_default_template(),
+				'type'     => 'textarea',
 			),
 			array(
 				'title'    => __( 'Cart', 'ean-for-woocommerce' ),

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 4.5.0
+ * @version 4.6.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -43,6 +43,18 @@ class Alg_WC_EAN_Core {
 		}
 		// Core loaded
 		do_action( 'alg_wc_ean_core_loaded', $this );
+	}
+
+	/**
+	 * get_default_template.
+	 *
+	 * @version 4.6.0
+	 * @since   4.6.0
+	 *
+	 * @todo    (dev) move to another file
+	 */
+	function get_default_template() {
+		return sprintf( '%s: %%ean%%', get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) );
 	}
 
 	/**

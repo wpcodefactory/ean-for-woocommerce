@@ -1,9 +1,9 @@
 === EAN for WooCommerce ===
-Contributors: wpcodefactory, algoritmika, anbinder, omardabbas, kousikmukherjeeli
+Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmukherjeeli
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.2
-Stable tag: 4.5.1
+Stable tag: 4.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -85,6 +85,15 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.6.0 - 23/06/2023 =
+* Dev - Display - Shortcodes are now processed in the "Single product page" and "Shop pages" options.
+* Dev - Display - Shop pages - "Template" option added. Defaults to `EAN: %ean%`.
+* Dev - Tools - Product Tools - Copy from product attribute - "Custom product attribute" option added.
+* Dev - Shortcodes - `[alg_wc_ean_if]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_if_product_cat]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_if_product_tag]` shortcode added.
+* Dev - Shortcodes - `[alg_wc_ean_product_terms]` shortcode added.
 
 = 4.5.1 - 18/06/2023 =
 * WC tested up to: 7.8.

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 4.5.0
+ * @version 4.6.0
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -76,12 +76,15 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_product_attributes.
 	 *
-	 * @version 3.9.0
+	 * @version 4.6.0
 	 * @since   3.7.2
 	 */
-	function get_product_attributes( $none_title = false ) {
+	function get_product_attributes( $none_title = false, $do_add_custom = false ) {
 		$options     = array();
 		$options[''] = ( $none_title ? $none_title : esc_html__( 'Disable', 'ean-for-woocommerce' ) );
+		if ( $do_add_custom ) {
+			$options['alg_wc_ean_product_attribute_custom'] = '(' . esc_html__( 'Custom', 'ean-for-woocommerce' ) . ')';
+		}
 		$taxonomies  = wc_get_attribute_taxonomies();
 		if ( ! empty( $taxonomies ) ) {
 			foreach ( $taxonomies as $tax ) {
@@ -96,7 +99,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.5.0
+	 * @version 4.6.0
 	 * @since   2.2.5
 	 *
 	 * @todo    (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
@@ -266,7 +269,14 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'default'  => '',
 				'type'     => 'select',
 				'class'    => 'chosen_select',
-				'options'  => $this->get_product_attributes( __( 'Select attribute...', 'ean-for-woocommerce' ) ),
+				'options'  => $this->get_product_attributes( __( 'Select attribute...', 'ean-for-woocommerce' ), true ),
+			),
+			array(
+				'desc'     => __( 'Custom product attribute', 'ean-for-woocommerce' ),
+				'desc_tip' => __( 'Ignored, unless the "Product attribute" option is set to "Custom".', 'ean-for-woocommerce' ),
+				'id'       => 'alg_wc_ean_tool_product_copy_attr[product_attribute_custom]',
+				'default'  => '',
+				'type'     => 'text',
 			),
 			array(
 				'title'    => __( 'Assign from the list', 'ean-for-woocommerce' ),

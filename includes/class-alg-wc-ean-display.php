@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 4.4.5
+ * @version 4.6.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -298,7 +298,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * variations_add_params.
 	 *
-	 * @version 3.0.0
+	 * @version 4.6.0
 	 * @since   1.0.0
 	 */
 	function variations_add_params( $args, $product = false, $variation = false ) {
@@ -307,7 +307,8 @@ class Alg_WC_EAN_Display {
 			if ( 'product_meta' === get_option( 'alg_wc_ean_frontend_variation_position', 'product_meta' ) ) {
 				$args['ean'] = $variation->get_meta( $key );
 			} else {
-				$args['variation_description'] .= str_replace( '%ean%', $variation->get_meta( $key ), get_option( 'alg_wc_ean_template', __( 'EAN: %ean%', 'ean-for-woocommerce' ) ) );
+				$args['variation_description'] .= str_replace( '%ean%', $variation->get_meta( $key ),
+					get_option( 'alg_wc_ean_template', alg_wc_ean()->core->get_default_template() ) );
 			}
 		}
 		return $args;
@@ -338,7 +339,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean.
 	 *
-	 * @version 3.9.0
+	 * @version 4.6.0
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) template: shortcode vs placeholder?
@@ -348,8 +349,11 @@ class Alg_WC_EAN_Display {
 	function add_ean( $template, $single_or_loop ) {
 		$output_data = $this->get_ean_output_data();
 		if ( $output_data['do_output'] ) {
+			global $product;
+			$template = alg_wc_ean()->core->shortcodes->do_shortcode( $template, array( 'product_id' => ( $product ? $product->get_id() : false ) ) );
 			$ean_html = '<span class="ean">' . $output_data['value'] . '</span>';
-			$output   = '<span class="sku_wrapper ean_wrapper"' . $output_data['style'] . '>' . str_replace( '%ean%', $ean_html, $template ) . '</span>';
+			$template = str_replace( '%ean%', $ean_html, $template );
+			$output   = '<span class="sku_wrapper ean_wrapper"' . $output_data['style'] . '>' . $template . '</span>';
 			echo apply_filters( 'alg_wc_ean_display', $output, $output_data['value'], $output_data['style'], $template, $single_or_loop );
 		}
 	}
@@ -357,24 +361,30 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_single.
 	 *
-	 * @version 3.9.0
+	 * @version 4.6.0
 	 * @since   2.1.0
 	 */
 	function add_ean_single() {
-		$this->add_ean( get_option( 'alg_wc_ean_template', __( 'EAN: %ean%', 'ean-for-woocommerce' ) ), 'single' );
+		$this->add_ean(
+			get_option( 'alg_wc_ean_template', alg_wc_ean()->core->get_default_template() ),
+			'single'
+		);
 	}
 
 	/**
 	 * add_ean_loop.
 	 *
-	 * @version 3.9.0
+	 * @version 4.6.0
 	 * @since   2.0.0
 	 *
-	 * @todo    (feature) customizable template; position(s)?
+	 * @todo    (feature) customizable position(s)?
 	 * @todo    (dev) variable: implode variations' EANs?
 	 */
 	function add_ean_loop() {
-		$this->add_ean( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) . ': %ean%', 'loop' );
+		$this->add_ean(
+			get_option( 'alg_wc_ean_template_loop', alg_wc_ean()->core->get_default_template() ),
+			'loop'
+		);
 	}
 
 	/**
