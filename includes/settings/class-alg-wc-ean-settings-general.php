@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 4.6.0
+ * @version 4.7.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_types_desc.
 	 *
-	 * @version 3.4.0
+	 * @version 4.7.0
 	 * @since   3.3.0
 	 *
 	 * @see     https://en.wikipedia.org/wiki/Global_Trade_Item_Number
@@ -38,6 +38,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	 * @see     https://en.wikipedia.org/wiki/International_Article_Number
 	 * @see     https://en.wikipedia.org/wiki/International_Standard_Book_Number
 	 * @see     https://en.wikipedia.org/wiki/International_Article_Number#jan
+	 * @see     https://www.barcode.graphics/gtin-14-encoding/
 	 */
 	function get_types_desc() {
 		$types = array(
@@ -60,6 +61,10 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			'JAN'      => array(
 				'desc'   => __( 'Japanese Article Number (JAN) is a subset of EAN-13 - with <code>45</code> or <code>49</code> prefix.', 'ean-for-woocommerce' ),
 				'length' => 13,
+			),
+			'EAN14'    => array(
+				'desc'   => __( 'EAN-14 is a 14 digit number used to identify trade items at various packaging levels. The first digit denotes the level of packaging.', 'ean-for-woocommerce' ),
+				'length' => 14,
 			),
 			__( 'Custom', 'ean-for-woocommerce' ) => array(
 				'desc'   => __( 'Custom can represent all 128 ASCII code characters (numbers, upper case/lower case letters, symbols and control codes).', 'ean-for-woocommerce' ),
@@ -87,7 +92,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.6.0
+	 * @version 4.7.0
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -160,12 +165,13 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'select',
 				'class'    => 'chosen_select',
 				'options'  => array(
-					'AUTO'   => __( 'Automatic', 'ean-for-woocommerce' ) . ' (' . implode( ', ', array( 'EAN-13', 'UPC-A', 'EAN-8', 'ISBN-13', 'JAN' ) ) . ')',
+					'AUTO'   => __( 'Automatic', 'ean-for-woocommerce' ) . ' (' . implode( ', ', array( 'EAN-13', 'UPC-A', 'EAN-8', 'ISBN-13', 'JAN', 'EAN-14' ) ) . ')',
 					'EAN8'   => 'EAN-8',
 					'UPCA'   => 'UPC-A',
 					'EAN13'  => 'EAN-13',
 					'ISBN13' => 'ISBN-13',
 					'JAN'    => 'JAN',
+					'EAN14'  => 'EAN-14',
 					'C128'   => __( 'Custom', 'ean-for-woocommerce' ), // mislabeled, should be `CUSTOM`
 				),
 			),
@@ -400,8 +406,8 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'     => __( 'Automatic key', 'ean-for-woocommerce' ),
-				'desc_tip' => sprintf( __( 'If enabled, will use the key based on EAN type, i.e., %s for EAN-8, %s for UPC-A, %s for EAN-13, ISBN-13 and JAN, and %s for all other types.', 'ean-for-woocommerce' ),
-					'<code>gtin8</code>', '<code>gtin12</code>', '<code>gtin13</code>', '<code>gtin</code>' ),
+				'desc_tip' => sprintf( __( 'If enabled, will use the key based on EAN type, i.e., %s for EAN-8, %s for UPC-A, %s for EAN-13, ISBN-13 and JAN, %s for EAN-14, and %s for all other types.', 'ean-for-woocommerce' ),
+					'<code>gtin8</code>', '<code>gtin12</code>', '<code>gtin13</code>', '<code>gtin14</code>', '<code>gtin</code>' ),
 				'id'       => 'alg_wc_ean_frontend_product_structured_data_key_auto',
 				'default'  => 'yes',
 				'type'     => 'checkbox',

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 4.6.0
+ * @version 4.7.0
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -13,6 +13,27 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_WC_EAN_Core' ) ) :
 
 class Alg_WC_EAN_Core {
+
+	/**
+	 * public.
+	 *
+	 * @version 4.7.0
+	 * @since   1.0.0
+	 */
+	public $ean_key;
+	public $edit;
+	public $admin;
+	public $search;
+	public $display;
+	public $order_items_table;
+	public $import_export;
+	public $orders;
+	public $rest_api;
+	public $product_tools;
+	public $order_tools;
+	public $settings_import_export;
+	public $compatibility;
+	public $shortcodes;
 
 	/**
 	 * Constructor.
@@ -72,7 +93,7 @@ class Alg_WC_EAN_Core {
 	/**
 	 * get_type_by_ean_length.
 	 *
-	 * @version 3.3.0
+	 * @version 4.7.0
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) rename function?
@@ -86,6 +107,8 @@ class Alg_WC_EAN_Core {
 				return 'UPCA';
 			case 13:
 				return ( $this->is_ean_isbn( $ean ) ? 'ISBN13' : ( $this->is_ean_jan( $ean ) ? 'JAN' : 'EAN13' ) );
+			case 14:
+				return 'EAN14';
 			default:
 				return false;
 		}
@@ -97,7 +120,7 @@ class Alg_WC_EAN_Core {
 	 * @version 3.3.0
 	 * @since   1.4.0
 	 *
-	 * @todo    (dev) now used only: `EAN8`, `UPCA`, `EAN13`, `ISBN13`, `JAN`
+	 * @todo    (dev) now used only: `EAN8`, `UPCA`, `EAN13`, `ISBN13`, `JAN`, `EAN14`
 	 */
 	function get_ean_type_length( $type ) {
 		switch ( $type ) {
@@ -145,7 +168,7 @@ class Alg_WC_EAN_Core {
 	/**
 	 * is_valid_ean.
 	 *
-	 * @version 3.3.0
+	 * @version 4.7.0
 	 * @since   1.0.1
 	 *
 	 * @see     https://stackoverflow.com/questions/19890144/generate-valid-ean13-in-php
@@ -162,6 +185,7 @@ class Alg_WC_EAN_Core {
 			case 'EAN13':  // e.g.: 5901234123457
 			case 'ISBN13':
 			case 'JAN':
+			case 'EAN14':  // e.g.: 40700719670720
 			case 'AUTO':
 				$ean = ( string ) $value;
 				// We accept only digits

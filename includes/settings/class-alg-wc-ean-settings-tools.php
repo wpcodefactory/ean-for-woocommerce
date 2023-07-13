@@ -102,6 +102,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	 * @version 4.6.0
 	 * @since   2.2.5
 	 *
+	 * @todo    (dev) Product Tools: Generate: Type: `EAN14`
 	 * @todo    (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
 	 * @todo    (dev) "Product tags" (similar to "Product categories")
 	 * @todo    (dev) add "Product categories" (and "Product tags") to all tools (now only in "Assign from the list")

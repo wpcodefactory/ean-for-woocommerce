@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.2
-Stable tag: 4.6.0
+Stable tag: 4.7.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -13,7 +13,7 @@ Manage product GTIN (EAN, UPC, ISBN, etc.) in WooCommerce. Beautifully.
 
 **EAN for WooCommerce** plugin lets you manage product GTIN (EAN, UPC, ISBN, etc.) in WooCommerce.
 
-Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, Custom.
+Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, EAN-14, Custom.
 
 ### &#9989; Main Features ###
 
@@ -85,6 +85,10 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.7.0 - 13/07/2023 =
+* Dev - "EAN-14" type added.
+* Dev - Code refactoring.
 
 = 4.6.0 - 23/06/2023 =
 * Dev - Display - Shortcodes are now processed in the "Single product page" and "Shop pages" options.
