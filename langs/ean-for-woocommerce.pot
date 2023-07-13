@@ -14,8 +14,8 @@
 #: includes/class-alg-wc-ean-display.php:192
 #: includes/class-alg-wc-ean-edit.php:127
 #: includes/class-alg-wc-ean-edit.php:144
-#: includes/class-alg-wc-ean-edit.php:257
-#: includes/class-alg-wc-ean-edit.php:291
+#: includes/class-alg-wc-ean-edit.php:258
+#: includes/class-alg-wc-ean-edit.php:292
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:82
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:141
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:192

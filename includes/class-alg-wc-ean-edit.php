@@ -216,6 +216,7 @@ class Alg_WC_EAN_Edit {
 		}
 
 		// Pattern and max length
+		$type = false;
 		if ( 'yes' === get_option( 'alg_wc_ean_add_pattern', 'yes' ) ) {
 			$type = alg_wc_ean()->core->get_type( false, false, $product_id );
 			switch ( $type ) {
