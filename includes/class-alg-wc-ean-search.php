@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Search Class
  *
- * @version 4.4.4
+ * @version 4.7.1
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -102,7 +102,7 @@ class Alg_WC_EAN_Search {
 	/**
 	 * search_backend.
 	 *
-	 * @version 4.4.4
+	 * @version 4.7.1
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) rewrite?
@@ -111,7 +111,7 @@ class Alg_WC_EAN_Search {
 
 		if (
 			$query->is_main_query() &&
-			isset( $query->query['post_type'] ) && 'product' == $query->query['post_type'] &&
+			isset( $query->query['post_type'] ) && in_array( 'product', (array) $query->query['post_type'] ) &&
 			apply_filters( 'alg_wc_ean_search_backend', true, $query )
 		) {
 
@@ -216,7 +216,7 @@ class Alg_WC_EAN_Search {
 	/**
 	 * search.
 	 *
-	 * @version 4.4.4
+	 * @version 4.7.1
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) rewrite?
@@ -226,7 +226,7 @@ class Alg_WC_EAN_Search {
 		// Pre-check
 		if (
 			! isset( $wp_query->query['s'] ) ||
-			! isset( $wp_query->query['post_type'] ) || 'product' != $wp_query->query['post_type'] ||
+			! isset( $wp_query->query['post_type'] ) || ! in_array( 'product', (array) $wp_query->query['post_type'] ) ||
 			! apply_filters( 'alg_wc_ean_search', true, $wp_query )
 		) {
 			return;

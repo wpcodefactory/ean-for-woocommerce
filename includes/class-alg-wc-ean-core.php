@@ -178,8 +178,11 @@ class Alg_WC_EAN_Core {
 	 * @todo    (feature) add more formats/standards, e.g., ASIN, etc.; also see https://github.com/tecnickcom/TCPDF/blob/6.4.1/tcpdf_barcodes_1d.php#L70
 	 */
 	function is_valid_ean( $value, $product_id = false ) {
+
 		$type = $this->get_type( $value, false, $product_id );
+
 		switch ( $type ) {
+
 			case 'EAN8':   // e.g.: 96385074
 			case 'UPCA':   // e.g.: 042100005264
 			case 'EAN13':  // e.g.: 5901234123457
@@ -230,9 +233,12 @@ class Alg_WC_EAN_Core {
 					}
 				}
 				break;
+
 			default:
 				$result = ( 0 != strlen( $value ) );
+
 		}
+
 		return apply_filters( 'alg_wc_ean_is_valid', $result, $value, $type );
 	}
 

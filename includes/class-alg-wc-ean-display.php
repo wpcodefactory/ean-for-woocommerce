@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -137,7 +137,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * product_columns_order_by_column.
 	 *
-	 * @version 1.5.0
+	 * @version 4.7.1
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) `$do_exclude_empty_lines`?
@@ -145,7 +145,7 @@ class Alg_WC_EAN_Display {
 	function product_columns_order_by_column( $query ) {
 		if (
 			$query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) && 'alg_ean' === $orderby &&
-			isset( $query->query['post_type'] ) && 'product' === $query->query['post_type'] &&
+			isset( $query->query['post_type'] ) && in_array( 'product', (array) $query->query['post_type'] ) &&
 			isset( $query->is_admin ) && 1 == $query->is_admin
 		) {
 			$do_exclude_empty_lines = false;
