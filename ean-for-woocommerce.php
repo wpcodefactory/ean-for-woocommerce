@@ -3,12 +3,12 @@
 Plugin Name: EAN for WooCommerce
 Plugin URI: https://wpfactory.com/item/ean-for-woocommerce/
 Description: Manage product GTIN (EAN, UPC, ISBN, etc.) in WooCommerce. Beautifully.
-Version: 4.7.1
+Version: 4.7.2
 Author: WPFactory
 Author URI: https://wpfactory.com
 Text Domain: ean-for-woocommerce
 Domain Path: /langs
-WC tested up to: 7.8
+WC tested up to: 8.0
 */
 
 defined( 'ABSPATH' ) || exit;
@@ -29,7 +29,7 @@ if ( 'ean-for-woocommerce.php' === basename( __FILE__ ) ) {
 	}
 }
 
-defined( 'ALG_WC_EAN_VERSION' ) || define( 'ALG_WC_EAN_VERSION', '4.7.1' );
+defined( 'ALG_WC_EAN_VERSION' ) || define( 'ALG_WC_EAN_VERSION', '4.7.2' );
 
 defined( 'ALG_WC_EAN_FILE' ) || define( 'ALG_WC_EAN_FILE', __FILE__ );
 

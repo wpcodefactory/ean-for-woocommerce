@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.6.0
+ * @version 4.7.2
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -215,7 +215,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * get_products.
 	 *
-	 * @version 4.3.3
+	 * @version 4.7.2
 	 * @since   2.1.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/wiki/wc_get_products-and-WC_Product_Query
@@ -276,7 +276,12 @@ class Alg_WC_EAN_Product_Tools {
 		if ( $do_fix_variations ) {
 			$_products = array();
 			foreach ( $products as $product_id ) {
-				$children = array_keys( get_children( array( 'post_parent' => $product_id, 'posts_per_page' => -1, 'post_type' => 'product_variation' ), 'ARRAY_N' ) );
+				$children = ( 'variable' !== WC_Product_Factory::get_product_type( $product_id ) ? false :
+					array_keys( get_children( array(
+						'post_parent'    => $product_id,
+						'posts_per_page' => -1,
+						'post_type'      => 'product_variation',
+					), 'ARRAY_N' ) ) );
 				if ( ! empty( $children ) ) {
 					// Variable products
 					if ( ! $do_remove_variable ) {
@@ -289,6 +294,7 @@ class Alg_WC_EAN_Product_Tools {
 				}
 			}
 			$products = $_products;
+			sort( $products );
 		}
 
 		return $products;
