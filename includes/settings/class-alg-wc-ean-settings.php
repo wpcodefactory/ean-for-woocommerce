@@ -25,8 +25,10 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 		$this->label = apply_filters( 'alg_wc_ean_settings_page_label', __( 'EAN', 'ean-for-woocommerce' ) );
 		parent::__construct();
 
-		// Sections: EAN
+		// Sections
 		require_once( 'class-alg-wc-ean-settings-section.php' );
+
+		// Sections: EAN
 		require_once( 'class-alg-wc-ean-settings-general.php' );
 		require_once( 'class-alg-wc-ean-settings-tools.php' );
 		require_once( 'class-alg-wc-ean-settings-compatibility.php' );

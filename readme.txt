@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.3
-Stable tag: 4.7.2
+Stable tag: 4.7.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -48,6 +48,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 * [Woocommerce OpenPos](https://codecanyon.net/item/openpos-a-complete-pos-plugins-for-woocomerce/22613341) plugin.
 * [Dokan marketplace](https://wordpress.org/plugins/dokan-lite/) plugin.
 * [WCFM](https://wordpress.org/plugins/wc-frontend-manager/) and [WCFM Marketplace](https://wordpress.org/plugins/wc-multivendor-marketplace/) plugins.
+* [MultiVendorX](https://wordpress.org/plugins/dc-woocommerce-multi-vendor/) plugin.
 * [Print Invoice & Delivery Notes for WooCommerce](https://wordpress.org/plugins/woocommerce-delivery-notes/) plugin.
 * [WooCommerce PDF Invoices & Packing Slips](https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/) plugin.
 * [WooCommerce PDF Invoices, Packing Slips, Delivery Notes and Shipping Labels](https://wordpress.org/plugins/print-invoices-packing-slip-labels-for-woocommerce/) plugin.
@@ -70,6 +71,10 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * We are open to your suggestions and feedback. Thank you for using or trying out one of our plugins!
 * [Visit plugin site](https://wpfactory.com/item/ean-for-woocommerce/).
 
+### &#8505; More ###
+
+The plugin is **"High-Performance Order Storage (HPOS)"** compatible.
+
 == Installation ==
 
 1. Upload the entire plugin folder to the `/wp-content/plugins/` directory.
@@ -85,6 +90,11 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.7.3 - 23/08/2023 =
+* Fix - Declaring HPOS compatibility for the free plugin version, even if the Pro version is activated.
+* Dev - Compatibility - "MultiVendorX" options added.
+* Dev - Admin settings - Advanced - Meta key - Description updated.
 
 = 4.7.2 - 09/08/2023 =
 * Fix - Tools - Product Tools - Assign from the list - Product categories - Variations - Checking for the `variable` product type.

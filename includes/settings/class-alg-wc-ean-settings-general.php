@@ -105,7 +105,6 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	 * @todo    (desc) add subsections, e.g., "General", "Display", etc., or "Products", "Orders", etc.?
 	 * @todo    (desc) "REST API" as a separate *section*?
 	 * @todo    (desc) remove "This will" everywhere
-	 * @todo    (dev) `alg_wc_ean_wcfm_hints`: better default value?
 	 * @todo    (dev) `alg_wc_ean_order_items_meta_admin`: default to `yes` || merge with `alg_wc_ean_order_items_meta`
 	 * @todo    (dev) `alg_wc_ean_order_items_meta`: default to `yes`
 	 * @todo    (desc) `alg_wc_ean_order_items_meta_admin`: better desc

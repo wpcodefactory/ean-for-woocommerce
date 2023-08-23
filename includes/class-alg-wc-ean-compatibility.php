@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.5.0
+ * @version 4.7.3
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -17,15 +17,24 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.0
+	 * @version 4.7.3
 	 * @since   2.2.0
 	 *
+	 * @todo    (dev) MultiVendorX: generate button
+	 * @todo    (dev) MultiVendorX: customizable template
+	 * @todo    (dev) MultiVendorX: barcodes?
 	 * @todo    (dev) "Point of Sale for WooCommerce": add `( 'yes' === get_option( 'alg_wc_ean_wc_pos', 'yes' ) )` / "This will add EAN field to the "Register > Scanning Fields" option of the %s plugin." / Point of Sale for WooCommerce / https://woocommerce.com/products/point-of-sale-for-woocommerce/
 	 * @todo    (feature) WCFM: customizable position, i.e., instead of right below the "SKU" field in "Inventory" tab
 	 * @todo    (feature) Dokan: customizable position, i.e., instead of `dokan_new_product_after_product_tags` and `dokan_product_edit_after_product_tags`
 	 * @todo    (feature) https://wordpress.org/plugins/woocommerce-xml-csv-product-import/ (WooCommerce add-on for "WP All Import")
 	 */
 	function __construct() {
+
+		// MultiVendorX
+		if ( 'yes' === get_option( 'alg_wc_ean_mvx', 'no' ) ) {
+			add_action( 'mvx_process_product_object',                                 array( $this, 'mvx_save_ean_field' ), 10, 2 );
+			add_action( 'mvx_frontend_dashboard_after_product_excerpt_metabox_panel', array( $this, 'mvx_add_ean_field' ) );
+		}
 
 		// "Point of Sale for WooCommerce" plugin
 		add_filter( 'wc_pos_scanning_fields', array( $this, 'wc_pos_scanning_fields' ), PHP_INT_MAX );
@@ -107,6 +116,36 @@ class Alg_WC_EAN_Compatibility {
 			add_filter( 'wc_customer_order_export_csv_order_row_one_row_per_item', array( $this, 'wc_customer_order_export_render_column' ), 10, 4 );
 		}
 
+	}
+
+	/**
+	 * mvx_save_ean_field.
+	 *
+	 * @version 4.7.3
+	 * @since   4.7.3
+	 */
+	function mvx_save_ean_field( $product, $_post ) {
+		if ( isset( $_post['alg_wc_ean_mvx'] ) ) {
+			$product->update_meta_data( alg_wc_ean()->core->ean_key, wc_clean( $_post['alg_wc_ean_mvx'] ) );
+		}
+	}
+
+	/**
+	 * mvx_add_ean_field.
+	 *
+	 * @version 4.7.3
+	 * @since   4.7.3
+	 */
+	function mvx_add_ean_field( $post_id ) {
+		$title       = get_option( 'alg_wc_ean_mvx_title', __( 'EAN:', 'ean-for-woocommerce' ) );
+		$placeholder = get_option( 'alg_wc_ean_mvx_placeholder', '' );
+		$value       = alg_wc_ean()->core->get_ean( $post_id );
+		?>
+		<div class="add-product-info-holder row-padding">
+			<label for="alg_wc_ean_mvx"><?php echo esc_html( $title ); ?></label>
+			<input id="alg_wc_ean_mvx" name="alg_wc_ean_mvx" class="form-control inline-input" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
+		</div>
+		<?php
 	}
 
 	/**
