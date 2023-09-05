@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 4.7.1
+ * @version 4.7.5
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -234,7 +234,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_to_product_structured_data.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.5
 	 * @since   1.0.0
 	 *
 	 * @see     https://schema.org/Product
@@ -245,7 +245,15 @@ class Alg_WC_EAN_Display {
 	 * @todo    (dev) `default` (`C128`): maybe no markup then?
 	 */
 	function add_ean_to_product_structured_data( $markup, $product ) {
-		if ( '' !== ( $value = alg_wc_ean()->core->get_ean( $product->get_id() ) ) ) {
+
+		// Get & filter product EAN
+		$value = alg_wc_ean()->core->get_ean( $product->get_id() );
+		$value = apply_filters( 'alg_wc_ean_product_structured_data_value', $value, $product );
+
+		// Add EAN to the markup
+		if ( '' !== $value || apply_filters( 'alg_wc_ean_product_structured_data_allow_empty_value', false, $product ) ) {
+
+			// Get key
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_product_structured_data_key_auto', 'yes' ) ) {
 				$type = alg_wc_ean()->core->get_type( $value, false, $product->get_id() );
 				switch ( $type ) {
@@ -270,8 +278,15 @@ class Alg_WC_EAN_Display {
 				$key = get_option( 'alg_wc_ean_frontend_product_structured_data_key', 'gtin' );
 				$key = apply_filters( 'alg_wc_ean_product_structured_data_markup_key', $key, false, $product );
 			}
-			$markup[ $key ] = $value;
+
+			// Filter & add
+			$value = apply_filters( 'alg_wc_ean_product_structured_data_markup_value', $value, $product );
+			if ( '' !== $value ) {
+				$markup[ $key ] = $value;
+			}
+
 		}
+
 		return $markup;
 	}
 

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 4.7.3
+ * @version 4.7.5
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.7.3
+	 * @version 4.7.5
 	 * @since   2.2.9
 	 *
 	 * @todo    (dev) `alg_wc_ean_wcfm_hints`: better default value?
@@ -41,6 +41,16 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'title'    => __( 'Plugin Compatibility Options', 'ean-for-woocommerce' ),
 				'type'     => 'title',
 				'id'       => 'alg_wc_ean_plugin_compatibility_options',
+			),
+			array(
+				'title'    => __( 'Google Listings & Ads', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'This will add EAN to the product data of the %s plugin.', 'ean-for-woocommerce' ),
+					'<a target="_blank" href="' . 'https://wordpress.org/plugins/google-listings-and-ads/' . '">' .
+						__( 'Google Listings & Ads', 'ean-for-woocommerce' ) . '</a>' ),
+				'id'       => 'alg_wc_ean_gla',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'    => __( 'Point of Sale for WooCommerce', 'ean-for-woocommerce' ),

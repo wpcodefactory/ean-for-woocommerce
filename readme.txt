@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.3
-Stable tag: 4.7.4
+Stable tag: 4.7.5
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,6 +44,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 
 ### &#129309; Compatibility ###
 
+* [Google Listings & Ads](https://wordpress.org/plugins/google-listings-and-ads/) plugin.
 * [Point of Sale for WooCommerce](https://woocommerce.com/products/point-of-sale-for-woocommerce/) plugin.
 * [Woocommerce OpenPos](https://codecanyon.net/item/openpos-a-complete-pos-plugins-for-woocomerce/22613341) plugin.
 * [Dokan marketplace](https://wordpress.org/plugins/dokan-lite/) plugin.
@@ -90,6 +91,12 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.7.5 - 05/09/2023 =
+* Dev - Compatibility - "Google Listings & Ads" option added.
+* Dev - Developers - `alg_wc_ean_product_structured_data_value` filter added.
+* Dev - Developers - `alg_wc_ean_product_structured_data_markup_value` filter added.
+* Dev - Developers - `alg_wc_ean_product_structured_data_allow_empty_value` filter added.
 
 = 4.7.4 - 30/08/2023 =
 * Dev - Print - Cell - "Cell top/left/right/bottom margin" options added (all default to `0`).
