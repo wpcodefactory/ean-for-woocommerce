@@ -60,7 +60,7 @@ msgid "Generate %s"
 msgstr ""
 
 #: includes/class-alg-wc-ean-compatibility.php:612
-#: includes/class-alg-wc-ean-search.php:207
+#: includes/class-alg-wc-ean-search.php:217
 #, php-format
 msgid "EAN: %s"
 msgstr ""
@@ -207,8 +207,8 @@ msgstr ""
 #: includes/pro/class-alg-wc-ean-extra-field.php:48
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:40
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:71
-#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:69
-#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:72
+#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:71
+#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:74
 #, php-format
 msgid "Extra field #%d"
 msgstr ""
@@ -452,6 +452,8 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:260
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:84
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:92
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:100
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:108
 #: includes/settings/class-alg-wc-ean-settings-general.php:254
 #: includes/settings/class-alg-wc-ean-settings-general.php:272
 #: includes/settings/class-alg-wc-ean-settings-general.php:291
@@ -769,7 +771,7 @@ msgid "You should use %s shortcode here."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:92
-#: includes/settings/class-alg-wc-ean-settings-extra-field.php:83
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:91
 #: includes/settings/class-alg-wc-ean-settings-general.php:298
 msgid "Single product page"
 msgstr ""
@@ -1110,17 +1112,36 @@ msgstr ""
 msgid "For example: %s"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-extra-field.php:85
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:83
+#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:51
+#: includes/settings/class-alg-wc-ean-settings-general.php:253
+msgid "Admin product search"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:86
+msgid "This will enable searching by the field in admin area."
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:93
 msgid "This will show the field on single product page on frontend."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-extra-field.php:91
-#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:52
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:99
+#: includes/settings/class-alg-wc-ean-settings-general.php:372
+msgid "Search"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:101
+msgid "This will enable searching by the field on the frontend."
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:107
+#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:54
 #: includes/settings/class-alg-wc-ean-settings-general.php:389
 msgid "Product structured data"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-extra-field.php:94
+#: includes/settings/class-alg-wc-ean-settings-extra-field.php:110
 msgid ""
 "This will add the field to the product structured data, e.g., for Google "
 "Search Console."
@@ -1150,11 +1171,15 @@ msgstr ""
 msgid "Currently supported features are: %s."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:51
+#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:52
 msgid "Single product page display (including variations)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:58
+#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:53
+msgid "Search (frontend)"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-extra-fields.php:60
 msgid "Total extra fields"
 msgstr ""
 
@@ -1375,10 +1400,6 @@ msgstr ""
 msgid "This will add \"Generate %s\" button to the admin product edit pages."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:253
-msgid "Admin product search"
-msgstr ""
-
 #: includes/settings/class-alg-wc-ean-settings-general.php:255
 msgid "This will enable searching by EAN in admin area."
 msgstr ""
@@ -1453,10 +1474,6 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:366
 msgid "This will show EAN on cart page on frontend."
-msgstr ""
-
-#: includes/settings/class-alg-wc-ean-settings-general.php:372
-msgid "Search"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:374

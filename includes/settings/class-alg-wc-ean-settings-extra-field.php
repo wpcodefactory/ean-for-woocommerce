@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Extra Field Section Settings
  *
- * @version 4.5.0
+ * @version 4.7.6
  * @since   4.0.0
  *
  * @author  Algoritmika Ltd
@@ -43,61 +43,77 @@ class Alg_WC_EAN_Settings_Extra_Field extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.5.0
+	 * @version 4.7.6
 	 * @since   4.0.0
 	 */
 	function get_settings() {
 
 		$settings = array(
 			array(
-				'title'    => sprintf( __( '%s Options', 'ean-for-woocommerce' ), $this->desc ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_ean_extra_field_' . $this->num . '_options',
+				'title'             => sprintf( __( '%s Options', 'ean-for-woocommerce' ), $this->desc ),
+				'type'              => 'title',
+				'id'                => 'alg_wc_ean_extra_field_' . $this->num . '_options',
 			),
 			array(
-				'title'    => $this->get_desc(),
-				'desc'     => '<strong>' . __( 'Enable field', 'ean-for-woocommerce' ) . '</strong>',
-				'desc_tip' => $this->pro_msg( 'enable this field' ),
-				'type'     => 'checkbox',
-				'id'       => "alg_wc_ean_extra_field_enabled[{$this->num}]",
-				'default'  => 'no',
+				'title'             => $this->get_desc(),
+				'desc'              => '<strong>' . __( 'Enable field', 'ean-for-woocommerce' ) . '</strong>',
+				'desc_tip'          => $this->pro_msg( 'enable this field' ),
+				'type'              => 'checkbox',
+				'id'                => "alg_wc_ean_extra_field_enabled[{$this->num}]",
+				'default'           => 'no',
 				'custom_attributes' => apply_filters( 'alg_wc_ean_settings', array( 'disabled' => 'disabled' ) ),
 			),
 			array(
-				'title'    => __( 'Title', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'For example: %s', 'ean-for-woocommerce' ), '<code>MPN</code>' ),
-				'type'     => 'text',
-				'id'       => "alg_wc_ean_extra_field_name[{$this->num}]",
-				'default'  => sprintf( __( 'Extra field #%d', 'ean-for-woocommerce' ), $this->num ),
+				'title'             => __( 'Title', 'ean-for-woocommerce' ),
+				'desc'              => sprintf( __( 'For example: %s', 'ean-for-woocommerce' ), '<code>MPN</code>' ),
+				'type'              => 'text',
+				'id'                => "alg_wc_ean_extra_field_name[{$this->num}]",
+				'default'           => sprintf( __( 'Extra field #%d', 'ean-for-woocommerce' ), $this->num ),
 				'custom_attributes' => array( 'required' => 'required' ),
 			),
 			array(
-				'title'    => __( 'Meta key', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'For example: %s', 'ean-for-woocommerce' ), '<code>mpn</code>' ),
-				'type'     => 'text',
-				'id'       => "alg_wc_ean_extra_field_key[{$this->num}]",
-				'default'  => sprintf( 'extra_field_%d', $this->num ),
+				'title'             => __( 'Meta key', 'ean-for-woocommerce' ),
+				'desc'              => sprintf( __( 'For example: %s', 'ean-for-woocommerce' ), '<code>mpn</code>' ),
+				'type'              => 'text',
+				'id'                => "alg_wc_ean_extra_field_key[{$this->num}]",
+				'default'           => sprintf( 'extra_field_%d', $this->num ),
 				'custom_attributes' => array( 'required' => 'required' ),
 			),
 			array(
-				'title'    => __( 'Single product page', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip' => __( 'This will show the field on single product page on frontend.', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_extra_field_frontend[{$this->num}]",
-				'default'  => 'yes',
-				'type'     => 'checkbox',
+				'title'             => __( 'Admin product search', 'ean-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'ean-for-woocommerce' ),
+				'id'                => "alg_wc_ean_extra_field_backend_search[{$this->num}]",
+				'desc_tip'          => __( 'This will enable searching by the field in admin area.', 'ean-for-woocommerce' ),
+				'default'           => 'no',
+				'type'              => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Product structured data', 'ean-for-woocommerce' ),
-				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
-				'id'       => "alg_wc_ean_extra_field_structured_data_product[{$this->num}]",
-				'desc_tip' => __( 'This will add the field to the product structured data, e.g., for Google Search Console.', 'ean-for-woocommerce' ),
-				'default'  => 'yes',
-				'type'     => 'checkbox',
+				'title'             => __( 'Single product page', 'ean-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip'          => __( 'This will show the field on single product page on frontend.', 'ean-for-woocommerce' ),
+				'id'                => "alg_wc_ean_extra_field_frontend[{$this->num}]",
+				'default'           => 'yes',
+				'type'              => 'checkbox',
 			),
 			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_ean_extra_field_' . $this->num . '_options',
+				'title'             => __( 'Search', 'ean-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip'          => __( 'This will enable searching by the field on the frontend.', 'ean-for-woocommerce' ),
+				'id'                => "alg_wc_ean_extra_field_frontend_search[{$this->num}]",
+				'default'           => 'no',
+				'type'              => 'checkbox',
+			),
+			array(
+				'title'             => __( 'Product structured data', 'ean-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'ean-for-woocommerce' ),
+				'id'                => "alg_wc_ean_extra_field_structured_data_product[{$this->num}]",
+				'desc_tip'          => __( 'This will add the field to the product structured data, e.g., for Google Search Console.', 'ean-for-woocommerce' ),
+				'default'           => 'yes',
+				'type'              => 'checkbox',
+			),
+			array(
+				'type'              => 'sectionend',
+				'id'                => 'alg_wc_ean_extra_field_' . $this->num . '_options',
 			),
 		);
 

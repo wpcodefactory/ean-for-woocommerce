@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.3
-Stable tag: 4.7.5
+Stable tag: 4.7.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -92,6 +92,12 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 
 == Changelog ==
 
+= 4.7.6 - 15/09/2023 =
+* Dev - Search - Code refactoring.
+* Dev - Pro - Extra Fields - "Admin product search" options added (default to `no`).
+* Dev - Pro - Extra Fields - "Search" (frontend) options added (default to `no`).
+* WC tested up to: 8.1.
+
 = 4.7.5 - 05/09/2023 =
 * Dev - Compatibility - "Google Listings & Ads" option added.
 * Dev - Developers - `alg_wc_ean_product_structured_data_value` filter added.
@@ -99,9 +105,9 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 * Dev - Developers - `alg_wc_ean_product_structured_data_allow_empty_value` filter added.
 
 = 4.7.4 - 30/08/2023 =
-* Dev - Print - Cell - "Cell top/left/right/bottom margin" options added (all default to `0`).
-* Dev - Print - Cell - "Cell content alignment" option added.
-* Dev - Print - Admin settings descriptions updated.
+* Dev - Pro - Print - Cell - "Cell top/left/right/bottom margin" options added (all default to `0`).
+* Dev - Pro - Print - Cell - "Cell content alignment" option added.
+* Dev - Pro - Print - Admin settings descriptions updated.
 
 = 4.7.3 - 23/08/2023 =
 * Fix - Declaring HPOS compatibility for the free plugin version, even if the Pro version is activated.

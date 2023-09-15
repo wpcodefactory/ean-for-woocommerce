@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Extra Fields Section Settings
  *
- * @version 4.3.0
+ * @version 4.7.6
  * @since   4.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Extra_Fields extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.0
+	 * @version 4.7.6
 	 * @since   4.0.0
 	 *
 	 * @todo    (dev) `alg_wc_ean_extra_fields_num_total`: JS?
@@ -43,12 +43,14 @@ class Alg_WC_EAN_Settings_Extra_Fields extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'    => __( 'Extra Fields Options', 'ean-for-woocommerce' ),
 				'desc'     => $this->pro_msg( 'use this section' ) .
-					__( 'This section allows you to add multiple extra fields per product, e.g., EAN and MPN simultaneously.', 'ean-for-woocommerce' ) . ' ' .
+					__( 'This section allows you to add multiple extra fields per product, e.g., EAN and MPN simultaneously.', 'ean-for-woocommerce' ) . '<br>' .
 					__( 'Please note that extra fields have less features compared to the main field.', 'ean-for-woocommerce' ) . ' ' .
 					sprintf( __( 'Currently supported features are: %s.', 'ean-for-woocommerce' ), implode( ', ', array(
 						__( 'Title', 'ean-for-woocommerce' ),
 						__( 'Meta key', 'ean-for-woocommerce' ),
+						__( 'Admin product search', 'ean-for-woocommerce' ),
 						__( 'Single product page display (including variations)', 'ean-for-woocommerce' ),
+						__( 'Search (frontend)', 'ean-for-woocommerce' ),
 						__( 'Product structured data', 'ean-for-woocommerce' ),
 					) ) ),
 				'type'     => 'title',

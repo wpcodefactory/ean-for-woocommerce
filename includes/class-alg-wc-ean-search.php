@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Search Class
  *
- * @version 4.7.1
+ * @version 4.7.6
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,10 +17,10 @@ class Alg_WC_EAN_Search {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.1.0
+	 * @version 4.7.6
 	 * @since   2.0.0
 	 *
-	 * @todo    (dev) [!] replace `( ! is_admin() )` with `( ! is_admin() || wp_doing_ajax() )`?
+	 * @todo    (dev) [!] replace `( ! is_admin() )` with `( ! is_admin() || wp_doing_ajax() )` (similar in "extra fields")?
 	 * @todo    (dev) Flatsome to `class-alg-wc-ean-compatibility.php`?
 	 * @todo    (dev) remove `! is_admin()` and `is_admin()`?
 	 * @todo    (dev) `alg_wc_ean_frontend_search_ajax_flatsome`: better solution?
@@ -34,7 +34,7 @@ class Alg_WC_EAN_Search {
 
 			// Frontend
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_search', 'yes' ) ) {
-				add_action( 'pre_get_posts', array( $this, 'search' ), 10 );
+				add_action( 'pre_get_posts', array( $this, 'search' ) );
 			}
 
 		} else {
@@ -102,17 +102,27 @@ class Alg_WC_EAN_Search {
 	/**
 	 * search_backend.
 	 *
-	 * @version 4.7.1
+	 * @version 4.7.6
 	 * @since   1.0.0
+	 */
+	function search_backend( $query ) {
+		self::_search_backend( $query, alg_wc_ean()->core->ean_key, $this );
+	}
+
+	/**
+	 * _search_backend.
+	 *
+	 * @version 4.7.6
+	 * @since   4.7.6
 	 *
 	 * @todo    (dev) rewrite?
 	 */
-	function search_backend( $query ) {
+	static function _search_backend( $query, $key, $obj ) {
 
 		if (
 			$query->is_main_query() &&
 			isset( $query->query['post_type'] ) && in_array( 'product', (array) $query->query['post_type'] ) &&
-			apply_filters( 'alg_wc_ean_search_backend', true, $query )
+			apply_filters( 'alg_wc_ean_search_backend', true, $query, $key )
 		) {
 
 			// Check search term
@@ -132,7 +142,7 @@ class Alg_WC_EAN_Search {
 
 			// Set `meta_query`
 			$new_meta_query = array(
-				'key'     => alg_wc_ean()->core->ean_key,
+				'key'     => $key,
 				'value'   => $search_term,
 				'compare' => 'LIKE',
 			);
@@ -151,7 +161,7 @@ class Alg_WC_EAN_Search {
 			$new_query->set( 'posts_per_page', -1 );
 
 			// Remove action
-			remove_action( 'pre_get_posts', array( $this, 'search_backend' ) );
+			remove_action( 'pre_get_posts', array( $obj, 'search_backend' ) );
 
 			// Search for products
 			$new_query->set( 'fields', 'ids' );
@@ -216,25 +226,34 @@ class Alg_WC_EAN_Search {
 	/**
 	 * search.
 	 *
-	 * @version 4.7.1
+	 * @version 4.7.6
 	 * @since   1.0.0
+	 */
+	function search( $wp_query ) {
+		self::_search_frontend( $wp_query, alg_wc_ean()->core->ean_key );
+	}
+
+	/**
+	 * _search_frontend.
+	 *
+	 * @version 4.7.6
+	 * @since   4.7.6
 	 *
 	 * @todo    (dev) rewrite?
 	 */
-	function search( $wp_query ) {
+	static function _search_frontend( $wp_query, $key ) {
 
 		// Pre-check
 		if (
 			! isset( $wp_query->query['s'] ) ||
 			! isset( $wp_query->query['post_type'] ) || ! in_array( 'product', (array) $wp_query->query['post_type'] ) ||
-			! apply_filters( 'alg_wc_ean_search', true, $wp_query )
+			! apply_filters( 'alg_wc_ean_search', true, $wp_query, $key )
 		) {
 			return;
 		}
 
 		// Get `$posts`
 		global $wpdb;
-		$key   = alg_wc_ean()->core->ean_key;
 		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='{$key}' AND meta_value LIKE %s;",
 			esc_sql( '%' . $wp_query->query['s'] . '%' ) ) );
 		if ( ! $posts ) {
