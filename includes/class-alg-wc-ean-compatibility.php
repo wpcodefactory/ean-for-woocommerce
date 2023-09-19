@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.7.5
+ * @version 4.7.7
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.5
+	 * @version 4.7.7
 	 * @since   2.2.0
 	 *
 	 * @todo    (dev) MultiVendorX: generate button
@@ -32,7 +32,7 @@ class Alg_WC_EAN_Compatibility {
 
 		// Google Listings & Ads
 		if ( 'yes' === get_option( 'alg_wc_ean_gla', 'no' ) ) {
-			add_filter( 'woocommerce_gla_product_attribute_value_gtin', array( $this, 'gla_add_ean' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_gla_attribute_mapping_sources_custom_attributes', array( $this, 'gla_add_ean' ), PHP_INT_MAX );
 		}
 
 		// MultiVendorX
@@ -126,11 +126,12 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * gla_add_ean.
 	 *
-	 * @version 4.7.5
+	 * @version 4.7.7
 	 * @since   4.7.5
 	 */
-	function gla_add_ean( $value, $product ) {
-		return alg_wc_ean()->core->get_ean( $product->get_id() );
+	function gla_add_ean( $values ) {
+		$values[] = alg_wc_ean()->core->ean_key;
+		return $values;
 	}
 
 	/**
