@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 4.7.7
+ * @version 4.7.8
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.7.7
+	 * @version 4.7.8
 	 * @since   2.2.9
 	 *
 	 * @todo    (dev) `alg_wc_ean_wcfm_hints`: better default value?
@@ -50,7 +50,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 						__( 'Google Listings & Ads', 'ean-for-woocommerce' ) . '</a>' ) . '<br>' .
 					sprintf( __( 'After enabling the checkbox, go to "Marketing > Google Listings & Ads > Attributes > Create attribute rule", select the "GTIN" attribute, and then select %s in the "Use value from existing product field" dropdown box.', 'ean-for-woocommerce' ),
 						'<code>' . alg_wc_ean()->core->ean_key . '</code>' ) . '<br>' .
-					( defined( 'WC_GLA_VERSION' ) ? sprintf( __( 'You may also want to "Sync All Products with Google Merchant Center" on the %s page.', 'ean-for-woocommerce' ),
+					( defined( 'WC_GLA_VERSION' ) ? sprintf( __( 'You may also want to "Sync All Products with Google Merchant Center" on the %s.', 'ean-for-woocommerce' ),
 						'<a href="' . admin_url( 'admin.php?page=connection-test-admin-page' ) . '">' . __( 'Google Listings & Ads connection testing page', 'ean-for-woocommerce' ) . '</a>' ) : '' ),
 				'id'       => 'alg_wc_ean_gla',
 				'default'  => 'no',

@@ -1008,7 +1008,7 @@ msgstr ""
 #, php-format
 msgid ""
 "You may also want to \"Sync All Products with Google Merchant Center\" on "
-"the %s page."
+"the %s."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:54
