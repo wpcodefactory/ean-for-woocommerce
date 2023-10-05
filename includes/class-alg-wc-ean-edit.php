@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -200,7 +200,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * get_ean_input_custom_atts.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   1.0.1
 	 *
 	 * @todo    (dev) `AUTO`: better maxlength (13); add minlength (8)
@@ -217,7 +217,7 @@ class Alg_WC_EAN_Edit {
 
 		// Pattern and max length
 		$type = false;
-		if ( 'yes' === get_option( 'alg_wc_ean_add_pattern', 'yes' ) ) {
+		if ( 'yes' === get_option( 'alg_wc_ean_add_pattern', 'no' ) ) {
 			$type = alg_wc_ean()->core->get_type( false, false, $product_id );
 			switch ( $type ) {
 				case 'EAN8':
