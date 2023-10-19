@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.3
-Stable tag: 4.8.0
+Stable tag: 4.8.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -91,6 +91,10 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.8.1 - 19/10/2023 =
+* Dev - Admin settings - General - Admin product edit page - Add pattern - Description updated.
+* WC tested up to: 8.2.
 
 = 4.8.0 - 05/10/2023 =
 * Dev - General - Admin product edit page - Add pattern - Default value changed to `no`.
