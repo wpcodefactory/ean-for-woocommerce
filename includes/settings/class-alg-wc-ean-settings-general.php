@@ -101,7 +101,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	 * @todo    (dev) `alg_wc_ean_order_items_table_templates`: translate?
 	 * @todo    (dev) deprecate placeholders
 	 * @todo    (dev) `alg_wc_ean_type`: rename `C128` to `CUSTOM`
-	 * @todo    (desc) `alg_wc_ean_order_items_meta_rest`: "... tried order item meta, then uses product as a fallback..."
+	 * @todo    (desc) `alg_wc_ean_order_items_meta_rest`: "... tries order item meta, then uses product as a fallback..."
 	 * @todo    (desc) add subsections, e.g., "General", "Display", etc., or "Products", "Orders", etc.?
 	 * @todo    (desc) "REST API" as a separate *section*?
 	 * @todo    (desc) remove "This will" everywhere

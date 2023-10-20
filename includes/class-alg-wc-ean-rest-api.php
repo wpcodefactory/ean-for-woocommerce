@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - REST API Class
  *
- * @version 4.4.5
+ * @version 4.8.2
  * @since   3.7.0
  *
  * @author  Algoritmika Ltd
@@ -147,15 +147,23 @@ class Alg_WC_EAN_REST_API {
 	/**
 	 * order_add_ean.
 	 *
-	 * @version 4.4.5
+	 * @version 4.8.2
 	 * @since   2.8.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php#L420
 	 */
 	function order_add_ean( $response, $order, $request ) {
+		if ( empty( $response->data['line_items'] ) ) {
+			return $response;
+		}
+
 		$res_key = apply_filters( 'alg_wc_ean_rest_api_order_ean_key', 'ean', $response, $order, $request );
+
 		foreach ( $response->data['line_items'] as $item_key => &$item ) {
+
 			$is_in_meta = false;
+
+			// Item meta
 			if ( ! empty( $item['meta_data'] ) ) {
 				foreach ( $item['meta_data'] as $meta_data ) {
 					if ( isset( $meta_data['key'], $meta_data['value'] ) && alg_wc_ean()->core->ean_key === $meta_data['key'] ) {
@@ -165,13 +173,17 @@ class Alg_WC_EAN_REST_API {
 					}
 				}
 			}
+
+			// Product meta (fallback)
 			if ( ! $is_in_meta && isset( $item['product_id'] ) ) {
 				$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
 				if ( '' !== ( $ean = alg_wc_ean()->core->get_ean( $product_id ) ) ) {
 					$item[ $res_key ] = $ean;
 				}
 			}
+
 		}
+
 		return $response;
 	}
 
