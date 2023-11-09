@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 4.7.2
+ * @version 4.8.3
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -365,7 +365,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * product_on_insert_post.
 	 *
-	 * @version 4.6.0
+	 * @version 4.8.3
 	 * @since   2.2.8
 	 *
 	 * @todo    (dev) merge with `products_create()`?
@@ -467,10 +467,24 @@ class Alg_WC_EAN_Product_Tools {
 						break;
 
 					case 'copy_to_meta':
-						$data = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
-						$data['keys'] = ( isset( $data['key'] ) && '' !== $data['key'] ? array_filter( explode( ',', $data['key'] ) ) : array() );
-						foreach ( $data['keys'] as $key ) {
-							update_post_meta( $post_id, $key, $current_ean );
+						$data             = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
+						$data['keys']     = ( isset( $data['key'] )     && '' !== $data['key']     ? explode( ',', $data['key'] )     : array() );
+						$data['sub_keys'] = ( isset( $data['sub_key'] ) && '' !== $data['sub_key'] ? explode( ',', $data['sub_key'] ) : array() );
+						foreach ( $data['keys'] as $i => $key ) {
+							if ( '' === $key ) {
+								continue;
+							}
+							if ( isset( $data['sub_keys'][ $i ] ) && '' !== $data['sub_keys'][ $i ] ) {
+								if ( '' === ( $_value = get_post_meta( $post_id, $key, true ) ) ) {
+									$_value = array();
+								} elseif ( ! is_array( $_value ) ) {
+									continue;
+								}
+								$_value[ $data['sub_keys'][ $i ] ] = $current_ean;
+								update_post_meta( $post_id, $key, $_value );
+							} else {
+								update_post_meta( $post_id, $key, $current_ean );
+							}
 						}
 						break;
 
@@ -492,7 +506,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * process_action_for_all_products.
 	 *
-	 * @version 4.6.0
+	 * @version 4.8.3
 	 * @since   2.9.0
 	 *
 	 * @todo    (dev) Copy to: do NOT overwrite?
@@ -537,8 +551,9 @@ class Alg_WC_EAN_Product_Tools {
 				break;
 
 			case 'copy_to_meta':
-				$data = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
-				$data['keys'] = ( isset( $data['key'] ) && '' !== $data['key'] ? array_filter( explode( ',', $data['key'] ) ) : array() );
+				$data             = get_option( 'alg_wc_ean_tool_product_copy_to_meta', array() );
+				$data['keys']     = ( isset( $data['key'] )     && '' !== $data['key']     ? explode( ',', $data['key'] )     : array() );
+				$data['sub_keys'] = ( isset( $data['sub_key'] ) && '' !== $data['sub_key'] ? explode( ',', $data['sub_key'] ) : array() );
 				if ( empty( $data['keys'] ) ) {
 					return array( 'result' => false, 'message' => __( 'Please set the "Meta key" option.', 'ean-for-woocommerce' ) );
 				}
@@ -577,9 +592,24 @@ class Alg_WC_EAN_Product_Tools {
 			}
 			if ( 'copy_to_meta' === $action ) {
 				if ( '' !== $current_ean ) {
-					foreach ( $data['keys'] as $key ) {
-						if ( update_post_meta( $product_id, $key, $current_ean ) ) {
-							$count++;
+					foreach ( $data['keys'] as $i => $key ) {
+						if ( '' === $key ) {
+							continue;
+						}
+						if ( isset( $data['sub_keys'][ $i ] ) && '' !== $data['sub_keys'][ $i ] ) {
+							if ( '' === ( $_value = get_post_meta( $product_id, $key, true ) ) ) {
+								$_value = array();
+							} elseif ( ! is_array( $_value ) ) {
+								continue;
+							}
+							$_value[ $data['sub_keys'][ $i ] ] = $current_ean;
+							if ( update_post_meta( $product_id, $key, $_value ) ) {
+								$count++;
+							}
+						} else {
+							if ( update_post_meta( $product_id, $key, $current_ean ) ) {
+								$count++;
+							}
 						}
 					}
 				}
