@@ -322,41 +322,41 @@ msgstr ""
 msgid "Leave blank or set to zero to use the default quantity."
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:301
-#: includes/pro/class-alg-wc-ean-print.php:325
-#: includes/pro/class-alg-wc-ean-print.php:340
-#: includes/pro/class-alg-wc-ean-print.php:499
+#: includes/pro/class-alg-wc-ean-print.php:307
+#: includes/pro/class-alg-wc-ean-print.php:335
+#: includes/pro/class-alg-wc-ean-print.php:351
+#: includes/pro/class-alg-wc-ean-print.php:511
 msgid "Print barcodes"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:324
-#: includes/pro/class-alg-wc-ean-print.php:339
+#: includes/pro/class-alg-wc-ean-print.php:334
+#: includes/pro/class-alg-wc-ean-print.php:350
 msgid "Get barcodes PDF"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:332
+#: includes/pro/class-alg-wc-ean-print.php:343
 msgid "Refunded items"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:377
-#: includes/pro/class-alg-wc-ean-print.php:402
-#: includes/pro/class-alg-wc-ean-print.php:420
-#: includes/pro/class-alg-wc-ean-print.php:446
+#: includes/pro/class-alg-wc-ean-print.php:389
+#: includes/pro/class-alg-wc-ean-print.php:414
+#: includes/pro/class-alg-wc-ean-print.php:432
+#: includes/pro/class-alg-wc-ean-print.php:458
 msgid "Print barcode"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:401
-#: includes/pro/class-alg-wc-ean-print.php:419
-#: includes/pro/class-alg-wc-ean-print.php:445
+#: includes/pro/class-alg-wc-ean-print.php:413
+#: includes/pro/class-alg-wc-ean-print.php:431
+#: includes/pro/class-alg-wc-ean-print.php:457
 msgid "Get barcode PDF"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:409
+#: includes/pro/class-alg-wc-ean-print.php:421
 #: includes/settings/class-alg-wc-ean-settings-print.php:339
 msgid "Variations"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:636
+#: includes/pro/class-alg-wc-ean-print.php:648
 #: includes/settings/class-alg-wc-ean-settings-barcodes-compatibility.php:27
 #: includes/settings/class-alg-wc-ean-settings-barcodes-compatibility.php:43
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:27
