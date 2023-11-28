@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 4.7.5
+ * @version 4.8.5
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -355,9 +355,22 @@ class Alg_WC_EAN_Display {
 	}
 
 	/**
+	 * get_ean_output_html.
+	 *
+	 * @version 4.8.5
+	 * @since   4.8.5
+	 */
+	function get_ean_output_html( $ean, $template, $product_id = false, $wrapper_atts = '' ) {
+		$template = alg_wc_ean()->core->shortcodes->do_shortcode( $template, array( 'product_id' => $product_id ) );
+		$ean_html = '<span class="ean">' . $ean . '</span>';
+		$template = str_replace( '%ean%', $ean_html, $template );
+		return '<span class="sku_wrapper ean_wrapper"' . $wrapper_atts . '>' . $template . '</span>';
+	}
+
+	/**
 	 * add_ean.
 	 *
-	 * @version 4.6.0
+	 * @version 4.8.5
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) template: shortcode vs placeholder?
@@ -368,11 +381,9 @@ class Alg_WC_EAN_Display {
 		$output_data = $this->get_ean_output_data();
 		if ( $output_data['do_output'] ) {
 			global $product;
-			$template = alg_wc_ean()->core->shortcodes->do_shortcode( $template, array( 'product_id' => ( $product ? $product->get_id() : false ) ) );
-			$ean_html = '<span class="ean">' . $output_data['value'] . '</span>';
-			$template = str_replace( '%ean%', $ean_html, $template );
-			$output   = '<span class="sku_wrapper ean_wrapper"' . $output_data['style'] . '>' . $template . '</span>';
-			echo apply_filters( 'alg_wc_ean_display', $output, $output_data['value'], $output_data['style'], $template, $single_or_loop );
+			$product_id  = ( $product ? $product->get_id() : false );
+			$output_html = $this->get_ean_output_html( $output_data['value'], $template, $product_id, $output_data['style'] );
+			echo apply_filters( 'alg_wc_ean_display', $output_html, $output_data['value'], $output_data['style'], $template, $single_or_loop );
 		}
 	}
 
@@ -408,17 +419,15 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_cart.
 	 *
-	 * @version 2.0.0
+	 * @version 4.8.5
 	 * @since   2.0.0
-	 *
-	 * @todo    (dev) use `$this->add_ean()`?
 	 */
 	function add_ean_cart( $cart_item ) {
 		$product_id = ( ! empty( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : $cart_item['product_id'] );
 		if ( $ean = alg_wc_ean()->core->get_ean( $product_id ) ) {
-			echo '<div><span class="sku_wrapper ean_wrapper">' . esc_html__( 'EAN:', 'ean-for-woocommerce' ) . ' ' .
-				'<span class="ean">' . $ean . '</span>' .
-			'</span></div>';
+			$template    = get_option( 'alg_wc_ean_frontend_cart_template', alg_wc_ean()->core->get_default_template() );
+			$output_html = '<div>' . $this->get_ean_output_html( $ean, $template, $product_id ) . '</div>';
+			echo apply_filters( 'alg_wc_ean_display_cart', $output_html, $ean, $template );
 		}
 	}
 
