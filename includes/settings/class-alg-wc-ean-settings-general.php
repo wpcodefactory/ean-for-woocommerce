@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 4.8.5
+ * @version 4.8.6
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -92,7 +92,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.8.5
+	 * @version 4.8.6
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -364,7 +364,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'             => __( 'Cart', 'ean-for-woocommerce' ),
 				'desc'              => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip'          => __( 'This will show EAN on cart page on frontend.', 'ean-for-woocommerce' ),
+				'desc_tip'          => __( 'This will show EAN on the cart page.', 'ean-for-woocommerce' ),
 				'id'                => 'alg_wc_ean_frontend_cart',
 				'default'           => 'no',
 				'type'              => 'checkbox',
@@ -376,6 +376,14 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'id'                => 'alg_wc_ean_frontend_cart_template',
 				'default'           => alg_wc_ean()->core->get_default_template(),
 				'type'              => 'textarea',
+			),
+			array(
+				'title'             => __( 'Checkout', 'ean-for-woocommerce' ),
+				'desc'              => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip'          => __( 'This will show EAN on the checkout page.', 'ean-for-woocommerce' ),
+				'id'                => 'alg_wc_ean_frontend_checkout',
+				'default'           => 'no',
+				'type'              => 'checkbox',
 			),
 			array(
 				'title'             => __( 'Search', 'ean-for-woocommerce' ),

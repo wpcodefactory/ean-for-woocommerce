@@ -10,8 +10,9 @@
 #: includes/class-alg-wc-ean-compatibility.php:571
 #: includes/class-alg-wc-ean-compatibility.php:596
 #: includes/class-alg-wc-ean-core.php:78
-#: includes/class-alg-wc-ean-display.php:186
-#: includes/class-alg-wc-ean-display.php:192
+#: includes/class-alg-wc-ean-display.php:191
+#: includes/class-alg-wc-ean-display.php:197
+#: includes/class-alg-wc-ean-display.php:453
 #: includes/class-alg-wc-ean-edit.php:127
 #: includes/class-alg-wc-ean-edit.php:144
 #: includes/class-alg-wc-ean-edit.php:258
@@ -460,8 +461,9 @@ msgstr ""
 #: includes/settings/class-alg-wc-ean-settings-general.php:350
 #: includes/settings/class-alg-wc-ean-settings-general.php:366
 #: includes/settings/class-alg-wc-ean-settings-general.php:382
-#: includes/settings/class-alg-wc-ean-settings-general.php:399
-#: includes/settings/class-alg-wc-ean-settings-general.php:442
+#: includes/settings/class-alg-wc-ean-settings-general.php:390
+#: includes/settings/class-alg-wc-ean-settings-general.php:407
+#: includes/settings/class-alg-wc-ean-settings-general.php:450
 #: includes/settings/class-alg-wc-ean-settings-print.php:353
 #: includes/settings/class-alg-wc-ean-settings-print.php:428
 #: includes/settings/class-alg-wc-ean-settings-print.php:436
@@ -809,14 +811,14 @@ msgid "Cart template"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:141
-#: includes/settings/class-alg-wc-ean-settings-general.php:436
+#: includes/settings/class-alg-wc-ean-settings-general.php:444
 msgid "Orders & Emails"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:146
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:208
-#: includes/settings/class-alg-wc-ean-settings-general.php:441
-#: includes/settings/class-alg-wc-ean-settings-general.php:531
+#: includes/settings/class-alg-wc-ean-settings-general.php:449
+#: includes/settings/class-alg-wc-ean-settings-general.php:539
 msgid "Orders"
 msgstr ""
 
@@ -834,12 +836,12 @@ msgid "Template"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:161
-#: includes/settings/class-alg-wc-ean-settings-general.php:458
+#: includes/settings/class-alg-wc-ean-settings-general.php:466
 msgid "Order items table"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:162
-#: includes/settings/class-alg-wc-ean-settings-general.php:459
+#: includes/settings/class-alg-wc-ean-settings-general.php:467
 msgid "Pages"
 msgstr ""
 
@@ -848,14 +850,14 @@ msgid "Show barcode image in order items table on <strong>pages</strong>."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:164
-#: includes/settings/class-alg-wc-ean-settings-general.php:461
+#: includes/settings/class-alg-wc-ean-settings-general.php:469
 msgid ""
 "E.g.: \"thank you\" (i.e., \"order received\") page, \"view order\" page (in "
 "\"my account\")."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:171
-#: includes/settings/class-alg-wc-ean-settings-general.php:468
+#: includes/settings/class-alg-wc-ean-settings-general.php:476
 msgid "Emails"
 msgstr ""
 
@@ -864,33 +866,33 @@ msgid "Show barcode image in order items table in <strong>emails</strong>."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:173
-#: includes/settings/class-alg-wc-ean-settings-general.php:470
+#: includes/settings/class-alg-wc-ean-settings-general.php:478
 msgid ""
 "You can limit it to the specific emails in the \"Emails list\" option below."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:181
-#: includes/settings/class-alg-wc-ean-settings-general.php:477
+#: includes/settings/class-alg-wc-ean-settings-general.php:485
 msgid "Emails list"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:182
-#: includes/settings/class-alg-wc-ean-settings-general.php:478
+#: includes/settings/class-alg-wc-ean-settings-general.php:486
 msgid "Leave empty to add to all emails."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:183
-#: includes/settings/class-alg-wc-ean-settings-general.php:479
+#: includes/settings/class-alg-wc-ean-settings-general.php:487
 msgid "Ignored unless the \"Emails\" option above is enabled."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:195
-#: includes/settings/class-alg-wc-ean-settings-general.php:506
+#: includes/settings/class-alg-wc-ean-settings-general.php:514
 msgid "REST API"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:200
-#: includes/settings/class-alg-wc-ean-settings-general.php:511
+#: includes/settings/class-alg-wc-ean-settings-general.php:519
 msgid "Products"
 msgstr ""
 
@@ -900,11 +902,11 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:202
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:210
-#: includes/settings/class-alg-wc-ean-settings-general.php:513
 #: includes/settings/class-alg-wc-ean-settings-general.php:521
-#: includes/settings/class-alg-wc-ean-settings-general.php:524
-#: includes/settings/class-alg-wc-ean-settings-general.php:533
+#: includes/settings/class-alg-wc-ean-settings-general.php:529
+#: includes/settings/class-alg-wc-ean-settings-general.php:532
 #: includes/settings/class-alg-wc-ean-settings-general.php:541
+#: includes/settings/class-alg-wc-ean-settings-general.php:549
 #, php-format
 msgid "E.g.: %s"
 msgstr ""
@@ -977,7 +979,7 @@ msgid "Suppress PHP errors when generating barcode."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:275
-#: includes/settings/class-alg-wc-ean-settings-general.php:553
+#: includes/settings/class-alg-wc-ean-settings-general.php:561
 msgid "Notes"
 msgstr ""
 
@@ -1147,7 +1149,7 @@ msgid "This will show the field on single product page on frontend."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:99
-#: includes/settings/class-alg-wc-ean-settings-general.php:381
+#: includes/settings/class-alg-wc-ean-settings-general.php:389
 msgid "Search"
 msgstr ""
 
@@ -1157,7 +1159,7 @@ msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-extra-field.php:107
 #: includes/settings/class-alg-wc-ean-settings-extra-fields.php:54
-#: includes/settings/class-alg-wc-ean-settings-general.php:398
+#: includes/settings/class-alg-wc-ean-settings-general.php:406
 msgid "Product structured data"
 msgstr ""
 
@@ -1498,49 +1500,57 @@ msgid "This will show EAN on shop (e.g., category) pages on frontend."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:367
-msgid "This will show EAN on cart page on frontend."
+msgid "This will show EAN on the cart page."
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-general.php:381
+msgid "Checkout"
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:383
-msgid "This will enable searching by EAN on frontend."
-msgstr ""
-
-#: includes/settings/class-alg-wc-ean-settings-general.php:390
-msgid "\"Flatsome\" theme"
+msgid "This will show EAN on the checkout page."
 msgstr ""
 
 #: includes/settings/class-alg-wc-ean-settings-general.php:391
+msgid "This will enable searching by EAN on frontend."
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-general.php:398
+msgid "\"Flatsome\" theme"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-general.php:399
 msgid ""
 "This will enable searching by EAN in \"Flatsome\" theme's \"LIVE SEARCH\"."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:401
+#: includes/settings/class-alg-wc-ean-settings-general.php:409
 msgid ""
 "This will add EAN to the product structured data, e.g., for Google Search "
 "Console."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:407
+#: includes/settings/class-alg-wc-ean-settings-general.php:415
 #, php-format
 msgid "\"%s\" plugin"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:407
-#: includes/settings/class-alg-wc-ean-settings-general.php:409
+#: includes/settings/class-alg-wc-ean-settings-general.php:415
+#: includes/settings/class-alg-wc-ean-settings-general.php:417
 msgid "Rank Math SEO"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:408
+#: includes/settings/class-alg-wc-ean-settings-general.php:416
 #, php-format
 msgid ""
 "This will add EAN to the product structured data generated by the %s plugin."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:416
+#: includes/settings/class-alg-wc-ean-settings-general.php:424
 msgid "Automatic key"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:417
+#: includes/settings/class-alg-wc-ean-settings-general.php:425
 #, php-format
 msgid ""
 "If enabled, will use the key based on EAN type, i.e., %s for EAN-8, %s for "
@@ -1548,80 +1558,80 @@ msgid ""
 "types."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:425
+#: includes/settings/class-alg-wc-ean-settings-general.php:433
 msgid "Custom key"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:426
+#: includes/settings/class-alg-wc-ean-settings-general.php:434
 msgid "Ignored, unless the \"Automatic key\" option above is disabled."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:443
+#: includes/settings/class-alg-wc-ean-settings-general.php:451
 msgid "Add EAN to new order items meta."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:450
+#: includes/settings/class-alg-wc-ean-settings-general.php:458
 msgid "Admin order"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:451
+#: includes/settings/class-alg-wc-ean-settings-general.php:459
 msgid "Add EAN to new order items meta for orders created by admin."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:460
+#: includes/settings/class-alg-wc-ean-settings-general.php:468
 msgid "This will show EAN in order items table on <strong>pages</strong>."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:469
+#: includes/settings/class-alg-wc-ean-settings-general.php:477
 msgid "This will show EAN in order items table in <strong>emails</strong>."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:487
+#: includes/settings/class-alg-wc-ean-settings-general.php:495
 msgid "Template (HTML)"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:488
 #: includes/settings/class-alg-wc-ean-settings-general.php:496
+#: includes/settings/class-alg-wc-ean-settings-general.php:504
 #, php-format
 msgid "Available placeholder(s): %s"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:495
+#: includes/settings/class-alg-wc-ean-settings-general.php:503
 msgid "Template (Plain text (emails only))"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:512
+#: includes/settings/class-alg-wc-ean-settings-general.php:520
 msgid "Add EAN to each product object in REST API responses"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:520
-#: includes/settings/class-alg-wc-ean-settings-general.php:540
+#: includes/settings/class-alg-wc-ean-settings-general.php:528
+#: includes/settings/class-alg-wc-ean-settings-general.php:548
 msgid "Search by EAN"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:522
+#: includes/settings/class-alg-wc-ean-settings-general.php:530
 #, php-format
 msgid ""
 "Alternatively, you can enable the \"Search > This will enable searching by "
 "EAN on frontend\" option, and then search using the standard %s parameter:"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:532
+#: includes/settings/class-alg-wc-ean-settings-general.php:540
 msgid "Add EAN to each order object in REST API responses"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:542
+#: includes/settings/class-alg-wc-ean-settings-general.php:550
 msgid ""
 "Please note that the \"Orders > Add EAN to new order items meta\" option "
 "must be enabled."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:555
+#: includes/settings/class-alg-wc-ean-settings-general.php:563
 #, php-format
 msgid "You can also output EAN with %s shortcode."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-general.php:557
+#: includes/settings/class-alg-wc-ean-settings-general.php:565
 #, php-format
 msgid ""
 "EAN is stored in product meta with %s key. You may need this for some third-"

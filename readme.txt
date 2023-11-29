@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.4
-Stable tag: 4.8.5
+Stable tag: 4.8.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -21,7 +21,7 @@ Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, EAN-14, Custo
 * For **variable products** set EAN for each variation individually or set single EAN for all variations at once.
 * **Search by EAN** in backend (including AJAX search) and in frontend.
 * Add sortable EAN column to **admin products list**.
-* Optionally **show EAN** on **single product page**, **shop pages** and/or in **cart** on frontend.
+* Optionally **show EAN** on the **single product page**, **shop pages**, **cart page** or **checkout page** on the frontend.
 * Add EAN to **product structured data**, e.g., for Google Search Console.
 * Add EAN to **WooCommerce REST API** order and product responses; search orders and products by EAN.
 * Show EAN in **order items table**, including emails, "thank you" page, etc.
@@ -91,6 +91,9 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.8.6 - 29/11/2023 =
+* Dev - General - "Checkout" option added (defaults to `no`).
 
 = 4.8.5 - 28/11/2023 =
 * Dev - General - Cart - "Template" option added.

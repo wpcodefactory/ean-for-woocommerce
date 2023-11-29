@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 4.8.5
+ * @version 4.8.6
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.4.5
+	 * @version 4.8.6
 	 * @since   2.0.0
 	 *
 	 * @todo    (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php` or `class-alg-wc-ean-admin.php`?
@@ -49,6 +49,11 @@ class Alg_WC_EAN_Display {
 			// Cart
 			if ( 'yes' === get_option( 'alg_wc_ean_frontend_cart', 'no' ) ) {
 				add_action( 'woocommerce_after_cart_item_name', array( $this, 'add_ean_cart' ) );
+			}
+
+			// Checkout
+			if ( 'yes' === get_option( 'alg_wc_ean_frontend_checkout', 'no' ) ) {
+				add_filter( 'woocommerce_get_item_data', array( $this, 'add_ean_checkout' ), 10, 2 );
 			}
 
 			// Product structured data
@@ -429,6 +434,28 @@ class Alg_WC_EAN_Display {
 			$output_html = '<div>' . $this->get_ean_output_html( $ean, $template, $product_id ) . '</div>';
 			echo apply_filters( 'alg_wc_ean_display_cart', $output_html, $ean, $template );
 		}
+	}
+
+	/**
+	 * add_ean_checkout.
+	 *
+	 * @version 4.8.6
+	 * @since   4.8.6
+	 */
+	function add_ean_checkout( $item_data, $cart_item ) {
+		if ( ! is_checkout() ) {
+			return $item_data;
+		}
+
+		$product_id = ( ! empty( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : $cart_item['product_id'] );
+		if ( $ean = alg_wc_ean()->core->get_ean( $product_id ) ) {
+			$item_data[] = array(
+				'key'   => get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ),
+				'value' => $ean,
+			);
+		}
+
+		return $item_data;
 	}
 
 }
