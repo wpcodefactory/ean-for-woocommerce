@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 4.8.0
+ * @version 4.8.7
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -13,6 +13,13 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_WC_EAN_Edit' ) ) :
 
 class Alg_WC_EAN_Edit {
+
+	/**
+	 * do_add_generate_button.
+	 *
+	 * @version 4.8.7
+	 */
+	public $do_add_generate_button;
 
 	/**
 	 * Constructor.

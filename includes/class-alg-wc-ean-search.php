@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Search Class
  *
- * @version 4.7.6
+ * @version 4.8.7
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -13,6 +13,13 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_WC_EAN_Search' ) ) :
 
 class Alg_WC_EAN_Search {
+
+	/**
+	 * flatsome_theme_mod_search_by_sku.
+	 *
+	 * @version 4.8.7
+	 */
+	public $flatsome_theme_mod_search_by_sku;
 
 	/**
 	 * Constructor.

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Section Settings
  *
- * @version 4.0.0
+ * @version 4.8.7
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -13,6 +13,41 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_WC_EAN_Settings_Section' ) ) :
 
 class Alg_WC_EAN_Settings_Section {
+
+	/**
+	 * id.
+	 *
+	 * @version 4.8.7
+	 */
+	public $id;
+
+	/**
+	 * desc.
+	 *
+	 * @version 4.8.7
+	 */
+	public $desc;
+
+	/**
+	 * dim.
+	 *
+	 * @version 4.8.7
+	 */
+	public $dim;
+
+	/**
+	 * dim_suffix.
+	 *
+	 * @version 4.8.7
+	 */
+	public $dim_suffix;
+
+	/**
+	 * num.
+	 *
+	 * @version 4.8.7
+	 */
+	public $num;
 
 	/**
 	 * Constructor.

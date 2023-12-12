@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 4.6.0
+ * @version 4.8.7
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -13,6 +13,13 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_WC_EAN_Shortcodes' ) ) :
 
 class Alg_WC_EAN_Shortcodes {
+
+	/**
+	 * data.
+	 *
+	 * @version 4.8.7
+	 */
+	public $data;
 
 	/**
 	 * Constructor.

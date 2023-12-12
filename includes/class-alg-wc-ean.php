@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Main Class
  *
- * @version 4.7.3
+ * @version 4.8.7
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -21,6 +21,20 @@ final class Alg_WC_EAN {
 	 * @since 1.0.0
 	 */
 	public $version = ALG_WC_EAN_VERSION;
+
+	/**
+	 * core.
+	 *
+	 * @version 4.8.7
+	 */
+	public $core;
+
+	/**
+	 * pro.
+	 *
+	 * @version 4.8.7
+	 */
+	public $pro;
 
 	/**
 	 * @var   Alg_WC_EAN The single instance of the class

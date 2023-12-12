@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.7.7
+ * @version 4.8.7
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -13,6 +13,13 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_WC_EAN_Compatibility' ) ) :
 
 class Alg_WC_EAN_Compatibility {
+
+	/**
+	 * wt_pklist_options.
+	 *
+	 * @version 4.8.7
+	 */
+	public $wt_pklist_options;
 
 	/**
 	 * Constructor.

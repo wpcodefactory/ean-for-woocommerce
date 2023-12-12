@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Order Items Table Class
  *
- * @version 3.7.0
+ * @version 4.8.7
  * @since   3.7.0
  *
  * @author  Algoritmika Ltd
@@ -13,6 +13,13 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_WC_EAN_Order_Items_Table' ) ) :
 
 class Alg_WC_EAN_Order_Items_Table {
+
+	/**
+	 * email.
+	 *
+	 * @version 4.8.7
+	 */
+	public $email;
 
 	/**
 	 * Constructor.
