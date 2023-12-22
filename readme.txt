@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.4
-Stable tag: 4.8.7
+Stable tag: 4.8.8
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -91,6 +91,10 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.8.8 - 22/12/2023 =
+* Dev - Display - Single product page - Variable products: Position in variation - Description - Now checking if EAN is not empty.
+* WC tested up to: 8.4.
 
 = 4.8.7 - 12/12/2023 =
 * Dev – PHP 8.2 compatibility – "Creation of dynamic property is deprecated" notice fixed.

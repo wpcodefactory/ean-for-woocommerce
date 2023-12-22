@@ -12,7 +12,7 @@
 #: includes/class-alg-wc-ean-core.php:78
 #: includes/class-alg-wc-ean-display.php:191
 #: includes/class-alg-wc-ean-display.php:197
-#: includes/class-alg-wc-ean-display.php:453
+#: includes/class-alg-wc-ean-display.php:454
 #: includes/class-alg-wc-ean-edit.php:134
 #: includes/class-alg-wc-ean-edit.php:151
 #: includes/class-alg-wc-ean-edit.php:265

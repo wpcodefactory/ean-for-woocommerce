@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 4.8.6
+ * @version 4.8.8
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -321,17 +321,18 @@ class Alg_WC_EAN_Display {
 	/**
 	 * variations_add_params.
 	 *
-	 * @version 4.6.0
+	 * @version 4.8.8
 	 * @since   1.0.0
 	 */
 	function variations_add_params( $args, $product = false, $variation = false ) {
 		if ( $variation ) {
-			$key = alg_wc_ean()->core->ean_key;
+			$ean = $variation->get_meta( alg_wc_ean()->core->ean_key );
 			if ( 'product_meta' === get_option( 'alg_wc_ean_frontend_variation_position', 'product_meta' ) ) {
-				$args['ean'] = $variation->get_meta( $key );
-			} else {
-				$args['variation_description'] .= str_replace( '%ean%', $variation->get_meta( $key ),
-					get_option( 'alg_wc_ean_template', alg_wc_ean()->core->get_default_template() ) );
+				$args['ean'] = $ean;
+			} else { // Variation description
+				if ( '' !== $ean ) {
+					$args['variation_description'] .= str_replace( '%ean%', $ean, get_option( 'alg_wc_ean_template', alg_wc_ean()->core->get_default_template() ) );
+				}
 			}
 		}
 		return $args;
