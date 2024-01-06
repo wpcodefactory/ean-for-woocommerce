@@ -17,6 +17,7 @@
 #: includes/class-alg-wc-ean-edit.php:151
 #: includes/class-alg-wc-ean-edit.php:265
 #: includes/class-alg-wc-ean-edit.php:299
+#: includes/class-alg-wc-ean-orders.php:51
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:97
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:156
 #: includes/settings/class-alg-wc-ean-settings-compatibility.php:207

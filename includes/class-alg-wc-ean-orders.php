@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Orders Class
  *
- * @version 3.7.0
+ * @version 4.8.9
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -17,16 +17,16 @@ class Alg_WC_EAN_Orders {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 4.8.9
 	 * @since   2.1.0
 	 *
-	 * @todo    (feature) option to add it to `woocommerce_hidden_order_itemmeta`
+	 * @todo    (feature) option to hide the field (i.e., add it to `woocommerce_hidden_order_itemmeta`)?
 	 */
 	function __construct() {
 
-		// Orders items meta
+		// Order item meta
 		if ( 'yes' === get_option( 'alg_wc_ean_order_items_meta', 'no' ) ) {
-			add_action( 'woocommerce_checkout_order_processed', array( $this, 'add_ean_to_order_items_meta' ), PHP_INT_MAX, 1 );
+			add_action( 'woocommerce_checkout_order_processed', array( $this, 'add_ean_to_order_items_meta' ), PHP_INT_MAX );
 		}
 
 		// Admin new order (AJAX)
@@ -34,6 +34,21 @@ class Alg_WC_EAN_Orders {
 			add_action( 'woocommerce_new_order_item', array( $this, 'new_order_item_ajax' ), PHP_INT_MAX, 2 );
 		}
 
+		// Order item meta label
+		add_filter( 'woocommerce_order_item_display_meta_key', array( $this, 'set_order_item_meta_display_key' ), PHP_INT_MAX, 2 );
+
+	}
+
+	/**
+	 * set_order_item_meta_display_key.
+	 *
+	 * @version 4.8.9
+	 * @since   4.8.9
+	 *
+	 * @todo    (dev) make this optional?
+	 */
+	function set_order_item_meta_display_key( $display_key, $meta ) {
+		return ( alg_wc_ean()->core->ean_key === $meta->key ? get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) : $display_key );
 	}
 
 	/**
