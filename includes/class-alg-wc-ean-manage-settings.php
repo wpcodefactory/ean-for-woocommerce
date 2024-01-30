@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Settings Import/Export/Reset Class
  *
- * @version 4.0.0
+ * @version 4.9.0
  * @since   3.9.0
  *
  * @author  Algoritmika Ltd
@@ -46,7 +46,7 @@ class Alg_WC_EAN_Manage_Settings {
 	/**
 	 * import_settings.
 	 *
-	 * @version 4.0.0
+	 * @version 4.9.0
 	 * @since   3.1.0
 	 *
 	 * @todo    (dev) better data validation?
@@ -58,7 +58,10 @@ class Alg_WC_EAN_Manage_Settings {
 			if ( JSON_ERROR_NONE === json_last_error() ) {
 				$counter = 0;
 				foreach ( $content as $row ) {
-					if ( ! in_array( $row['option_name'], array( 'alg_wc_ean_version', 'alg_wc_ean_export_settings', 'alg_wc_ean_reset_settings' ) ) ) {
+					if (
+						'alg_wc_ean' === substr( $row['option_name'], 0, 10 ) &&
+						! in_array( $row['option_name'], array( 'alg_wc_ean_version', 'alg_wc_ean_export_settings', 'alg_wc_ean_reset_settings' ) )
+					) {
 						if ( update_option( $row['option_name'], $row['option_value'] ) ) {
 							$counter++;
 						}

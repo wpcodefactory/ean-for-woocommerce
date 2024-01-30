@@ -95,12 +95,12 @@ msgstr ""
 msgid "Settings reset: %d option(s) deleted."
 msgstr ""
 
-#: includes/class-alg-wc-ean-manage-settings.php:68
+#: includes/class-alg-wc-ean-manage-settings.php:71
 #, php-format
 msgid "Settings imported: %d option(s) updated."
 msgstr ""
 
-#: includes/class-alg-wc-ean-manage-settings.php:71
+#: includes/class-alg-wc-ean-manage-settings.php:74
 #, php-format
 msgid "Import file error: %s"
 msgstr ""
