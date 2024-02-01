@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Settings
  *
- * @version 4.3.0
+ * @version 4.9.1
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,10 +17,11 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.0
+	 * @version 4.9.1
 	 * @since   1.0.0
 	 */
 	function __construct() {
+
 		$this->id    = 'alg_wc_ean';
 		$this->label = apply_filters( 'alg_wc_ean_settings_page_label', __( 'EAN', 'ean-for-woocommerce' ) );
 		parent::__construct();
@@ -31,6 +32,7 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 		// Sections: EAN
 		require_once( 'class-alg-wc-ean-settings-general.php' );
 		require_once( 'class-alg-wc-ean-settings-tools.php' );
+		require_once( 'class-alg-wc-ean-settings-order-tools.php' );
 		require_once( 'class-alg-wc-ean-settings-compatibility.php' );
 
 		// Sections: Barcodes

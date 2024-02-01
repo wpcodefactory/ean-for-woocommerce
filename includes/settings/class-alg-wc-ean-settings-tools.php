@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 4.8.3
+ * @version 4.9.1
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -19,6 +19,8 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	 *
 	 * @version 2.2.5
 	 * @since   2.2.5
+	 *
+	 * @todo    (dev) rename to "Product Tools"?
 	 */
 	function __construct() {
 		$this->id   = 'tools';
@@ -99,35 +101,25 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.8.3
+	 * @version 4.9.1
 	 * @since   2.2.5
 	 *
-	 * @todo    (dev) Product Tools: Generate: Type: `EAN14`
+	 * @todo    (dev) Generate: Type: `EAN14`
 	 * @todo    (dev) `alg_wc_ean_product_bulk_actions_confirm`: better default value?
 	 * @todo    (dev) "Product tags" (similar to "Product categories")
 	 * @todo    (dev) add "Product categories" (and "Product tags") to all tools (now only in "Assign from the list")
 	 * @todo    (desc) add subsections, e.g.: "Automatic and Periodic Actions", "Bulk Actions"
 	 * @todo    (desc) Periodic action: rename?
 	 * @todo    (desc) `seed_prefix`
-	 * @todo    (desc) "Order Tools": add info about "General > Orders" options (i.e., "Add EAN to new order items meta", etc.)
 	 * @todo    (desc) better desc for all tools?
 	 */
 	function get_settings() {
 		$settings = array(
 			array(
-				'title'    => __( 'Tools', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'Check the %s box and "Save changes" to run the tool. Please note that there is no undo for these tools.', 'ean-for-woocommerce' ),
-					'<span class="dashicons dashicons-admin-generic"></span>' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_ean_tools',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_ean_tools',
-			),
-			array(
 				'title'    => __( 'Product Tools', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'Please note that %s, %s and %s tools will <strong>not</strong> overwrite EANs for products with existing EANs.', 'ean-for-woocommerce' ),
+				'desc'     => sprintf( __( 'Check the %s box and "Save changes" to run the tool. Please note that there is no undo for these tools.', 'ean-for-woocommerce' ),
+						'<span class="dashicons dashicons-admin-generic"></span>' ) . '<br><br>' .
+					sprintf( __( 'Please note that %s, %s and %s tools will <strong>not</strong> overwrite EANs for products with existing EANs.', 'ean-for-woocommerce' ),
 						'<strong>' . __( 'Generate', 'ean-for-woocommerce' ) . '</strong>',
 						'<strong>' . __( 'Copy', 'ean-for-woocommerce' ) . '</strong>',
 						'<strong>' . __( 'Assign', 'ean-for-woocommerce' ) . '</strong>' ) . ' ' .
@@ -454,29 +446,6 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'alg_wc_ean_tools_products_actions',
-			),
-			array(
-				'title'    => __( 'Order Tools', 'ean-for-woocommerce' ),
-				'type'     => 'title',
-				'id'       => 'alg_wc_ean_tools_orders',
-			),
-			array(
-				'title'    => __( 'Add', 'ean-for-woocommerce' ),
-				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Add EANs to all order items', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_tool_orders_add',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Delete', 'ean-for-woocommerce' ),
-				'desc'     => '<span class="dashicons dashicons-admin-generic"></span> ' . __( 'Delete EANs from all order items', 'ean-for-woocommerce' ),
-				'id'       => 'alg_wc_ean_tool_orders_delete',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'alg_wc_ean_tools_orders',
 			),
 		);
 		return $settings;

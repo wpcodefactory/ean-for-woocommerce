@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, woo commerce
 Requires at least: 4.4
 Tested up to: 6.4
-Stable tag: 4.9.0
+Stable tag: 4.9.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,7 @@ Plugin has tools that will help you generate, copy, assign and delete EANs in bu
 * **Delete** EANs for all products at once.
 * **Copy** EANs **to** product **SKU** or product **attribute**.
 * **Add** or **delete** EANs for all **orders** at once.
+* **Search orders** by EAN.
 * And more...
 
 ### &#129309; Compatibility ###
@@ -91,6 +92,10 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.9.1 - 01/02/2024 =
+* Dev - Order Tools - "Search" tool added.
+* Dev - Admin settings - Tools - Section split: "Order Tools" section added.
 
 = 4.9.0 - 30/01/2024 =
 * Dev - Advanced - Export/Import/Reset Plugin Settings - Import - Better data validation.
