@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - General Section Settings
  *
- * @version 4.8.6
+ * @version 4.9.2
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -92,7 +92,7 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.8.6
+	 * @version 4.9.2
 	 * @since   1.0.0
 	 *
 	 * @see     https://www.keyence.com/ss/products/auto_id/barcode_lecture/basic/barcode-types/
@@ -284,6 +284,14 @@ class Alg_WC_EAN_Settings_General extends Alg_WC_EAN_Settings_Section {
 				'desc_tip'          => __( 'Validate EAN in column.', 'ean-for-woocommerce' ) . ' ' . __( 'Invalid EANs will be marked red.', 'ean-for-woocommerce' ),
 				'id'                => 'alg_wc_ean_backend_column_validate',
 				'default'           => 'no',
+				'type'              => 'checkbox',
+				'checkboxgroup'     => '',
+			),
+			array(
+				'desc'              => __( 'Show duplicates', 'ean-for-woocommerce' ),
+				'desc_tip'          => __( 'Show duplicate variation EANs for variable products.', 'ean-for-woocommerce' ),
+				'id'                => 'alg_wc_ean_backend_column_show_duplicates',
+				'default'           => 'yes',
 				'type'              => 'checkbox',
 				'checkboxgroup'     => 'end',
 			),
