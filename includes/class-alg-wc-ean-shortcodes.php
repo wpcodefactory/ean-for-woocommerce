@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 4.8.7
+ * @version 4.9.3
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -74,14 +74,15 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * output.
 	 *
-	 * @version 4.1.0
+	 * @version 4.9.3
 	 * @since   3.5.0
 	 *
-	 * @todo    (dev) escape: `wp_kses_post()`?
+	 * @see     https://developer.wordpress.org/reference/functions/wp_kses_post/
+	 *
 	 * @todo    (dev) `max_length`: add everywhere
 	 */
 	function output( $result, $atts ) {
-		return ( '' === $result ?
+		$result = ( '' === $result ?
 			$atts['on_empty'] :
 			(
 				$atts['before'] .
@@ -89,6 +90,7 @@ class Alg_WC_EAN_Shortcodes {
 				$atts['after']
 			)
 		);
+		return apply_filters( 'alg_wc_ean_shortcode_output', wp_kses_post( $result ), $result, $atts );
 	}
 
 	/**
@@ -248,6 +250,8 @@ class Alg_WC_EAN_Shortcodes {
 	 *
 	 * @version 3.6.0
 	 * @since   3.6.0
+	 *
+	 * @todo    (dev) `name`: add `alg_wc_ean_product_function_shortcode_allowed_names` option?
 	 */
 	function product_function_shortcode( $atts, $content = '' ) {
 
@@ -286,8 +290,10 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * product_meta_shortcode.
 	 *
-	 * @version 3.6.0
+	 * @version 4.9.3
 	 * @since   3.6.0
+	 *
+	 * @todo    (dev) `key`: add `alg_wc_ean_product_meta_shortcode_allowed_keys` option?
 	 */
 	function product_meta_shortcode( $atts, $content = '' ) {
 
@@ -312,8 +318,13 @@ class Alg_WC_EAN_Shortcodes {
 			$product_id = $product_parent_id;
 		}
 
+		// Product object
+		if ( ! ( $product = wc_get_product( $product_id ) ) ) {
+			return '';
+		}
+
 		// Result
-		$result = get_post_meta( $product_id, $atts['key'], true );
+		$result = $product->get_meta( $atts['key'] );
 
 		return $this->output( $result, $atts );
 	}

@@ -71,22 +71,22 @@ msgid "- No change -"
 msgstr ""
 
 #: includes/class-alg-wc-ean-edit.php:196
-#: includes/class-alg-wc-ean-shortcodes.php:629
+#: includes/class-alg-wc-ean-shortcodes.php:640
 msgid "Valid EAN"
 msgstr ""
 
 #: includes/class-alg-wc-ean-edit.php:197
-#: includes/class-alg-wc-ean-shortcodes.php:630
+#: includes/class-alg-wc-ean-shortcodes.php:641
 msgid "Invalid EAN"
 msgstr ""
 
 #: includes/class-alg-wc-ean-edit.php:201
-#: includes/class-alg-wc-ean-shortcodes.php:597
+#: includes/class-alg-wc-ean-shortcodes.php:608
 msgid "Unique EAN"
 msgstr ""
 
 #: includes/class-alg-wc-ean-edit.php:202
-#: includes/class-alg-wc-ean-shortcodes.php:598
+#: includes/class-alg-wc-ean-shortcodes.php:609
 msgid "Duplicated EAN"
 msgstr ""
 
