@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Section Settings
  *
- * @version 4.7.8
+ * @version 4.9.4
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.7.8
+	 * @version 4.9.4
 	 * @since   2.2.9
 	 *
 	 * @todo    (dev) `alg_wc_ean_wcfm_hints`: better default value?
@@ -57,6 +57,17 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
+				'title'    => __( 'Google Product Feed', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'This will add EAN to the %s plugin settings in "%s".', 'ean-for-woocommerce' ),
+					'<a target="_blank" href="' . 'https://woocommerce.com/products/google-product-feed/' . '">' .
+						__( 'Google Product Feed', 'ean-for-woocommerce' ) . '</a>',
+					__( 'WooCommerce > Settings > Product Feeds > Global Trade Item Number (GTIN)', 'ean-for-woocommerce' ) ),
+				'id'       => 'alg_wc_ean_gpf',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
 				'title'    => __( 'Point of Sale for WooCommerce', 'ean-for-woocommerce' ),
 				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
 				'desc_tip' => sprintf( __( 'This will add EAN to the product search of the %s plugin.', 'ean-for-woocommerce' ),
@@ -67,6 +78,17 @@ class Alg_WC_EAN_Settings_Compatibility extends Alg_WC_EAN_Settings_Section {
 					'* ' . __( 'To enable searching with a scanner, add "EAN" field to the "Scanning Fields" option in "Point of Sale > Settings > Register".', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_wc_pos_search',
 				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Woocommerce OpenPos', 'ean-for-woocommerce' ),
+				'desc'     => __( 'Enable', 'ean-for-woocommerce' ),
+				'desc_tip' => sprintf( __( 'This will add EAN to the %s plugin settings in "%s".', 'ean-for-woocommerce' ),
+					'<a target="_blank" href="' . 'https://codecanyon.net/item/openpos-a-complete-pos-plugins-for-woocomerce/22613341' . '">' .
+						__( 'Woocommerce OpenPos', 'ean-for-woocommerce' ) . '</a>',
+					__( 'POS > Setting > Barcode Label > Barcode Meta Key', 'ean-for-woocommerce' ) ),
+				'id'       => 'alg_wc_ean_op',
+				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
 			array(

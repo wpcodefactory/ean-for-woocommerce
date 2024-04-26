@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, upc
 Requires at least: 4.4
 Tested up to: 6.5
-Stable tag: 4.9.3
+Stable tag: 4.9.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -92,6 +92,11 @@ With [premium plugin version](https://wpfactory.com/item/ean-for-woocommerce/) y
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 4.9.4 - 26/04/2024 =
+* Dev - Compatibility - "Google Product Feed" option added (defaults to `yes`).
+* Dev - Compatibility - "Woocommerce OpenPos" option added (defaults to `yes`).
+* WC tested up to: 8.8.
 
 = 4.9.3 - 15/04/2024 =
 * Security - Shortcodes -  Sanitizing shortcodes output (`wp_kses_post()`).

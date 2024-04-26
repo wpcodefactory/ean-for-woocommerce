@@ -251,6 +251,7 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 3.6.0
 	 * @since   3.6.0
 	 *
+	 * @todo    (dev) `name`: sanitize?
 	 * @todo    (dev) `name`: add `alg_wc_ean_product_function_shortcode_allowed_names` option?
 	 */
 	function product_function_shortcode( $atts, $content = '' ) {
@@ -293,6 +294,7 @@ class Alg_WC_EAN_Shortcodes {
 	 * @version 4.9.3
 	 * @since   3.6.0
 	 *
+	 * @todo    (dev) `key`: sanitize?
 	 * @todo    (dev) `key`: add `alg_wc_ean_product_meta_shortcode_allowed_keys` option?
 	 */
 	function product_meta_shortcode( $atts, $content = '' ) {

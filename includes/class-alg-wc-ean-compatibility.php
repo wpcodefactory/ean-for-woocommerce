@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 4.8.7
+ * @version 4.9.4
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -24,7 +24,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.7
+	 * @version 4.9.4
 	 * @since   2.2.0
 	 *
 	 * @todo    (dev) MultiVendorX: generate button
@@ -55,7 +55,9 @@ class Alg_WC_EAN_Compatibility {
 		}
 
 		// "Woocommerce OpenPos" plugin
-		add_filter( 'op_barcode_key_setting', array( $this, 'op_barcode_key_setting' ), PHP_INT_MAX );
+		if ( 'yes' === get_option( 'alg_wc_ean_op', 'yes' ) ) {
+			add_filter( 'op_barcode_key_setting', array( $this, 'op_barcode_key_setting' ), PHP_INT_MAX );
+		}
 
 		// "Dokan – Best WooCommerce Multivendor Marketplace Solution – Build Your Own Amazon, eBay, Etsy" plugin
 		if ( 'yes' === get_option( 'alg_wc_ean_dokan', 'no' ) ) {
@@ -120,7 +122,9 @@ class Alg_WC_EAN_Compatibility {
 		}
 
 		// "WooCommerce Google Product Feed"
-		add_filter( 'woocommerce_gpf_custom_field_list', array( $this, 'add_to_woocommerce_gpf_custom_field_list' ), PHP_INT_MAX );
+		if ( 'yes' === get_option( 'alg_wc_ean_gpf', 'yes' ) ) {
+			add_filter( 'woocommerce_gpf_custom_field_list', array( $this, 'add_to_woocommerce_gpf_custom_field_list' ), PHP_INT_MAX );
+		}
 
 		// "WooCommerce Customer / Order / Coupon Export"
 		if ( 'yes' === get_option( 'alg_wc_ean_wc_customer_order_export', 'no' ) ) {
@@ -176,8 +180,6 @@ class Alg_WC_EAN_Compatibility {
 	 *
 	 * @version 4.2.0
 	 * @since   4.2.0
-	 *
-	 * @todo    (desc) add to "WooCommerce > Settings > EAN > Compatibility"?
 	 */
 	function op_barcode_key_setting( $keys ) {
 		$keys[ alg_wc_ean()->core->ean_key ] = get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) );
@@ -278,8 +280,6 @@ class Alg_WC_EAN_Compatibility {
 	 *
 	 * @version 3.0.0
 	 * @since   3.0.0
-	 *
-	 * @todo    (dev) make this optional?
 	 */
 	function add_to_woocommerce_gpf_custom_field_list( $fields ) {
 		$fields[ 'meta:' . alg_wc_ean()->core->ean_key ] = __( 'EAN', 'ean-for-woocommerce' );

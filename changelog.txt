@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 4.9.4 - 26/04/2024 =
+* Dev - Compatibility - "Google Product Feed" option added (defaults to `yes`).
+* Dev - Compatibility - "Woocommerce OpenPos" option added (defaults to `yes`).
+* WC tested up to: 8.8.
+
 = 4.9.3 - 15/04/2024 =
 * Security - Shortcodes -  Sanitizing shortcodes output (`wp_kses_post()`).
 * Security - Shortcodes - `[alg_wc_ean_product_meta]` - Ensuring that only *product* meta is retrieved (`get_post_meta()` replaced with `$product->get_meta()`).
