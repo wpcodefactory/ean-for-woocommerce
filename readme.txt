@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, upc
 Requires at least: 4.4
 Tested up to: 6.5
-Stable tag: 4.9.5
+Stable tag: 4.9.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -17,9 +17,9 @@ Manage GTINs (EAN, UPC, ISBN, etc.) effortlessly in WooCommerce! Create, save, s
 
 Manage GTINs (EAN, UPC, ISBN, etc.) effortlessly in WooCommerce! Save, search, and display EANs easily. Tools for bulk actions and compatibility with major plugins.
 
-Using this plugin,, you can seamlessly assign unique identifiers to each product, ensuring global recognition for your shop products. 
+Using this plugin, you can seamlessly assign unique identifiers to each product, ensuring global recognition for your shop products.
 
-And with our advanced barcode management, you can customize & update everything either using our toosl, or directly on your product editing page. 
+And with our advanced barcode management, you can customize & update everything either using our toosl, or directly on your product editing page.
 
 Currently supported standards: EAN-13, UPC-A, EAN-8, ISBN-13, JAN, EAN-14, Custom.
 
@@ -113,7 +113,7 @@ Simplify offline operations by printing multiple EANs and corresponding barcodes
 
 ### 🏆 Add multiple extra fields to each Product ###
 
-Expand product details by incorporating multiple fields, so a product can have EAN and MPN fields simultaneously for example. 
+Expand product details by incorporating multiple fields, so a product can have EAN and MPN fields simultaneously for example.
 
 ### 🏆 Full support for 1D (barcodes) or 2D (barcodes, QR codes) ###
 
@@ -192,8 +192,12 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 == Changelog ==
 
-= 4.9.5 - 16/04/2024 =
-* readme.txt content update.
+= 4.9.6 - 14/06/2024 =
+* WC tested up to: 8.9.
+* WooCommerce added to the "Requires Plugins" (plugin header).
+
+= 4.9.5 - 16/05/2024 =
+* Readme.txt - Content updated.
 
 = 4.9.4 - 26/04/2024 =
 * Dev - Compatibility - "Google Product Feed" option added (defaults to `yes`).
