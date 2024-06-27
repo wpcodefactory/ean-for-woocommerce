@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Core Class
  *
- * @version 4.7.0
+ * @version 4.9.7
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -168,7 +168,7 @@ class Alg_WC_EAN_Core {
 	/**
 	 * is_valid_ean.
 	 *
-	 * @version 4.7.0
+	 * @version 4.9.7
 	 * @since   1.0.1
 	 *
 	 * @see     https://stackoverflow.com/questions/19890144/generate-valid-ean13-in-php
@@ -190,18 +190,26 @@ class Alg_WC_EAN_Core {
 			case 'JAN':
 			case 'EAN14':  // e.g.: 40700719670720
 			case 'AUTO':
+
+				// Get value
 				$ean = ( string ) $value;
+
 				// We accept only digits
 				if ( ! preg_match( "/^[0-9]+$/", $ean ) ) {
 					$result = false;
 					break;
 				}
+
 				// Check valid lengths
 				$l = strlen( $ean );
-				if ( ( 'AUTO' == $type && ! in_array( $l, array( 8, 12, 13 ) ) ) || ( 'AUTO' != $type && $l != $this->get_ean_type_length( $type ) ) ) {
+				if (
+					( 'AUTO' == $type && ! in_array( $l, array( 8, 12, 13, 14 ) ) ) ||
+					( 'AUTO' != $type && $l != $this->get_ean_type_length( $type ) )
+				) {
 					$result = false;
 					break;
 				}
+
 				// Get check digit
 				$check    = substr( $ean, -1 );
 				$ean      = substr( $ean, 0, -1 );
@@ -220,6 +228,7 @@ class Alg_WC_EAN_Core {
 				$sum            = $sum_even + $sum_odd;
 				$sum_rounded_up = ceil( $sum / 10 ) * 10;
 				$result         = ( $check == ( $sum_rounded_up - $sum ) );
+
 				// Extra prefix check (ISBN13, JAN)
 				if ( $result ) {
 					if ( 'ISBN13' === $type ) {
@@ -232,6 +241,8 @@ class Alg_WC_EAN_Core {
 						}
 					}
 				}
+
+				// The end
 				break;
 
 			default:
