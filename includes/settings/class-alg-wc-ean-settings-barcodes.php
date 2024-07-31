@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Barcodes Section Settings
  *
- * @version 4.5.0
+ * @version 4.9.9
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -31,7 +31,7 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.5.0
+	 * @version 4.9.9
 	 * @since   2.0.0
 	 *
 	 * @todo    (desc) Enable section: better desc
@@ -64,6 +64,14 @@ class Alg_WC_EAN_Settings_Barcodes extends Alg_WC_EAN_Settings_Section {
 				'id'       => "alg_wc_ean_backend_barcode{$this->dim_suffix}",
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Template', 'ean-for-woocommerce' ) . '<br>' .
+					sprintf( __( 'You should use %s shortcode here.', 'ean-for-woocommerce' ), '<code>[alg_wc_ean_barcode' . $this->dim_suffix . ']</code>' ),
+				'id'       => "alg_wc_ean_backend_barcode_template{$this->dim_suffix}",
+				'default'  => '[alg_wc_ean_barcode' . $this->dim_suffix . ' content="ean" w="' . ( '1d' === $this->dim ? 2  : 2 ) . '" h="' . ( '1d' === $this->dim ? 30 : 2 ) . '"]',
+				'type'     => 'textarea',
+				'css'      => 'width:100%;',
 			),
 			array(
 				'title'    => __( 'Admin products list column', 'ean-for-woocommerce' ),

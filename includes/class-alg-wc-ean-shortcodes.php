@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Shortcodes Class
  *
- * @version 4.9.3
+ * @version 4.9.9
  * @since   3.5.0
  *
  * @author  Algoritmika Ltd
@@ -74,7 +74,7 @@ class Alg_WC_EAN_Shortcodes {
 	/**
 	 * output.
 	 *
-	 * @version 4.9.3
+	 * @version 4.9.9
 	 * @since   3.5.0
 	 *
 	 * @see     https://developer.wordpress.org/reference/functions/wp_kses_post/
@@ -90,7 +90,8 @@ class Alg_WC_EAN_Shortcodes {
 				$atts['after']
 			)
 		);
-		return apply_filters( 'alg_wc_ean_shortcode_output', wp_kses_post( $result ), $result, $atts );
+		$sanitized_result = wp_kses( $result, 'post', array_merge( wp_allowed_protocols(), array( 'data' ) ) );
+		return apply_filters( 'alg_wc_ean_shortcode_output', $sanitized_result, $result, $atts );
 	}
 
 	/**

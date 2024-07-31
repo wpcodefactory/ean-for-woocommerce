@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, upc
 Requires at least: 4.4
 Tested up to: 6.6
-Stable tag: 4.9.8
+Stable tag: 4.9.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,9 +192,15 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 == Changelog ==
 
+= 4.9.9 - 31/07/2024 =
+* Fix - Shortcodes - Sanitizing shortcodes output - `data` protocol added (fixes the issue with barcode images in the Pro version).
+* Dev - Pro - Barcodes - Admin product edit page - "Template" options added.
+* Dev - Pro - Shortcodes - Barcodes - `add_text` attribute added to the `[alg_wc_ean_barcode]` and `[alg_wc_ean_barcode_2d]` shortcodes (defaults to `no`).
+* Dev - Pro - Developers - `alg_wc_ean_barcode_args` filter added.
+
 = 4.9.8 - 30/07/2024 =
-* WC tested up to: 9.1.
 * Tested up to: 6.6.
+* WC tested up to: 9.1.
 
 = 4.9.7 - 27/06/2024 =
 * Fix - EAN-14 validation fixed when the "Type" is set to "Automatic".
@@ -421,7 +427,7 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
     * `alg_wc_ean_product_tools_generate_ean_seed_prefix` filter added.
     * `alg_wc_ean_product_tools_generate_ean_seed` filter added.
 * Dev - Pro - "Extra Fields" sections added.
-* Dev - Pro - Shortcodes - Barcodes - `img_w` and `img_h` attributes added (both defaults to `false`).
+* Dev - Pro - Shortcodes - Barcodes - `img_w` and `img_h` attributes added (both default to `false`).
 
 [See changelog for all versions](https://plugins.svn.wordpress.org/ean-for-woocommerce/trunk/changelog.txt).
 

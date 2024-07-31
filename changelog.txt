@@ -1,5 +1,26 @@
 == Changelog ==
 
+= 4.9.9 - 31/07/2024 =
+* Fix - Shortcodes - Sanitizing shortcodes output - `data` protocol added (fixes the issue with barcode images in the Pro version).
+* Dev - Pro - Barcodes - Admin product edit page - "Template" options added.
+* Dev - Pro - Shortcodes - Barcodes - `add_text` attribute added to the `[alg_wc_ean_barcode]` and `[alg_wc_ean_barcode_2d]` shortcodes (defaults to `no`).
+* Dev - Pro - Developers - `alg_wc_ean_barcode_args` filter added.
+
+= 4.9.8 - 30/07/2024 =
+* Tested up to: 6.6.
+* WC tested up to: 9.1.
+
+= 4.9.7 - 27/06/2024 =
+* Fix - EAN-14 validation fixed when the "Type" is set to "Automatic".
+* WC tested up to: 9.0.
+
+= 4.9.6 - 14/06/2024 =
+* WC tested up to: 8.9.
+* WooCommerce added to the "Requires Plugins" (plugin header).
+
+= 4.9.5 - 16/05/2024 =
+* Readme.txt - Content updated.
+
 = 4.9.4 - 26/04/2024 =
 * Dev - Compatibility - "Google Product Feed" option added (defaults to `yes`).
 * Dev - Compatibility - "Woocommerce OpenPos" option added (defaults to `yes`).
@@ -214,7 +235,7 @@
     * `alg_wc_ean_product_tools_generate_ean_seed_prefix` filter added.
     * `alg_wc_ean_product_tools_generate_ean_seed` filter added.
 * Dev - Pro - "Extra Fields" sections added.
-* Dev - Pro - Shortcodes - Barcodes - `img_w` and `img_h` attributes added (both defaults to `false`).
+* Dev - Pro - Shortcodes - Barcodes - `img_w` and `img_h` attributes added (both default to `false`).
 
 = 3.9.1 - 24/05/2022 =
 * Dev - Print - Admin settings rearranged.
