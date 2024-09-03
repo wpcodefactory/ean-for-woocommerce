@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 5.0.0 - 03/09/2024 =
+* Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `title` option added.
+* Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `formatted_name` option added.
+* Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `attribute_summary` option added.
+* Dev - Pro - Developers - `alg_wc_ean_barcode_shortcode_content` filter added.
+* Dev - Pro - Developers - `alg_wc_ean_barcode_2d_shortcode_content` filter added.
+* WC tested up to: 9.2.
+
 = 4.9.9 - 31/07/2024 =
 * Fix - Shortcodes - Sanitizing shortcodes output - `data` protocol added (fixes the issue with barcode images in the Pro version).
 * Dev - Pro - Barcodes - Admin product edit page - "Template" options added.

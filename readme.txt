@@ -3,7 +3,7 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, upc
 Requires at least: 4.4
 Tested up to: 6.6
-Stable tag: 4.9.9
+Stable tag: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -191,6 +191,14 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 5.0.0 - 03/09/2024 =
+* Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `title` option added.
+* Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `formatted_name` option added.
+* Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `attribute_summary` option added.
+* Dev - Pro - Developers - `alg_wc_ean_barcode_shortcode_content` filter added.
+* Dev - Pro - Developers - `alg_wc_ean_barcode_2d_shortcode_content` filter added.
+* WC tested up to: 9.2.
 
 = 4.9.9 - 31/07/2024 =
 * Fix - Shortcodes - Sanitizing shortcodes output - `data` protocol added (fixes the issue with barcode images in the Pro version).
