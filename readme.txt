@@ -3,11 +3,11 @@ Contributors: wpcodefactory, algoritmika, anbinder, karzin, omardabbas, kousikmu
 Tags: woocommerce, ean, gtin, barcode, upc
 Requires at least: 4.4
 Tested up to: 6.6
-Stable tag: 5.0.0
+Stable tag: 5.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Manage GTINs (EAN, UPC, ISBN, etc.) effortlessly in WooCommerce! Create, save, search, and display EANs easily, with tools for bulk actions and compatibility with major plugins
+Manage GTINs (EAN, UPC, ISBN, etc.) effortlessly in WooCommerce! Create, save, search, and display EANs easily, with tools for bulk actions, etc.
 
 == Description ==
 
@@ -191,6 +191,11 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 5. EAN for WooCommerce - Tools
 
 == Changelog ==
+
+= 5.1.0 - 06/09/2024 =
+* Dev - Pro - "TCPDF" library updated (to v6.7.5).
+* Dev - Pro - Print - Options are sanitized now.
+* Plugin short description updated.
 
 = 5.0.0 - 03/09/2024 =
 * Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `title` option added.

@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 5.1.0 - 06/09/2024 =
+* Dev - Pro - "TCPDF" library updated (to v6.7.5).
+* Dev - Pro - Print - Options are sanitized now.
+* Plugin short description updated.
+
 = 5.0.0 - 03/09/2024 =
 * Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `title` option added.
 * Dev - Pro - Barcodes - `[alg_wc_ean_barcode_2d]` - `content` - `formatted_name` option added.
