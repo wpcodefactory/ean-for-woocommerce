@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 5.1.1 - 10/09/2024 =
+* Dev - Advanced - Admin settings descriptions updated.
+
 = 5.1.0 - 06/09/2024 =
 * Dev - Pro - "TCPDF" library updated (to v6.7.5).
 * Dev - Pro - Print - Options are sanitized now.

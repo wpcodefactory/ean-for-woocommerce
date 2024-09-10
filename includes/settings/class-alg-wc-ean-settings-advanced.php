@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Advanced Section Settings
  *
- * @version 4.7.3
+ * @version 5.1.1
  * @since   2.2.9
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.7.3
+	 * @version 5.1.1
 	 * @since   2.2.9
 	 *
 	 * @todo    (dev) Import/Export: move to "Tools", and/or add dashicons?
@@ -80,6 +80,8 @@ class Alg_WC_EAN_Settings_Advanced extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'title'             => __( 'Closest container', 'ean-for-woocommerce' ),
+				'desc'              => sprintf( __( 'If EAN is not displayed in product variations, try setting this option to %s', 'ean-for-woocommerce' ),
+					'<code>.single-product</code>' ),
 				'id'                => 'alg_wc_ean_js_variations_form_closest',
 				'default'           => '.summary',
 				'type'              => 'text',

@@ -386,7 +386,7 @@ msgstr ""
 msgid "Variations"
 msgstr ""
 
-#: includes/pro/class-alg-wc-ean-print.php:655
+#: includes/pro/class-alg-wc-ean-print.php:689
 #: includes/settings/class-alg-wc-ean-settings-barcodes-compatibility.php:27
 #: includes/settings/class-alg-wc-ean-settings-barcodes-compatibility.php:43
 #: includes/settings/class-alg-wc-ean-settings-barcodes.php:27
@@ -548,40 +548,46 @@ msgstr ""
 msgid "Closest container"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:92
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:83
+#, php-format
+msgid ""
+"If EAN is not displayed in product variations, try setting this option to %s"
+msgstr ""
+
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:94
 msgid "Export/Import/Reset Plugin Settings"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:97
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:99
 msgid "Export"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:98
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:100
 msgid "Export all settings"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:99
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:101
 msgid "Check the box and \"Save changes\" to export."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:105
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:107
 msgid "Import"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:106
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:108
 msgid "Choose file and \"Save changes\" to import."
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:111
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:113
 #: includes/settings/class-alg-wc-ean-settings.php:126
 msgid "Reset"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:112
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:114
 msgid "Reset all settings"
 msgstr ""
 
-#: includes/settings/class-alg-wc-ean-settings-advanced.php:113
+#: includes/settings/class-alg-wc-ean-settings-advanced.php:115
 msgid "Check the box and \"Save changes\" to reset."
 msgstr ""
 
