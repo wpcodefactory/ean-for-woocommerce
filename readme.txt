@@ -192,6 +192,10 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 == Changelog ==
 
+= 5.4.3 - 03/04/2025 =
+* Fix - General - Admin product block editor - Translation loading fixed.
+* WC tested up to: 9.7.
+
 = 5.4.2 - 04/02/2025 =
 * Dev - Print - Advanced - "Define K_PATH_CACHE" option added (defaults to `no`).
 
