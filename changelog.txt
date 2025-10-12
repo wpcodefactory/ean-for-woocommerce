@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 5.5.1 - 12/10/2025 =
+* Dev - WPFactory Recommendations - Library updated (to v1.0.6).
+* WC tested up to: 10.2.
+
 = 5.5.0 - 10/07/2025 =
 * Dev - WPFactory Admin Menu - Plugin icon method updated.
 * Dev - WPFactory Admin Menu - Library updated.
