@@ -5,6 +5,7 @@
 * Dev - WPFactory Recommendations - Library updated (to v1.1.0).
 * Dev - WPFactory Admin Menu - Library updated (to v1.1.0).
 * Dev - WPFactory Key Manager - Library updated (to v1.0.8).
+* Deploy script updated.
 * Tested up to: 6.9.
 * WC tested up to: 10.7.
 
