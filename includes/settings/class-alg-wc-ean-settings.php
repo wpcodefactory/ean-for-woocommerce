@@ -134,7 +134,10 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 				'id'        => $this->id . '_' . $current_section . '_reset_options',
 			),
 		) );
-		return array_merge( apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ), $reset_settings );
+		return array_merge(
+			apply_filters( 'woocommerce_get_settings_' . $this->id . '_' . $current_section, array() ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
+			$reset_settings
+		);
 	}
 
 	/**
@@ -186,7 +189,11 @@ class Alg_WC_EAN_Settings extends WC_Settings_Page {
 
 		do_action( 'alg_wc_ean_settings_saved', $current_section );
 
-		if ( 'print' === $current_section || 'advanced' === $current_section || 'extra_field' === substr( $current_section, 0, strlen( 'extra_field' ) ) ) {
+		if (
+			'print' === $current_section ||
+			'advanced' === $current_section ||
+			'extra_field' === substr( $current_section, 0, strlen( 'extra_field' ) )
+		) {
 			wp_safe_redirect( add_query_arg( array() ) );
 			exit;
 		}

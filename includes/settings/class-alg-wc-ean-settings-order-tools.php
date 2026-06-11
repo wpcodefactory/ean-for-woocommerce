@@ -75,16 +75,16 @@ class Alg_WC_EAN_Settings_Order_Tools extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'    => __( 'Search', 'ean-for-woocommerce' ),
 				'desc'     => (
-					isset( $_REQUEST['alg_wc_ean_order_items_search'], alg_wc_ean()->core->order_tools ) ?
+					isset( $_REQUEST['alg_wc_ean_order_items_search'], alg_wc_ean()->core->order_tools ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					alg_wc_ean()->core->order_tools->get_order_items_search(
-						sanitize_text_field( wp_unslash( $_REQUEST['alg_wc_ean_order_items_search'] ) )
+						sanitize_text_field( wp_unslash( $_REQUEST['alg_wc_ean_order_items_search'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					) :
 					''
 				),
 				'id'       => 'alg_wc_ean_order_items_search',
 				'default'  => (
-					isset( $_REQUEST['alg_wc_ean_order_items_search'] ) ?
-					sanitize_text_field( wp_unslash( $_REQUEST['alg_wc_ean_order_items_search'] ) ) :
+					isset( $_REQUEST['alg_wc_ean_order_items_search'] ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					sanitize_text_field( wp_unslash( $_REQUEST['alg_wc_ean_order_items_search'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					''
 				),
 				'type'     => 'text',

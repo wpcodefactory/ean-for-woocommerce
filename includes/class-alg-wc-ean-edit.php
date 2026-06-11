@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 5.5.2
+ * @version 5.5.5
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -24,7 +24,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.2.0
+	 * @version 5.5.5
 	 * @since   2.0.0
 	 *
 	 * @todo    (dev) position: new tab (for both simple and variable products)
@@ -82,7 +82,7 @@ class Alg_WC_EAN_Edit {
 				2
 			);
 			add_action(
-				'admin_footer',
+				'admin_enqueue_scripts',
 				array( $this, 'add_quick_edit_js' )
 			);
 
@@ -90,7 +90,7 @@ class Alg_WC_EAN_Edit {
 			$this->do_add_generate_button = ( 'yes' === get_option( 'alg_wc_ean_backend_add_generate_button', 'no' ) );
 			if ( $this->do_add_generate_button ) {
 				add_action(
-					'admin_footer',
+					'admin_enqueue_scripts',
 					array( $this, 'add_generate_button' )
 				);
 				add_action(
@@ -124,12 +124,10 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_quick_edit_js.
 	 *
-	 * @version 5.2.0
+	 * @version 5.5.5
 	 * @since   5.2.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/9.3.3/plugins/woocommerce/includes/admin/list-tables/class-wc-admin-list-table-products.php#L161
-	 *
-	 * @todo    (dev) move to a separate JS file?
 	 */
 	function add_quick_edit_js() {
 		if (
@@ -140,88 +138,52 @@ class Alg_WC_EAN_Edit {
 		) {
 			return;
 		}
-		?>
-		<script>
-		jQuery(
-			function ( $ ) {
-				$( '#the-list' ).on(
-					'click',
-					'.editinline',
-					function () {
-						var post_id = $( this ).closest( 'tr' ).attr( 'id' );
-						post_id = post_id.replace( 'post-', '' );
-						var inline_data = $( '#alg_wc_ean_inline_' + post_id );
-						var ean = inline_data.find( '.alg_wc_ean_quick_edit' ).text();
-						$( 'input[name="_alg_ean_qb"]', '.inline-edit-row' ).val( ean );
-					}
-				);
-			}
+
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_enqueue_script(
+			'alg-wc-ean-quick-edit',
+			alg_wc_ean()->plugin_url() . '/assets/js/alg-wc-ean-quick-edit' . $min . '.js',
+			array( 'jquery' ),
+			alg_wc_ean()->version,
+			true
 		);
-		</script>
-		<?php
 	}
 
 	/**
 	 * add_generate_button.
 	 *
-	 * @version 4.0.0
+	 * @version 5.5.5
 	 * @since   4.0.0
 	 */
 	function add_generate_button() {
 		if (
-			is_admin() &&
-			function_exists( 'get_current_screen' ) &&
-			( $screen = get_current_screen() ) &&
-			'product' === $screen->post_type
+			! is_admin() ||
+			! function_exists( 'get_current_screen' ) ||
+			! ( $screen = get_current_screen() ) ||
+			'product' !== $screen->post_type
 		) {
-			$this->generate_button_js();
+			return;
 		}
-	}
 
-	/**
-	 * generate_button_js.
-	 *
-	 * @version 5.5.2
-	 * @since   4.0.0
-	 *
-	 * @todo    (dev) static? (3x)
-	 * @todo    (dev) recheck `return false;`
-	 * @todo    (dev) recheck `ajaxurl`
-	 * @todo    (dev) use `admin_enqueue_scripts`?
-	 */
-	static function generate_button_js() {
-		?><script>
-			jQuery( document ).ready( function () {
-				jQuery( 'body' ).on( 'click', '.alg_wc_ean_generate_ajax', function () {
-					var product = jQuery( this ).data( 'product' )
-					var input   = jQuery( this ).data( 'input' );
-					jQuery( '#spinner-' + input ).addClass( 'is-active' );
-					var data = {
-						'action':  'alg_wc_ean_generate_ajax',
-						'product': product,
-						'input':   input,
-					};
-					jQuery.post( ajaxurl, data, function( response ) {
-						if ( response ) {
-							jQuery( '#' + data['input'] ).val( response ).trigger( 'change' );
-						}
-						jQuery( '#spinner-' + data['input'] ).removeClass( 'is-active' );
-					} );
-					return false;
-				} );
-			} );
-		</script><?php
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_enqueue_script(
+			'alg-wc-ean-generate-button',
+			alg_wc_ean()->plugin_url() . '/assets/js/alg-wc-ean-generate-button' . $min . '.js',
+			array( 'jquery' ),
+			alg_wc_ean()->version,
+			true
+		);
 	}
 
 	/**
 	 * generate_button_ajax.
 	 *
-	 * @version 5.3.5
+	 * @version 5.5.5
 	 * @since   4.0.0
 	 */
 	static function generate_button_ajax() {
 		$ean = alg_wc_ean()->core->product_tools->generate_ean(
-			intval( $_POST['product'] ),
+			intval( $_POST['product'] ?? 0 ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			alg_wc_ean()->core->product_tools->get_generate_data()
 		);
 		echo esc_html( $ean );
@@ -261,7 +223,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_bulk_and_quick_edit_fields.
 	 *
-	 * @version 5.2.0
+	 * @version 5.5.5
 	 * @since   1.5.0
 	 *
 	 * @todo    (dev) reposition this (e.g., right after the "SKU" field)?
@@ -274,11 +236,11 @@ class Alg_WC_EAN_Edit {
 			$start       = '';
 			$placeholder = __( '- No change -', 'ean-for-woocommerce' );
 		}
-		echo $start .
+		echo wp_kses_post( $start ) .
 			'<label>' .
 				'<span class="title">' . esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ) . '</span>' .
 				'<span class="input-text-wrap">' .
-					'<input type="text" name="_alg_ean_qb" class="text" placeholder="' . $placeholder . '" value="">' .
+					'<input type="text" name="_alg_ean_qb" class="text" placeholder="' . esc_attr( $placeholder ) . '" value="">' .
 				'</span>' .
 			'</label>';
 	}
@@ -286,7 +248,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * save_bulk_and_quick_edit_fields.
 	 *
-	 * @version 5.2.0
+	 * @version 5.5.5
 	 * @since   1.5.0
 	 */
 	function save_bulk_and_quick_edit_fields( $post_id, $post ) {
@@ -309,7 +271,7 @@ class Alg_WC_EAN_Edit {
 		// Check nonce
 		if (
 			! isset( $_REQUEST['woocommerce_quick_edit_nonce'] ) ||
-			! wp_verify_nonce( $_REQUEST['woocommerce_quick_edit_nonce'], 'woocommerce_quick_edit_nonce' )
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['woocommerce_quick_edit_nonce'] ) ), 'woocommerce_quick_edit_nonce' )
 		) {
 			return $post_id;
 		}
@@ -321,7 +283,7 @@ class Alg_WC_EAN_Edit {
 				! empty( $_REQUEST['woocommerce_quick_edit'] )
 			)
 		) {
-			alg_wc_ean()->core->set_ean( $post_id, wc_clean( $_REQUEST['_alg_ean_qb'] ) );
+			alg_wc_ean()->core->set_ean( $post_id, wc_clean( wp_unslash( $_REQUEST['_alg_ean_qb'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		}
 		return $post_id;
 	}
@@ -396,7 +358,7 @@ class Alg_WC_EAN_Edit {
 	/**
 	 * add_ean_input_variation.
 	 *
-	 * @version 4.4.0
+	 * @version 5.5.5
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) `variable{$key}` to `variable_{$key}`?
@@ -421,26 +383,52 @@ class Alg_WC_EAN_Edit {
 			),
 			'custom_attributes' => $this->get_ean_input_custom_atts( $variation->ID ),
 		) );
+		wp_nonce_field(
+			'alg_wc_ean_save_input_variation',
+			'_alg_wc_ean_save_input_variation_nonce_' . $variation->ID
+		);
 	}
 
 	/**
 	 * save_ean_input_variation.
 	 *
-	 * @version 4.5.0
+	 * @version 5.5.5
 	 * @since   1.0.0
 	 */
 	function save_ean_input_variation( $variation_id, $i ) {
 		$key = alg_wc_ean()->core->ean_key;
-		if ( isset( $_POST[ 'variable' . $key ][ $i ] ) ) {
-			alg_wc_ean()->core->set_ean( $variation_id, wc_clean( $_POST[ 'variable' . $key ][ $i ] ) );
+		if (
+			isset(
+				$_POST[ 'variable' . $key ][ $i ],
+				$_POST[ '_alg_wc_ean_save_input_variation_nonce_' . $variation_id ]
+			)
+		) {
+			if (
+				! wp_verify_nonce(
+					sanitize_text_field(
+						wp_unslash(
+							$_POST[ '_alg_wc_ean_save_input_variation_nonce_' . $variation_id ]
+						)
+					),
+					'alg_wc_ean_save_input_variation'
+				)
+			) {
+				wp_die( esc_html__( 'Nonce verification failed.', 'ean-for-woocommerce' ) );
+			}
+			alg_wc_ean()->core->set_ean(
+				$variation_id,
+				wc_clean( wp_unslash( $_POST[ 'variable' . $key ][ $i ] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			);
 		}
 	}
 
 	/**
 	 * add_ean_input.
 	 *
-	 * @version 5.5.2
+	 * @version 5.5.5
 	 * @since   1.0.0
+	 *
+	 * @todo    (v5.5.5) generate button: `empty( $value )` (also for variations)?
 	 */
 	function add_ean_input() {
 		$product_id = get_the_ID();
@@ -460,23 +448,45 @@ class Alg_WC_EAN_Edit {
 			),
 			'custom_attributes' => $this->get_ean_input_custom_atts( $product_id ),
 		) );
+		wp_nonce_field(
+			'alg_wc_ean_save_input',
+			'_alg_wc_ean_save_input_nonce'
+		);
 	}
 
 	/**
 	 * save_ean_input.
 	 *
-	 * @version 4.5.0
+	 * @version 5.5.5
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) save `$key . '_is_valid'` (same in `save_ean_input_variation()`)
 	 */
 	function save_ean_input( $post_id, $__post ) {
 		if (
-			isset( $_POST[ alg_wc_ean()->core->ean_key ] ) &&
+			isset(
+				$_POST[ alg_wc_ean()->core->ean_key ],
+				$_POST['_alg_wc_ean_save_input_nonce']
+			) &&
 			empty( $_REQUEST['woocommerce_quick_edit'] ) &&
 			empty( $_REQUEST['woocommerce_bulk_edit'] )
 		) {
-			alg_wc_ean()->core->set_ean( $post_id, wc_clean( $_POST[ alg_wc_ean()->core->ean_key ] ) );
+			if (
+				! wp_verify_nonce(
+					sanitize_text_field(
+						wp_unslash(
+							$_POST['_alg_wc_ean_save_input_nonce']
+						)
+					),
+					'alg_wc_ean_save_input'
+				)
+			) {
+				wp_die( esc_html__( 'Nonce verification failed.', 'ean-for-woocommerce' ) );
+			}
+			alg_wc_ean()->core->set_ean(
+				$post_id,
+				wc_clean( wp_unslash( $_POST[ alg_wc_ean()->core->ean_key ] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			);
 		}
 	}
 

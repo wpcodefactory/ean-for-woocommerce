@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Order Items Table Class
  *
- * @version 4.8.7
+ * @version 5.5.5
  * @since   3.7.0
  *
  * @author  Algoritmika Ltd
@@ -61,7 +61,7 @@ class Alg_WC_EAN_Order_Items_Table {
 	/**
 	 * add_to_order_item_meta_ean.
 	 *
-	 * @version 3.7.0
+	 * @version 5.5.5
 	 * @since   1.2.0
 	 */
 	function add_to_order_item_meta_ean( $item_id, $item, $order, $plain_text ) {
@@ -91,11 +91,20 @@ class Alg_WC_EAN_Order_Items_Table {
 			}
 			// Display
 			if ( $do_display ) {
-				$templates = array_replace( array(
+				$templates = array_replace(
+					array(
 						'html'       => '<ul class="wc-item-meta"><li><span class="sku_wrapper ean_wrapper">EAN: <span class="ean">%ean%</span></span></li></ul>',
 						'plain_text' => '%new_line%- EAN: %ean%',
-					), get_option( 'alg_wc_ean_order_items_table_templates', array() ) );
-				echo str_replace( array( '%new_line%', '%ean%' ), array( "\n", $ean ), $templates[ ( ! $plain_text ? 'html' : 'plain_text' ) ] );
+					),
+					get_option( 'alg_wc_ean_order_items_table_templates', array() )
+				);
+				echo wp_kses_post(
+					str_replace(
+						array( '%new_line%', '%ean%' ),
+						array( "\n", $ean ),
+						$templates[ ( ! $plain_text ? 'html' : 'plain_text' ) ]
+					)
+				);
 			}
 		}
 	}

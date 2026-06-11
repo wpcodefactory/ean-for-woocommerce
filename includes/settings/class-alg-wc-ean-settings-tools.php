@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Tools Section Settings
  *
- * @version 5.3.2
+ * @version 5.5.5
  * @since   2.2.5
  *
  * @author  Algoritmika Ltd
@@ -56,7 +56,11 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	 * @since   3.0.0
 	 */
 	function get_missing_product_cat_title( $term_id ) {
-		return sprintf( __( 'Product category #%s', 'ean-for-woocommerce' ), $term_id );
+		return sprintf(
+			/* Translators: %s: Term ID. */
+			__( 'Product category #%s', 'ean-for-woocommerce' ),
+			$term_id
+		);
 	}
 
 	/**
@@ -101,7 +105,7 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 5.3.2
+	 * @version 5.5.5
 	 * @since   2.2.5
 	 *
 	 * @todo    (dev) Generate: Type: `EAN14`
@@ -117,14 +121,25 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 		$settings = array(
 			array(
 				'title'    => __( 'Product Tools', 'ean-for-woocommerce' ),
-				'desc'     => sprintf( __( 'Check the %s box and "Save changes" to run the tool. Please note that there is no undo for these tools.', 'ean-for-woocommerce' ),
-						'<span class="dashicons dashicons-admin-generic"></span>' ) . '<br><br>' .
-					sprintf( __( 'Please note that %s, %s and %s tools will <strong>not</strong> overwrite EANs for products with existing EANs.', 'ean-for-woocommerce' ),
+				'desc'     => (
+					sprintf(
+						/* Translators: %s: Dashicon. */
+						__( 'Check the %s box and "Save changes" to run the tool. Please note that there is no undo for these tools.', 'ean-for-woocommerce' ),
+						'<span class="dashicons dashicons-admin-generic"></span>'
+					) . '<br><br>' .
+					sprintf(
+						/* Translators: %1$s: Tool name, %2$s: Tool name, %3$s: Tool name. */
+						__( 'Please note that %1$s, %2$s and %3$s tools will <strong>not</strong> overwrite EANs for products with existing EANs.', 'ean-for-woocommerce' ),
 						'<strong>' . __( 'Generate', 'ean-for-woocommerce' ) . '</strong>',
 						'<strong>' . __( 'Copy', 'ean-for-woocommerce' ) . '</strong>',
-						'<strong>' . __( 'Assign', 'ean-for-woocommerce' ) . '</strong>' ) . ' ' .
-					sprintf( __( 'You can use the %s tool to clear the existing EANs before generating or copying.', 'ean-for-woocommerce' ),
-						'<strong>' . __( 'Delete', 'ean-for-woocommerce' ) . '</strong>' ),
+						'<strong>' . __( 'Assign', 'ean-for-woocommerce' ) . '</strong>'
+					) . ' ' .
+					sprintf(
+						/* Translators: %s: Tool name. */
+						__( 'You can use the %s tool to clear the existing EANs before generating or copying.', 'ean-for-woocommerce' ),
+						'<strong>' . __( 'Delete', 'ean-for-woocommerce' ) . '</strong>'
+					)
+				),
 				'type'     => 'title',
 				'id'       => 'alg_wc_ean_tools_products',
 			),
@@ -152,10 +167,12 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'     => __( 'Country prefix (from)', 'ean-for-woocommerce' ) . ' ' .
-					sprintf( '<a target="_blank" title="%s" style="text-decoration:none;" href="%s">%s</a>',
+					sprintf(
+						'<a target="_blank" title="%s" style="text-decoration:none;" href="%s">%s</a>',
 						__( 'List of GS1 country codes.', 'ean-for-woocommerce' ),
 						'https://en.wikipedia.org/wiki/List_of_GS1_country_codes',
-						'<span class="dashicons dashicons-external"></span>' ),
+						'<span class="dashicons dashicons-external"></span>'
+					),
 				'id'       => 'alg_wc_ean_tool_product_generate[prefix]',
 				'default'  => 200,
 				'type'     => 'number',
@@ -163,8 +180,12 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'     => __( 'County prefix (to)', 'ean-for-woocommerce' ) . ' (' . __( 'optional', 'ean-for-woocommerce' ) . ')',
-				'desc_tip' => sprintf( __( 'If set, prefix will be generated randomly between "%s" and "%s" values.', 'ean-for-woocommerce' ),
-					__( 'Prefix from', 'ean-for-woocommerce' ), __( 'Prefix to', 'ean-for-woocommerce' ) ),
+				'desc_tip' => sprintf(
+					/* Translators: %1$s: Prefix from, %2$s: Prefix to. */
+					__( 'If set, prefix will be generated randomly between "%1$s" and "%2$s" values.', 'ean-for-woocommerce' ),
+					__( 'Prefix from', 'ean-for-woocommerce' ),
+					__( 'Prefix to', 'ean-for-woocommerce' )
+				),
 				'id'       => 'alg_wc_ean_tool_product_generate[prefix_to]',
 				'default'  => '',
 				'type'     => 'number',
@@ -236,7 +257,11 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'desc'     => sprintf( __( 'Meta key, e.g., %s', 'ean-for-woocommerce' ), '<code>_gtin</code>' ),
+				'desc'     => sprintf(
+					/* Translators: %s: Meta key example. */
+					__( 'Meta key, e.g., %s', 'ean-for-woocommerce' ),
+					'<code>_gtin</code>'
+				),
 				'desc_tip' => __( 'Product meta key to copy from.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_copy_meta[key]',
 				'default'  => '',
@@ -327,7 +352,12 @@ class Alg_WC_EAN_Settings_Tools extends Alg_WC_EAN_Settings_Section {
 				'type'     => 'checkbox',
 			),
 			array(
-				'desc'     => sprintf( __( 'Meta key, e.g.: %s, or comma-separated list of keys, e.g.: %s', 'ean-for-woocommerce' ), '<code>_gtin</code>', '<code>_gtin,_ean13</code>' ),
+				'desc'     => sprintf(
+					/* Translators: %1$s: Meta key example, %2$s: Meta key list example. */
+					__( 'Meta key, e.g.: %1$s, or comma-separated list of keys, e.g.: %2$s', 'ean-for-woocommerce' ),
+					'<code>_gtin</code>',
+					'<code>_gtin,_ean13</code>'
+				),
 				'desc_tip' => __( 'Product meta key to copy to.', 'ean-for-woocommerce' ),
 				'id'       => 'alg_wc_ean_tool_product_copy_to_meta[key]',
 				'default'  => '',

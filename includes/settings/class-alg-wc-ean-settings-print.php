@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Section Settings
  *
- * @version 5.4.9
+ * @version 5.5.5
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -29,7 +29,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * get_settings.
 	 *
-	 * @version 5.4.9
+	 * @version 5.5.5
 	 * @since   2.0.0
 	 *
 	 * @see     https://www.avery.com/templates/6879 (default margins etc.)
@@ -85,8 +85,16 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'             => __( 'Print barcodes (PDF)', 'ean-for-woocommerce' ),
 				'desc'              => '<strong>' . __( 'Enable section', 'ean-for-woocommerce' ) . '</strong>',
-				'desc_tip'          => sprintf( __( 'This will add "Print barcodes" to the "Bulk actions" in %s.', 'ean-for-woocommerce' ),
-					'<a href="' . admin_url( 'edit.php?post_type=product' ) . '">' . __( 'admin products list', 'ean-for-woocommerce' ) . '</a>' ) . $this->pro_msg(),
+				'desc_tip'          => (
+					sprintf(
+						/* Translators: %s: Link. */
+						__( 'This will add "Print barcodes" to the "Bulk actions" in %s.', 'ean-for-woocommerce' ),
+						'<a href="' . admin_url( 'edit.php?post_type=product' ) . '">' .
+							__( 'admin products list', 'ean-for-woocommerce' ) .
+						'</a>'
+					) .
+					$this->pro_msg()
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf',
 				'default'           => 'no',
 				'type'              => 'checkbox',
@@ -115,7 +123,10 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'             => __( 'Unit', 'ean-for-woocommerce' ),
 				'desc_tip'          => __( 'User measure unit.', 'ean-for-woocommerce' ) . '<br><br>' .
-					sprintf( __( 'Used in %s options.', 'ean-for-woocommerce' ), '"' . implode( '", "', array(
+					sprintf(
+						/* Translators: %s: Option list. */
+						__( 'Used in %s options.', 'ean-for-woocommerce' ),
+						'"' . implode( '", "', array(
 							__( 'Page format: Custom: Width', 'ean-for-woocommerce' ),
 							__( 'Page format: Custom: Height', 'ean-for-woocommerce' ),
 							__( 'Cell width', 'ean-for-woocommerce' ),
@@ -124,7 +135,9 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 							__( 'Left margin', 'ean-for-woocommerce' ),
 							__( 'Right margin', 'ean-for-woocommerce' ),
 							__( 'Page break margin', 'ean-for-woocommerce' ),
-						) ) . '"' ) . '<br><br>' .
+						) ) . '"'
+					) .
+					'<br><br>' .
 					'* ' . $point_desc,
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[unit]',
 				'default'           => 'in',
@@ -138,13 +151,27 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'default'           => 'LETTER',
 				'type'              => 'select',
 				'class'             => 'chosen_select',
-				'options'           => array_merge( array( 'custom' => __( 'Custom', 'ean-for-woocommerce' ) ), $pdf_page_formats ),
+				'options'           => array_merge(
+					array( 'custom' => __( 'Custom', 'ean-for-woocommerce' ) ),
+					$pdf_page_formats
+				),
 			),
 			array(
 				'desc'              => __( 'Page format: Custom: Width', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ) . '<br><br>' .
-					sprintf( __( 'Ignored unless "%s" option is set to "%s".', 'ean-for-woocommerce' ),
-						__( 'Page format', 'ean-for-woocommerce' ), __( 'Custom', 'ean-for-woocommerce' ) ),
+				'desc_tip'          => (
+					sprintf(
+						/* Translators: %s: Unit title. */
+						__( 'In %s.', 'ean-for-woocommerce' ),
+						$unit_title
+					) .
+					'<br><br>' .
+					sprintf(
+						/* Translators: %1$s: Option name, %2$s: Option value. */
+						__( 'Ignored unless "%1$s" option is set to "%2$s".', 'ean-for-woocommerce' ),
+						__( 'Page format', 'ean-for-woocommerce' ),
+						__( 'Custom', 'ean-for-woocommerce' )
+					)
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[page_format_custom_width]',
 				'default'           => 0,
 				'type'              => 'number',
@@ -152,9 +179,20 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Page format: Custom: Height', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ) . '<br><br>' .
-					sprintf( __( 'Ignored unless "%s" option is set to "%s".', 'ean-for-woocommerce' ),
-						__( 'Page format', 'ean-for-woocommerce' ), __( 'Custom', 'ean-for-woocommerce' ) ),
+				'desc_tip'          => (
+					sprintf(
+						/* Translators: %s: Unit title. */
+						__( 'In %s.', 'ean-for-woocommerce' ),
+						$unit_title
+					) .
+					'<br><br>' .
+					sprintf(
+						/* Translators: %1$s: Option name, %2$s: Option value. */
+						__( 'Ignored unless "%1$s" option is set to "%2$s".', 'ean-for-woocommerce' ),
+						__( 'Page format', 'ean-for-woocommerce' ),
+						__( 'Custom', 'ean-for-woocommerce' )
+					)
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[page_format_custom_height]',
 				'default'           => 0,
 				'type'              => 'number',
@@ -177,7 +215,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'             => __( 'Cell', 'ean-for-woocommerce' ),
 				'desc'              => __( 'Cell width', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_width]',
 				'default'           => 4,
 				'type'              => 'number',
@@ -185,7 +227,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Cell height', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_height]',
 				'default'           => 1.5,
 				'type'              => 'number',
@@ -204,7 +250,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Cell top margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_margin_top]',
 				'default'           => 0,
 				'type'              => 'number',
@@ -212,7 +262,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Cell left margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_margin_left]',
 				'default'           => 0,
 				'type'              => 'number',
@@ -220,7 +274,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Cell right margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_margin_right]',
 				'default'           => 0,
 				'type'              => 'number',
@@ -228,7 +286,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Cell bottom margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[cell_margin_bottom]',
 				'default'           => 0,
 				'type'              => 'number',
@@ -250,7 +312,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'             => __( 'Page margins', 'ean-for-woocommerce' ),
 				'desc'              => __( 'Top margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[margin_top]',
 				'default'           => 1.13,
 				'type'              => 'number',
@@ -258,7 +324,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Left margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[margin_left]',
 				'default'           => 0.46,
 				'type'              => 'number',
@@ -266,7 +336,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Right margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Unit title. */
+					__( 'In %s.', 'ean-for-woocommerce' ),
+					$unit_title
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[margin_right]',
 				'default'           => 0.31,
 				'type'              => 'number',
@@ -274,8 +348,15 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'desc'              => __( 'Page break (i.e., bottom) margin', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'In %s.', 'ean-for-woocommerce' ), $unit_title ) . '<br><br>' .
-					__( 'Distance from the bottom of the page that defines the automatic page breaking triggering limit.', 'ean-for-woocommerce' ),
+				'desc_tip'          => (
+					sprintf(
+						/* Translators: %s: Unit title. */
+						__( 'In %s.', 'ean-for-woocommerce' ),
+						$unit_title
+					) .
+					'<br><br>' .
+					__( 'Distance from the bottom of the page that defines the automatic page breaking triggering limit.', 'ean-for-woocommerce' )
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[page_break_margin]',
 				'default'           => 0.79,
 				'type'              => 'number',
@@ -283,8 +364,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'title'             => __( 'Font', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'If you are having issues displaying your language specific letters, select "%s" font.', 'ean-for-woocommerce' ),
-					'DejaVu Sans (Unicode)' ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Font name. */
+					__( 'If you are having issues displaying your language specific letters, select "%s" font.', 'ean-for-woocommerce' ),
+					'DejaVu Sans (Unicode)'
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[font_family]',
 				'default'           => 'dejavusans',
 				'type'              => 'select',
@@ -305,7 +389,8 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			),
 			array(
 				'title'             => __( 'Template', 'ean-for-woocommerce' ),
-				'desc'              =>  sprintf( '<details><summary style="%s">%s</summary>%s</details>',
+				'desc'              =>  sprintf(
+					'<details><summary style="%s">%s</summary>%s</details>',
 					'cursor: pointer; color: #2271b1;',
 					__( 'Available shortcodes', 'ean-for-woocommerce' ),
 					'<ul><li><code>' . implode( '</code></li><li><code>', array(
@@ -320,7 +405,8 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 						'[alg_wc_ean_product_id]',
 						'[alg_wc_ean_product_meta]',
 						'[alg_wc_ean_product_function]',
-					) ) . '</code></li></ul>' ),
+					) ) . '</code></li></ul>'
+				),
 				'desc_tip'          => apply_filters( 'alg_wc_ean_print_barcodes_to_pdf_template_settings_desc', '' ),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings[template]',
 				'default'           => '[alg_wc_ean_barcode]<br>[alg_wc_ean]',
@@ -382,17 +468,28 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				),
 			),
 			array(
-				'desc'              => sprintf( __( 'Print buttons style, e.g.: %s', 'ean-for-woocommerce' ), '<code>font-size: 40px; width: 40px; height: 40px;</code>' ),
-				'desc_tip'          => sprintf( __( 'Applied to the "%s" and "%s" print buttons.', 'ean-for-woocommerce' ),
-					__( 'Single product', 'ean-for-woocommerce' ), __( 'Single order', 'ean-for-woocommerce' ) ),
+				'desc'              => sprintf(
+					/* Translators: %s: Style example. */
+					__( 'Print buttons style, e.g.: %s', 'ean-for-woocommerce' ),
+					'<code>font-size: 40px; width: 40px; height: 40px;</code>'
+				),
+				'desc_tip'          => sprintf(
+					/* Translators: %1$s: Button type, %2$s: Button type. */
+					__( 'Applied to the "%1$s" and "%2$s" print buttons.', 'ean-for-woocommerce' ),
+					__( 'Single product', 'ean-for-woocommerce' ),
+					__( 'Single order', 'ean-for-woocommerce' )
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings_print_buttons_style',
 				'default'           => '',
 				'type'              => 'text',
 			),
 			array(
 				'desc'              => __( 'Variations print buttons', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'Applied to the "%s" print buttons.', 'ean-for-woocommerce' ),
-					__( 'Single product', 'ean-for-woocommerce' ) ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Button type. */
+					__( 'Applied to the "%s" print buttons.', 'ean-for-woocommerce' ),
+					__( 'Single product', 'ean-for-woocommerce' )
+				),
 				'id'                => 'alg_wc_ean_print_barcodes_to_pdf_settings_buttons_variations',
 				'default'           => array( 'variations_tab' ),
 				'type'              => 'multiselect',
@@ -434,8 +531,11 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 			array(
 				'title'             => __( 'Use Print.js', 'ean-for-woocommerce' ),
 				'desc'              => __( 'Enable', 'ean-for-woocommerce' ),
-				'desc_tip'          => sprintf( __( 'Use %s library for printing PDFs.', 'ean-for-woocommerce' ),
-					'<a href="https://printjs.crabbly.com/" target="_blank">Print.js</a>' ),
+				'desc_tip'          => sprintf(
+					/* Translators: %s: Link. */
+					__( 'Use %s library for printing PDFs.', 'ean-for-woocommerce' ),
+					'<a href="https://printjs.crabbly.com/" target="_blank">Print.js</a>'
+				),
 				'id'                => 'alg_wc_ean_print_use_print_js',
 				'default'           => 'yes',
 				'type'              => 'checkbox',
@@ -484,7 +584,7 @@ class Alg_WC_EAN_Settings_Print extends Alg_WC_EAN_Settings_Section {
 				'class'             => 'wc-product-search',
 				'options'           => array(),
 				'custom_attributes' => array(
-					'data-placeholder' => esc_attr__( 'Search for a product&hellip;', 'woocommerce' ),
+					'data-placeholder' => esc_attr__( 'Search for a product&hellip;', 'ean-for-woocommerce' ),
 					'data-action'      => 'woocommerce_json_search_products_and_variations',
 					'data-allow_clear' => true,
 				),

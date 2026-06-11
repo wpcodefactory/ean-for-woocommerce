@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Search Class
  *
- * @version 4.8.7
+ * @version 5.5.5
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -119,7 +119,7 @@ class Alg_WC_EAN_Search {
 	/**
 	 * _search_backend.
 	 *
-	 * @version 4.7.6
+	 * @version 5.5.5
 	 * @since   4.7.6
 	 *
 	 * @todo    (dev) rewrite?
@@ -133,7 +133,7 @@ class Alg_WC_EAN_Search {
 		) {
 
 			// Check search term
-			$search_term = isset( $_REQUEST['s'] ) ? sanitize_text_field( $_REQUEST['s'] ) : '';
+			$search_term = isset( $_REQUEST['s'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( empty( $search_term ) ) {
 				return;
 			}
@@ -196,7 +196,7 @@ class Alg_WC_EAN_Search {
 	/**
 	 * json_search_found_products.
 	 *
-	 * @version 1.0.2
+	 * @version 5.5.5
 	 * @since   1.0.2
 	 *
 	 * @todo    (dev) customizable `meta_compare` (can be e.g., `=`)
@@ -204,7 +204,7 @@ class Alg_WC_EAN_Search {
 	 */
 	function json_search_found_products( $products ) {
 
-		if ( isset( $_REQUEST['term'] ) && '' !== $_REQUEST['term'] ) {
+		if ( isset( $_REQUEST['term'] ) && '' !== $_REQUEST['term'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 			// Key
 			$key = alg_wc_ean()->core->ean_key;
@@ -213,8 +213,8 @@ class Alg_WC_EAN_Search {
 			$found_products = wc_get_products( array(
 				'type'         => array_merge( array_keys( wc_get_product_types() ), array( 'variation' ) ),
 				'limit'        => -1,
-				'meta_key'     => $key,                          // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-				'meta_value'   => wc_clean( $_REQUEST['term'] ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+				'meta_key'     => $key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_value'   => wc_clean( wp_unslash( $_REQUEST['term'] ) ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 				'meta_compare' => 'LIKE',
 				'return'       => 'ids',
 			) );
@@ -247,7 +247,7 @@ class Alg_WC_EAN_Search {
 	/**
 	 * _search_frontend.
 	 *
-	 * @version 4.7.6
+	 * @version 5.5.5
 	 * @since   4.7.6
 	 *
 	 * @todo    (dev) rewrite?
@@ -265,8 +265,13 @@ class Alg_WC_EAN_Search {
 
 		// Get `$posts`
 		global $wpdb;
-		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='{$key}' AND meta_value LIKE %s;",
-			esc_sql( '%' . $wp_query->query['s'] . '%' ) ) );
+		$posts = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value LIKE %s",
+				$key,
+				'%' . $wpdb->esc_like( $wp_query->query['s'] ) . '%'
+			)
+		);
 		if ( ! $posts ) {
 			return;
 		}

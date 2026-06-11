@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 5.4.6
+ * @version 5.5.5
  * @since   2.2.0
  *
  * @author  Algoritmika Ltd
@@ -24,7 +24,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * Constructor.
 	 *
-	 * @version 5.4.6
+	 * @version 5.5.5
 	 * @since   2.2.0
 	 *
 	 * @todo    (dev) MultiVendorX: generate button
@@ -70,13 +70,21 @@ class Alg_WC_EAN_Compatibility {
 
 		// WCFM
 		if ( 'yes' === get_option( 'alg_wc_ean_wcfm', 'no' ) ) {
+			// Field
 			add_filter( 'wcfm_product_fields_stock',            array( $this, 'wcfm_add_ean_field' ), 10, 3 );
 			add_action( 'after_wcfm_products_manage_meta_save', array( $this, 'wcfm_save_ean_field' ), 10, 2 );
+
+			// "Generate EAN" button
+			add_action( 'wp_enqueue_scripts',               array( $this, 'wcfm_generate_button_script_and_style' ) );
+			add_action( 'wp_ajax_alg_wc_ean_generate_ajax', array( $this, 'wcfm_generate_button_ajax' ) );
 
 			// Variations
 			add_filter( 'wcfm_variation_edit_data',               array( $this, 'wcfm_variation_edit_data' ), 10, 3 );
 			add_filter( 'wcfm_product_manage_fields_variations',  array( $this, 'wcfm_variation_add_ean_field' ) );
 			add_action( 'after_wcfm_product_variation_meta_save', array( $this, 'wcfm_variation_save_ean_field' ), 10, 3 );
+
+			// Variations: "Generate EAN" button
+			add_action( 'wp_enqueue_scripts', array( $this, 'wcfm_variation_generate_button_script' ) );
 		}
 
 		// "Print Invoice & Delivery Notes for WooCommerce" plugin
@@ -370,7 +378,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * add_to_wcdn_ean.
 	 *
-	 * @version 2.6.0
+	 * @version 5.5.5
 	 * @since   1.4.0
 	 *
 	 * @todo    (feature) customizable wrapper
@@ -379,7 +387,7 @@ class Alg_WC_EAN_Compatibility {
 	function add_to_wcdn_ean( $product, $order, $item ) {
 		if ( false !== ( $ean = alg_wc_ean()->core->get_ean_from_order_item( $item ) ) ) {
 			echo '<small class="ean_wrapper">' . esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ) . ' ' .
-					'<span class="ean">' . $ean . '</span>' .
+					'<span class="ean">' . wp_kses_post( $ean ) . '</span>' .
 				'</small>';
 		}
 	}
@@ -387,7 +395,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * add_to_wpo_wcpdf_ean.
 	 *
-	 * @version 4.2.0
+	 * @version 5.5.5
 	 * @since   2.6.0
 	 *
 	 * @todo    (dev) check if valid?
@@ -400,7 +408,7 @@ class Alg_WC_EAN_Compatibility {
 					'<dt class="ean">' . esc_html( get_option( 'alg_wc_ean_title', __( 'EAN', 'ean-for-woocommerce' ) ) ) . ':' . '</dt>' .
 					'<dd class="ean">' . '%ean%' . '</dd>' .
 				'</dl>' );
-			echo str_replace( '%ean%', $ean, $template );
+			echo wp_kses_post( str_replace( '%ean%', $ean, $template ) );
 		}
 	}
 
@@ -422,12 +430,11 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * wcfm_add_ean_field.
 	 *
-	 * @version 4.0.0
+	 * @version 5.5.5
 	 * @since   2.2.2
 	 *
 	 * @see     https://plugins.svn.wordpress.org/wc-frontend-manager/tags/6.5.10/views/products-manager/wcfm-view-products-manage-tabs.php
 	 *
-	 * @todo    (dev) `generate_button`: move `add_action` (3x) to constructor?
 	 * @todo    (dev) do we need `esc_html` everywhere, e.g., in `hints`? (same for `dokan_add_ean_field()`)
 	 * @todo    (feature) optional EAN validation
 	 */
@@ -436,22 +443,33 @@ class Alg_WC_EAN_Compatibility {
 
 		// "Generate" button
 		$do_add_generate_button = ( 'yes' === get_option( 'alg_wc_ean_wcfm_add_generate_button', 'no' ) && $product_id );
-		if ( $do_add_generate_button ) {
-			add_action( 'wp_footer', array( 'Alg_WC_EAN_Edit', 'generate_button_js' ) );
-			add_action( 'wp_ajax_alg_wc_ean_generate_ajax', array( 'Alg_WC_EAN_Edit', 'generate_button_ajax' ) );
-			add_action( 'wp_footer', array( $this, 'wcfm_generate_button_css' ) );
-		}
 
 		// Field data
 		$_field = array(
 			'label'       => esc_html( get_option( 'alg_wc_ean_wcfm_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
-			'desc'        => ( $do_add_generate_button ? '<p class="alg_wc_ean_generate_button_wrapper">' . Alg_WC_EAN_Edit::get_generate_button( $product_id, $_key ) . '</p>' : '' ),
+			'desc'        => (
+				$do_add_generate_button ?
+				'<p class="alg_wc_ean_generate_button_wrapper">' .
+					Alg_WC_EAN_Edit::get_generate_button( $product_id, $_key ) .
+				'</p>' :
+				''
+			),
 			'type'        => 'text',
 			'class'       => 'wcfm-text',
 			'label_class' => 'wcfm_title',
 			'value'       => alg_wc_ean()->core->get_ean( $product_id ),
-			'hints'       => esc_html( get_option( 'alg_wc_ean_wcfm_hints', __( 'The International Article Number (also known as European Article Number or EAN) is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.', 'ean-for-woocommerce' ) ) ),
-			'placeholder' => esc_html( get_option( 'alg_wc_ean_wcfm_placeholder', __( 'Product EAN...', 'ean-for-woocommerce' ) ) ),
+			'hints'       => esc_html(
+				get_option(
+					'alg_wc_ean_wcfm_hints',
+					__( 'The International Article Number (also known as European Article Number or EAN) is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.', 'ean-for-woocommerce' )
+				)
+			),
+			'placeholder' => esc_html(
+				get_option(
+					'alg_wc_ean_wcfm_placeholder',
+					__( 'Product EAN...', 'ean-for-woocommerce' )
+				)
+			),
 		);
 
 		// Add field
@@ -472,19 +490,46 @@ class Alg_WC_EAN_Compatibility {
 	}
 
 	/**
-	 * wcfm_generate_button_css.
+	 * wcfm_generate_button_ajax.
 	 *
-	 * @version 4.0.0
-	 * @since   4.0.0
+	 * @version 5.5.5
+	 * @since   5.5.5
 	 *
-	 * @todo    (dev) use `admin_enqueue_scripts`?
+	 * @todo    (v5.5.5) check for `'yes' === get_option( 'alg_wc_ean_wcfm_add_generate_button', 'no' )`?
 	 */
-	function wcfm_generate_button_css() {
-		?><style>
-			.alg_wc_ean_generate_button_wrapper {
-				text-align: right;
-			}
-		</style><?php
+	function wcfm_generate_button_ajax() {
+		Alg_WC_EAN_Edit::generate_button_ajax();
+	}
+
+	/**
+	 * wcfm_generate_button_script_and_style.
+	 *
+	 * @version 5.5.5
+	 * @since   5.5.5
+	 *
+	 * @todo    (v5.5.5) check if it's a WCFM page(s)
+	 */
+	function wcfm_generate_button_script_and_style() {
+		if ( 'no' === get_option( 'alg_wc_ean_wcfm_add_generate_button', 'no' ) ) {
+			return;
+		}
+
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_enqueue_script(
+			'alg-wc-ean-generate-button',
+			alg_wc_ean()->plugin_url() . '/assets/js/alg-wc-ean-generate-button' . $min . '.js',
+			array( 'jquery' ),
+			alg_wc_ean()->version,
+			true
+		);
+
+		wp_enqueue_style(
+			'alg-wc-ean-wcfm-generate-button',
+			alg_wc_ean()->plugin_url() . '/assets/css/alg-wc-ean-wcfm-generate-button' . $min . '.css',
+			array(),
+			alg_wc_ean()->version
+		);
 	}
 
 	/**
@@ -505,29 +550,38 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * wcfm_variation_add_ean_field.
 	 *
-	 * @version 4.0.0
+	 * @version 5.5.5
 	 * @since   4.0.0
 	 *
 	 * @todo    (dev) placeholder: parent product's EAN?
 	 * @todo    (dev) `wcfm_half_ele`?
-	 * @todo    (dev) `generate_button`: move `add_action` to constructor?
 	 * @todo    (dev) merge with `wcfm_add_ean_field()`?
 	 */
 	function wcfm_variation_add_ean_field( $fields ) {
 
-		// "Generate" button
-		if ( 'yes' === get_option( 'alg_wc_ean_wcfm_add_generate_button', 'no' ) ) {
-			add_action( 'wp_footer', array( $this, 'wcfm_variation_get_generate_button_js' ) );
-		}
-
 		// Field data
 		$_field = array(
-			'label'       => esc_html( get_option( 'alg_wc_ean_wcfm_title', __( 'EAN', 'ean-for-woocommerce' ) ) ),
+			'label'       => esc_html(
+				get_option(
+					'alg_wc_ean_wcfm_title',
+					__( 'EAN', 'ean-for-woocommerce' )
+				)
+			),
 			'type'        => 'text',
 			'class'       => 'wcfm-text wcfm_ele wcfm_half_ele variable variable-subscription pw-gift-card',
 			'label_class' => 'wcfm_title wcfm_half_ele_title',
-			'hints'       => esc_html( get_option( 'alg_wc_ean_wcfm_hints', __( 'The International Article Number (also known as European Article Number or EAN) is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.', 'ean-for-woocommerce' ) ) ),
-			'placeholder' => esc_html( get_option( 'alg_wc_ean_wcfm_placeholder', __( 'Product EAN...', 'ean-for-woocommerce' ) ) ),
+			'hints'       => esc_html(
+				get_option(
+					'alg_wc_ean_wcfm_hints',
+					__( 'The International Article Number (also known as European Article Number or EAN) is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.', 'ean-for-woocommerce' )
+				)
+			),
+			'placeholder' => esc_html(
+				get_option(
+					'alg_wc_ean_wcfm_placeholder',
+					__( 'Product EAN...', 'ean-for-woocommerce' )
+				)
+			),
 		);
 
 		// Add field
@@ -563,44 +617,48 @@ class Alg_WC_EAN_Compatibility {
 	}
 
 	/**
-	 * wcfm_variation_get_generate_button_js.
+	 * wcfm_variation_generate_button_script.
 	 *
-	 * @version 4.0.0
+	 * @version 5.5.5
 	 * @since   4.0.0
 	 *
+	 * @todo    (v5.5.5) check if it's a WCFM page(s)
 	 * @todo    (dev) merge with `Alg_WC_EAN_Edit::get_generate_button()`?
 	 */
-	function wcfm_variation_get_generate_button_js() {
+	function wcfm_variation_generate_button_script() {
+		if ( 'no' === get_option( 'alg_wc_ean_wcfm_add_generate_button', 'no' ) ) {
+			return;
+		}
+
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_enqueue_script(
+			'alg-wc-ean-wcfm-variation-generate-button',
+			alg_wc_ean()->plugin_url() . '/assets/js/alg-wc-ean-wcfm-variation-generate-button' . $min . '.js',
+			array( 'jquery' ),
+			alg_wc_ean()->version,
+			true
+		);
+
 		$button_label = sprintf(
 			/* Translators: %s: EAN title. */
 			esc_html__( 'Generate %s', 'ean-for-woocommerce' ),
 			get_option( 'alg_wc_ean_title', esc_html__( 'EAN', 'ean-for-woocommerce' ) )
 		);
-		?><script>
-			jQuery( document ).ready( function () {
-				jQuery( '.variation_id' ).each( function () {
-					var variation_id = jQuery( this ).val();
-					var input_id     = jQuery( this ).attr( 'id' ).replace( 'variations_id_', 'variations_wcfm_' + '<?php echo alg_wc_ean()->core->ean_key; ?>' + '_' );
-					jQuery( '#' + input_id ).after( '<p class="alg_wc_ean_generate_button_wrapper">' +
-							'<button' +
-								' type="button"' +
-								' class="button alg_wc_ean_generate_ajax wcfm_ele variable variable-subscription pw-gift-card"' +
-								' data-product="' + variation_id + '"' +
-								' data-input="' + input_id + '"' +
-							'>' +
-								'<?php echo $button_label; ?>' +
-							'</button>' +
-						'</p>'
-					);
-				} );
-			} );
-		</script><?php
+		wp_localize_script(
+			'alg-wc-ean-wcfm-variation-generate-button',
+			'algWCEANWCFMVariationGenerateButton',
+			array(
+				'eanKey'      => alg_wc_ean()->core->ean_key,
+				'buttonLabel' => $button_label,
+			),
+		);
+
 	}
 
 	/**
 	 * dokan_add_ean_field_variation.
 	 *
-	 * @version 4.4.6
+	 * @version 5.5.5
 	 * @since   3.1.2
 	 */
 	function dokan_add_ean_field_variation( $loop, $variation_data, $variation ) {
@@ -616,9 +674,9 @@ class Alg_WC_EAN_Compatibility {
 		$desc          = ( '' !== get_option( 'alg_wc_ean_dokan_desc', '' ) ? alg_wc_ean()->core->shortcodes->do_shortcode( get_option( 'alg_wc_ean_dokan_desc', '' ), array( 'ean' => $value, 'product_id' => $variation->ID ) ) : '' );
 
 		echo '<div class="dokan-form-group">' .
-			'<label for="' . $id . '" class="form-label">' . $title . $required_html . '</label>' .
-			'<input type="text" name="' . $name . '" id="' . $id . '" class="dokan-form-control alg-wc-ean" placeholder="' . $placeholder . '" value="' . $value . '"' . $required . '>' .
-			$desc .
+			'<label for="' . esc_attr( $id ) . '" class="form-label">' . wp_kses_post( $title . $required_html ) . '</label>' .
+			'<input type="text" name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '" class="dokan-form-control alg-wc-ean" placeholder="' . esc_attr( $placeholder ) . '" value="' . esc_attr( $value ) . '"' . esc_attr( $required ) . '>' .
+			wp_kses_post( $desc ) .
 		'</div>';
 
 	}
@@ -647,7 +705,7 @@ class Alg_WC_EAN_Compatibility {
 	/**
 	 * dokan_add_ean_field.
 	 *
-	 * @version 5.4.0
+	 * @version 5.5.5
 	 * @since   2.2.2
 	 *
 	 * @see     https://github.com/weDevsOfficial/dokan/blob/v3.2.8/templates/products/new-product.php#L257
@@ -663,8 +721,8 @@ class Alg_WC_EAN_Compatibility {
 			! empty( $post_id ) ?
 			alg_wc_ean()->core->get_ean( $post_id ) :
 			(
-				isset( $_REQUEST[ $id ] ) ?
-				sanitize_text_field( wp_unslash( $_REQUEST[ $id ] ) ) :
+				isset( $_REQUEST[ $id ] ) ? // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				sanitize_text_field( wp_unslash( $_REQUEST[ $id ] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				''
 			)
 		);
@@ -701,7 +759,7 @@ class Alg_WC_EAN_Compatibility {
 				for="<?php echo esc_attr( $id ); ?>"
 				class="form-label"
 			>
-				<?php echo esc_html( $title ); ?><?php echo $required_html; ?>
+				<?php echo esc_html( $title ); ?><?php echo wp_kses_post( $required_html ); ?>
 			</label>
 			<input
 				type="text"
@@ -710,9 +768,9 @@ class Alg_WC_EAN_Compatibility {
 				class="dokan-form-control alg-wc-ean"
 				placeholder="<?php echo esc_attr( $placeholder ); ?>"
 				value="<?php echo esc_attr( $value ); ?>"
-				<?php echo $required; ?>
+				<?php echo esc_attr( $required ); ?>
 			>
-			<?php echo $desc; ?>
+			<?php echo wp_kses_post( $desc ); ?>
 		</div>
 		<?php
 

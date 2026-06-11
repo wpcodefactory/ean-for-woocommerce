@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Main Class
  *
- * @version 5.5.0
+ * @version 5.5.5
  * @since   1.0.0
  *
  * @author  Algoritmika Ltd
@@ -63,7 +63,7 @@ final class Alg_WC_EAN {
 	/**
 	 * Alg_WC_EAN Constructor.
 	 *
-	 * @version 5.3.0
+	 * @version 5.5.5
 	 * @since   1.0.0
 	 *
 	 * @access  public
@@ -79,9 +79,6 @@ final class Alg_WC_EAN {
 		if ( is_admin() ) {
 			require_once plugin_dir_path( ALG_WC_EAN_FILE ) . 'vendor/autoload.php';
 		}
-
-		// Set up localisation
-		add_action( 'init', array( $this, 'localize' ) );
 
 		// Declare compatibility with custom order tables for WooCommerce
 		add_action( 'before_woocommerce_init', array( $this, 'wc_declare_compatibility' ) );
@@ -99,20 +96,6 @@ final class Alg_WC_EAN {
 			$this->admin();
 		}
 
-	}
-
-	/**
-	 * localize.
-	 *
-	 * @version 2.2.0
-	 * @since   2.0.0
-	 */
-	function localize() {
-		load_plugin_textdomain(
-			'ean-for-woocommerce',
-			false,
-			dirname( plugin_basename( ALG_WC_EAN_FILE ) ) . '/langs/'
-		);
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Display Class
  *
- * @version 5.3.5
+ * @version 5.5.5
  * @since   2.0.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.8.6
+	 * @version 5.5.5
 	 * @since   2.0.0
 	 *
 	 * @todo    (dev) Admin products list column: move to `class-alg-wc-ean-display-admin.php` or `class-alg-wc-ean-admin.php`?
@@ -76,7 +76,7 @@ class Alg_WC_EAN_Display {
 				add_action( 'manage_product_posts_custom_column',   array( $this, 'render_product_columns' ), 10, 2 );
 				add_filter( 'manage_edit-product_sortable_columns', array( $this, 'product_sortable_columns' ) );
 				add_action( 'pre_get_posts',                        array( $this, 'product_columns_order_by_column' ) );
-				add_action( 'admin_head',                           array( $this, 'product_columns_style' ) );
+				add_action( 'admin_enqueue_scripts',                array( $this, 'product_columns_style' ) );
 			}
 
 		}
@@ -114,18 +114,30 @@ class Alg_WC_EAN_Display {
 	/**
 	 * product_columns_style.
 	 *
-	 * @version 3.0.0
+	 * @version 5.5.5
 	 * @since   3.0.0
 	 *
 	 * @todo    (dev) make this optional? (same for barcodes)
-	 * @todo    (dev) load only on `edit.php?post_type=product` etc.? (same for barcodes)
 	 */
 	function product_columns_style() {
-		?><style>
-		.column-ean {
-			width: 10%;
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			return;
 		}
-		</style><?php
+		$screen = get_current_screen();
+		if (
+			! isset( $screen->id ) ||
+			'edit-product' !== $screen->id
+		) {
+			return;
+		}
+
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_enqueue_style(
+			'alg-wc-ean-product-columns',
+			alg_wc_ean()->plugin_url() . '/assets/css/alg-wc-ean-product-columns' . $min . '.css',
+			array(),
+			alg_wc_ean()->version
+		);
 	}
 
 	/**
@@ -301,18 +313,21 @@ class Alg_WC_EAN_Display {
 	/**
 	 * variations_enqueue_scripts.
 	 *
-	 * @version 4.4.0
+	 * @version 5.5.5
 	 * @since   1.0.0
 	 */
 	function variations_enqueue_scripts() {
 		if ( 'product_meta' === get_option( 'alg_wc_ean_frontend_variation_position', 'product_meta' ) ) {
-			wp_enqueue_script( 'alg-wc-ean-variations',
-				alg_wc_ean()->plugin_url() . '/includes/js/alg-wc-ean-variations' . ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ? '' : '.min' ) . '.js',
+			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			wp_enqueue_script(
+				'alg-wc-ean-variations',
+				alg_wc_ean()->plugin_url() . '/assets/js/alg-wc-ean-variations' . $min . '.js',
 				array( 'jquery' ),
 				alg_wc_ean()->version,
 				true
 			);
-			wp_localize_script( 'alg-wc-ean-variations',
+			wp_localize_script(
+				'alg-wc-ean-variations',
 				'alg_wc_ean_variations_obj', array(
 					'variations_form'         => get_option( 'alg_wc_ean_js_variations_form', '.variations_form' ),
 					'variations_form_closest' => get_option( 'alg_wc_ean_js_variations_form_closest', '.summary' ),
@@ -379,7 +394,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean.
 	 *
-	 * @version 4.8.5
+	 * @version 5.5.5
 	 * @since   1.0.0
 	 *
 	 * @todo    (dev) template: shortcode vs placeholder?
@@ -392,7 +407,7 @@ class Alg_WC_EAN_Display {
 			global $product;
 			$product_id  = ( $product ? $product->get_id() : false );
 			$output_html = $this->get_ean_output_html( $output_data['value'], $template, $product_id, $output_data['style'] );
-			echo apply_filters( 'alg_wc_ean_display', $output_html, $output_data['value'], $output_data['style'], $template, $single_or_loop );
+			echo wp_kses_post( apply_filters( 'alg_wc_ean_display', $output_html, $output_data['value'], $output_data['style'], $template, $single_or_loop ) );
 		}
 	}
 
@@ -428,7 +443,7 @@ class Alg_WC_EAN_Display {
 	/**
 	 * add_ean_cart.
 	 *
-	 * @version 4.8.5
+	 * @version 5.5.5
 	 * @since   2.0.0
 	 */
 	function add_ean_cart( $cart_item ) {
@@ -436,7 +451,7 @@ class Alg_WC_EAN_Display {
 		if ( $ean = alg_wc_ean()->core->get_ean( $product_id ) ) {
 			$template    = get_option( 'alg_wc_ean_frontend_cart_template', alg_wc_ean()->core->get_default_template() );
 			$output_html = '<div>' . $this->get_ean_output_html( $ean, $template, $product_id ) . '</div>';
-			echo apply_filters( 'alg_wc_ean_display_cart', $output_html, $ean, $template );
+			echo wp_kses_post( apply_filters( 'alg_wc_ean_display_cart', $output_html, $ean, $template ) );
 		}
 	}
 

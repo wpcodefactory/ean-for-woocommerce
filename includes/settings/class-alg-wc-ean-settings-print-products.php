@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Print Products Section Settings
  *
- * @version 5.4.8
+ * @version 5.5.5
  * @since   4.3.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Settings_Print_Products extends Alg_WC_EAN_Settings_Section {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.0
+	 * @version 5.5.5
 	 * @since   4.3.0
 	 */
 	function __construct() {
@@ -26,6 +26,8 @@ class Alg_WC_EAN_Settings_Print_Products extends Alg_WC_EAN_Settings_Section {
 		$this->desc = __( 'Print Products', 'ean-for-woocommerce' );
 
 		parent::__construct();
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'style' ), PHP_INT_MAX );
 
 		add_action( 'woocommerce_settings_' . 'alg_wc_ean', array( $this, 'before_table' ), 9 );
 		add_action( 'woocommerce_settings_' . 'alg_wc_ean', array( $this, 'after_table' ), 11 );
@@ -72,40 +74,44 @@ class Alg_WC_EAN_Settings_Print_Products extends Alg_WC_EAN_Settings_Section {
 		global $current_section;
 		if ( 'print_products' === $current_section ) {
 			$this->print_button();
-			$GLOBALS['hide_save_button'] = true;
+			$GLOBALS['hide_save_button'] = true; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		}
 	}
 
 	/**
 	 * style.
 	 *
-	 * @version 4.3.0
+	 * @version 5.5.5
 	 * @since   4.3.0
 	 */
 	function style() {
-		?>
-		<style>
+		if ( ! function_exists( 'get_current_screen' ) ) {
+			return;
+		}
+		$screen = get_current_screen();
+		if (
+			! isset( $screen->id ) ||
+			'woocommerce_page_wc-settings' !== $screen->id ||
+			! isset( $_GET['tab'], $_GET['section'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'alg_wc_ean' !== $_GET['tab'] || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'print_products' !== $_GET['section'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		) {
+			return;
+		}
 
-			.form-table,
-			.form-table th,
-			.form-table td {
-				padding: 5px;
-				width: auto;
-				border: 1px solid #ddd;
-			}
-
-			.woocommerce table.form-table input[type=number] {
-				width: 4em;
-			}
-
-		</style>
-		<?php
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_enqueue_style(
+			'alg-wc-ean-settings-print-products',
+			alg_wc_ean()->plugin_url() . '/assets/css/alg-wc-ean-settings-print-products' . $min . '.css',
+			array(),
+			alg_wc_ean()->version
+		);
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 4.3.0
+	 * @version 5.5.5
 	 * @since   4.3.0
 	 *
 	 * @todo    (dev) pagination
@@ -113,8 +119,6 @@ class Alg_WC_EAN_Settings_Print_Products extends Alg_WC_EAN_Settings_Section {
 	 */
 	function get_settings() {
 		$settings = array();
-
-		add_action( 'admin_footer', array( $this, 'style' ), PHP_INT_MAX );
 
 		$products = wc_get_products( array(
 			'limit'   => -1,

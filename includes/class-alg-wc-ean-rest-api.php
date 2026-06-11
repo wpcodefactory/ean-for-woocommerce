@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - REST API Class
  *
- * @version 4.8.2
+ * @version 5.5.5
  * @since   3.7.0
  *
  * @author  Algoritmika Ltd
@@ -113,7 +113,7 @@ class Alg_WC_EAN_REST_API {
 	/**
 	 * order_search.
 	 *
-	 * @version 3.7.0
+	 * @version 5.5.5
 	 * @since   3.7.0
 	 *
 	 * @see     https://github.com/woocommerce/woocommerce/blob/6.2.1/plugins/woocommerce/includes/rest-api/Controllers/Version2/class-wc-rest-orders-v2-controller.php#L524
@@ -125,11 +125,11 @@ class Alg_WC_EAN_REST_API {
 		if ( ! empty( $request['ean'] ) ) {
 			global $wpdb;
 
-			$order_ids = $wpdb->get_col(
+			$order_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare(
 					"SELECT order_id
 					FROM {$wpdb->prefix}woocommerce_order_items
-					WHERE order_item_id IN ( SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE meta_key = '%s' AND meta_value = %s )
+					WHERE order_item_id IN ( SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE meta_key = %s AND meta_value = %s )
 					AND order_item_type = 'line_item'",
 					alg_wc_ean()->core->ean_key,
 					$request['ean']

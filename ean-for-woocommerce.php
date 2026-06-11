@@ -3,13 +3,13 @@
 Plugin Name: EAN Barcode Generator for WooCommerce: UPC, ISBN & GTIN Inventory
 Plugin URI: https://wpfactory.com/item/ean-for-woocommerce/
 Description: Manage product GTIN (EAN, UPC, ISBN, etc.) in WooCommerce. Beautifully.
-Version: 5.5.4
+Version: 5.5.5
 Author: WPFactory
 Author URI: https://wpfactory.com
-Requires at least: 4.4
+Requires at least: 5.7
 Text Domain: ean-for-woocommerce
 Domain Path: /langs
-WC tested up to: 10.7
+WC tested up to: 10.8
 Requires Plugins: woocommerce
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -18,29 +18,52 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 defined( 'ABSPATH' ) || exit;
 
 if ( 'ean-for-woocommerce.php' === basename( __FILE__ ) ) {
-	/**
-	 * Check if Pro plugin version is activated.
-	 *
-	 * @version 4.7.3
-	 * @since   2.2.0
-	 */
-	$plugin = 'ean-for-woocommerce-pro/ean-for-woocommerce-pro.php';
-	if (
-		in_array( $plugin, (array) get_option( 'active_plugins', array() ), true ) ||
-		(
-			is_multisite() &&
-			array_key_exists( $plugin, (array) get_site_option( 'active_sitewide_plugins', array() ) )
-		)
-	) {
+	if ( ! function_exists( 'alg_wc_ean_is_pro_activated' ) ) {
+		/**
+		 * Check if Pro plugin version is activated.
+		 *
+		 * @version 5.5.5
+		 * @since   2.2.0
+		 */
+		function alg_wc_ean_is_pro_activated() {
+			$plugin = 'ean-for-woocommerce-pro/ean-for-woocommerce-pro.php';
+			return (
+				in_array( $plugin, (array) get_option( 'active_plugins', array() ), true ) ||
+				(
+					is_multisite() &&
+					array_key_exists( $plugin, (array) get_site_option( 'active_sitewide_plugins', array() ) )
+				)
+			);
+		}
+	}
+	if ( alg_wc_ean_is_pro_activated() ) {
 		defined( 'ALG_WC_EAN_FILE_FREE' ) || define( 'ALG_WC_EAN_FILE_FREE', __FILE__ );
 		return;
 	}
 }
 
-defined( 'ALG_WC_EAN_VERSION' ) || define( 'ALG_WC_EAN_VERSION', '5.5.4' );
+/**
+ * ALG_WC_EAN_VERSION.
+ *
+ * @version 1.0.0
+ * @since   1.0.0
+ */
+defined( 'ALG_WC_EAN_VERSION' ) || define( 'ALG_WC_EAN_VERSION', '5.5.5' );
 
+/**
+ * ALG_WC_EAN_FILE.
+ *
+ * @version 1.0.0
+ * @since   1.0.0
+ */
 defined( 'ALG_WC_EAN_FILE' ) || define( 'ALG_WC_EAN_FILE', __FILE__ );
 
+/**
+ * Main Class.
+ *
+ * @version 1.0.0
+ * @since   1.0.0
+ */
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-alg-wc-ean.php';
 
 if ( ! function_exists( 'alg_wc_ean' ) ) {
@@ -55,6 +78,20 @@ if ( ! function_exists( 'alg_wc_ean' ) ) {
 	}
 }
 
+/**
+ * plugins_loaded.
+ *
+ * @version 1.0.0
+ * @since   1.0.0
+ */
 add_action( 'plugins_loaded', 'alg_wc_ean' );
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/alg-wc-ean-init.php';
+if ( 'ean-for-woocommerce-pro.php' === basename( ALG_WC_EAN_FILE ) ) {
+	/**
+	 * Pro Init.
+	 *
+	 * @version 5.5.5
+	 * @since   5.4.5
+	 */
+	require_once plugin_dir_path( __FILE__ ) . 'includes/pro/alg-wc-ean-init-pro.php';
+}

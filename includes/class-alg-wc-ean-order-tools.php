@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Order Tools Class
  *
- * @version 4.9.1
+ * @version 5.5.5
  * @since   3.9.0
  *
  * @author  Algoritmika Ltd
@@ -43,20 +43,24 @@ class Alg_WC_EAN_Order_Tools {
 	/**
 	 * get_order_items_search.
 	 *
-	 * @version 4.9.1
+	 * @version 5.5.5
 	 * @since   4.9.1
 	 */
 	function get_order_items_search( $ean ) {
 
 		// Get orders
 		global $wpdb;
-		$order_ids = $wpdb->get_col( $wpdb->prepare( "
-			SELECT DISTINCT items.order_id
-			FROM {$wpdb->prefix}woocommerce_order_items AS items
-			LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta AS itemmeta ON items.order_item_id = itemmeta.order_item_id
-			WHERE meta_key LIKE '%s'
-			AND meta_value = %s
-		", alg_wc_ean()->core->ean_key, $ean ) );
+		$order_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				"SELECT DISTINCT items.order_id
+				FROM {$wpdb->prefix}woocommerce_order_items AS items
+				LEFT JOIN {$wpdb->prefix}woocommerce_order_itemmeta AS itemmeta ON items.order_item_id = itemmeta.order_item_id
+				WHERE meta_key LIKE %s
+				AND meta_value = %s",
+				alg_wc_ean()->core->ean_key,
+				$ean
+			)
+		);
 
 		// Output
 		ob_start();
@@ -83,12 +87,12 @@ class Alg_WC_EAN_Order_Tools {
 						?>
 						<tr>
 						<?php if ( $order ) { ?>
-							<td><strong><a href="<?php echo esc_url( admin_url( "post.php?post={$order_id}&action=edit" ) ); ?>">#<?php echo $order->get_order_number(); ?></a></strong></td>
-							<td><?php echo wc_format_datetime( $order->get_date_created() ); ?></td>
-							<td><mark class="order-status status-<?php echo esc_attr( $order->get_status() ); ?> tips"><span><?php echo wc_get_order_status_name( $order->get_status() ); ?></span></mark></td>
-							<td><?php echo wc_price( $order->get_total() ); ?></td>
+							<td><strong><a href="<?php echo esc_url( admin_url( "post.php?post={$order_id}&action=edit" ) ); ?>">#<?php echo esc_html( $order->get_order_number() ); ?></a></strong></td>
+							<td><?php echo esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></td>
+							<td><mark class="order-status status-<?php echo esc_attr( $order->get_status() ); ?> tips"><span><?php echo esc_html( wc_get_order_status_name( $order->get_status() ) ); ?></span></mark></td>
+							<td><?php echo wp_kses_post( wc_price( $order->get_total() ) ); ?></td>
 						<?php } else { ?>
-							<td colspan="4"><strong>#<?php echo $order_id; ?></strong></td>
+							<td colspan="4"><strong>#<?php echo esc_html( $order_id ); ?></strong></td>
 						<?php } ?>
 						</tr>
 						<?php

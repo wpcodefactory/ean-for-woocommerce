@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Product Tools Class
  *
- * @version 5.4.0
+ * @version 5.5.5
  * @since   2.1.0
  *
  * @author  Algoritmika Ltd
@@ -17,7 +17,7 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.2
+	 * @version 5.5.5
 	 * @since   2.1.0
 	 *
 	 * @todo    (dev) split into more files/classes, e.g., `class-alg-wc-ean-crons.php`?
@@ -44,7 +44,7 @@ class Alg_WC_EAN_Product_Tools {
 		// "Products > Bulk actions"
 		add_filter( 'bulk_actions-edit-product', array( $this, 'add_product_bulk_actions' ) );
 		add_filter( 'handle_bulk_actions-edit-product', array( $this, 'handle_product_bulk_actions' ), 10, 3 );
-		add_action( 'admin_footer', array( $this, 'bulk_actions_confirmation_js' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'bulk_actions_confirmation_js' ) );
 
 		// Assign from the list: Reuse deleted
 		add_action( 'before_delete_post', array( $this, 'reuse_deleted' ), 10, 2 );
@@ -54,28 +54,51 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * bulk_actions_confirmation_js.
 	 *
-	 * @version 4.1.2
+	 * @version 5.5.5
 	 * @since   4.1.2
-	 *
-	 * @todo    (dev) load only when needed
-	 * @todo    (dev) use `admin_enqueue_scripts`
 	 */
 	function bulk_actions_confirmation_js() {
-		$actions     = get_option( 'alg_wc_ean_product_bulk_actions',         array( 'alg_wc_ean_delete', 'alg_wc_ean_generate' ) );
-		$confirm     = get_option( 'alg_wc_ean_product_bulk_actions_confirm', array( 'alg_wc_ean_delete' ) );
-		$confirm_ids = array_intersect( $actions, $confirm );
-		if ( ! empty( $confirm_ids ) ) {
-			?><script>
-				const confirm_ids = <?php echo "['" . implode( "','", $confirm_ids ) . "']"; ?>;
-				jQuery( '#doaction' ).on( 'click', function () {
-					if ( -1 != confirm_ids.indexOf( jQuery( 'select[name="action"]' ).val() ) ) {
-						if ( ! confirm( "<?php echo esc_html__( 'Are you sure?', 'ean-for-woocommerce' ); ?>" ) ) {
-							return false;
-						}
-					}
-				} );
-			</script><?php
+		if (
+			! function_exists( 'get_current_screen' ) ||
+			! ( $current_screen = get_current_screen() ) ||
+			! isset( $current_screen->id ) ||
+			'edit-product' !== $current_screen->id
+		) {
+			return;
 		}
+
+		$actions     = get_option(
+			'alg_wc_ean_product_bulk_actions',
+			array( 'alg_wc_ean_delete', 'alg_wc_ean_generate' )
+		);
+		$confirm     = get_option(
+			'alg_wc_ean_product_bulk_actions_confirm',
+			array( 'alg_wc_ean_delete' )
+		);
+		$confirm_ids = array_intersect(
+			$actions,
+			$confirm
+		);
+		if ( empty( $confirm_ids ) ) {
+			return;
+		}
+
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		wp_enqueue_script(
+			'alg-wc-ean-bulk-actions-confirmation',
+			alg_wc_ean()->plugin_url() . '/assets/js/alg-wc-ean-bulk-actions-confirmation' . $min . '.js',
+			array( 'jquery' ),
+			alg_wc_ean()->version,
+			true
+		);
+		wp_localize_script(
+			'alg-wc-ean-bulk-actions-confirmation',
+			'algWCEANBulkActionsConfirmation',
+			array(
+				'message'    => __( 'Are you sure?', 'ean-for-woocommerce' ),
+				'confirmIDs' => $confirm_ids,
+			),
+		);
 	}
 
 	/**
@@ -855,11 +878,11 @@ class Alg_WC_EAN_Product_Tools {
 	/**
 	 * get_rand_prefix.
 	 *
-	 * @version 3.9.0
+	 * @version 5.5.5
 	 * @since   3.9.0
 	 */
 	function get_rand_prefix( $from, $to, $length ) {
-		return str_pad( substr( rand( $from, $to ), 0, $length ), $length, '0', STR_PAD_LEFT );
+		return str_pad( substr( wp_rand( $from, $to ), 0, $length ), $length, '0', STR_PAD_LEFT );
 	}
 
 	/**
@@ -879,10 +902,10 @@ class Alg_WC_EAN_Product_Tools {
 
 			case 'counter':
 				global $wpdb;
-				$wpdb->query( 'START TRANSACTION' );
+				$wpdb->query( 'START TRANSACTION' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$seed = get_option( 'alg_wc_ean_tool_product_generate_seed_counter', 0 );
 				update_option( 'alg_wc_ean_tool_product_generate_seed_counter', ( $seed + 1 ) );
-				$wpdb->query( 'COMMIT' );
+				$wpdb->query( 'COMMIT' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				break;
 
 		}
