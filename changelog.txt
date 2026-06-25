@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 5.5.7 - 25/06/2026 =
+* Dev - Security - Nonce added (generate button AJAX).
+* WC tested up to: 10.9.
+
 = 5.5.6 - 24/06/2026 =
 * Dev - Prefixes updated (from `alg` to `wpfactory`).
 * Dev - WPFactory Admin Menu - Library updated (to v1.1.1).

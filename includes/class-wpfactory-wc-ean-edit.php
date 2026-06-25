@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Edit Class
  *
- * @version 5.5.6
+ * @version 5.5.7
  * @since   2.0.0
  *
  * @author  WPFactory
@@ -152,7 +152,7 @@ class WPFactory_WC_EAN_Edit {
 	/**
 	 * add_generate_button.
 	 *
-	 * @version 5.5.6
+	 * @version 5.5.7
 	 * @since   4.0.0
 	 */
 	function add_generate_button() {
@@ -173,15 +173,33 @@ class WPFactory_WC_EAN_Edit {
 			wpfactory_wc_ean()->version,
 			true
 		);
+
+		wp_localize_script(
+			'wpfactory-wc-ean-generate-button',
+			'wpfactoryWCEANGenerateButton',
+			array(
+				'nonce' => wp_create_nonce( 'wpfactory_wc_ean_generate_ean' ),
+			),
+		);
 	}
 
 	/**
 	 * generate_button_ajax.
 	 *
-	 * @version 5.5.6
+	 * @version 5.5.7
 	 * @since   4.0.0
 	 */
 	static function generate_button_ajax() {
+		if (
+			! isset( $_POST['nonce'] ) ||
+			! wp_verify_nonce(
+				sanitize_text_field( wp_unslash( $_POST['nonce'] ) ),
+				'wpfactory_wc_ean_generate_ean'
+			)
+		) {
+			die();
+		}
+
 		$ean = wpfactory_wc_ean()->core->product_tools->generate_ean(
 			intval( $_POST['product'] ?? 0 ), // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			wpfactory_wc_ean()->core->product_tools->get_generate_data()

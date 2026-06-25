@@ -1,7 +1,7 @@
 /**
  * EAN for WooCommerce - Generate Button JS
  *
- * @version 5.5.6
+ * @version 5.5.7
  * @since   5.5.5
  *
  * @author  WPFactory
@@ -19,6 +19,7 @@ jQuery( document ).ready( function () {
 			'action': 'wpfactory_wc_ean_generate_ajax',
 			'product': product,
 			'input': input,
+			'nonce': wpfactoryWCEANGenerateButton.nonce,
 		};
 		jQuery.post( ajaxurl, data, function( response ) {
 			if ( response ) {

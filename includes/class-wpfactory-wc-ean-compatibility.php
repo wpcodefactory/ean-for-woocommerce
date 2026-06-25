@@ -2,7 +2,7 @@
 /**
  * EAN for WooCommerce - Compatibility Class
  *
- * @version 5.5.6
+ * @version 5.5.7
  * @since   2.2.0
  *
  * @author  WPFactory
@@ -642,7 +642,7 @@ class WPFactory_WC_EAN_Compatibility {
 	/**
 	 * wcfm_generate_button_script_and_style.
 	 *
-	 * @version 5.5.6
+	 * @version 5.5.7
 	 * @since   5.5.5
 	 *
 	 * @todo    (v5.5.5) check if it's a WCFM page(s)
@@ -660,6 +660,14 @@ class WPFactory_WC_EAN_Compatibility {
 			array( 'jquery' ),
 			wpfactory_wc_ean()->version,
 			true
+		);
+
+		wp_localize_script(
+			'wpfactory-wc-ean-generate-button',
+			'wpfactoryWCEANGenerateButton',
+			array(
+				'nonce' => wp_create_nonce( 'wpfactory_wc_ean_generate_ean' ),
+			),
 		);
 
 		wp_enqueue_style(
