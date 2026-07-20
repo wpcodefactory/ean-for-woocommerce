@@ -640,7 +640,7 @@ class WPFactory_WC_EAN_Compatibility {
 			! isset( $_POST['generate_action'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verification is handled in `WPFactory_WC_EAN_Edit::generate_button_ajax()`.
 			'generate' !== sanitize_text_field( wp_unslash( $_POST['generate_action'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verification is handled in `WPFactory_WC_EAN_Edit::generate_button_ajax()`.
 		) {
-			return;
+			die();
 		}
 
 		WPFactory_WC_EAN_Edit::generate_button_ajax();

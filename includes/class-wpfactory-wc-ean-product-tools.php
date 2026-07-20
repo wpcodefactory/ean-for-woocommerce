@@ -611,10 +611,20 @@ class WPFactory_WC_EAN_Product_Tools {
 								}
 								$_value[ $data['sub_keys'][ $i ] ] = $current_ean;
 								update_post_meta( $post_id, $key, $_value );
-								do_action( 'alg_wc_ean_tool_on_create_update_product_copy_to_meta', $post_id, $key, $_value );
+								do_action(
+									'alg_wc_ean_tool_on_create_update_product_copy_to_meta',
+									$post_id,
+									$key,
+									$_value
+								);
 							} else {
 								update_post_meta( $post_id, $key, $current_ean );
-								do_action( 'alg_wc_ean_tool_on_create_update_product_copy_to_meta', $post_id, $key, $current_ean );
+								do_action(
+									'alg_wc_ean_tool_on_create_update_product_copy_to_meta',
+									$post_id,
+									$key,
+									$current_ean
+								);
 							}
 						}
 						break;
